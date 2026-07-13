@@ -1,0 +1,766 @@
+/* ═══════════════════════════════════════════════════════════════
+   Products Page — Fully Scoped with .prod prefix
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Fade System ───────────────────────────────────────────── */
+.prod__fade {
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: opacity, transform;
+}
+
+.prod__fade--up {
+    transform: translateY(30px);
+}
+
+.prod__fade--down {
+    transform: translateY(-30px);
+}
+
+.prod__fade--left {
+    transform: translateX(-30px);
+}
+
+.prod__fade--right {
+    transform: translateX(30px);
+}
+
+.prod__fade--none {
+    transform: none;
+}
+
+.prod__fade--visible {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* ─── Hero ──────────────────────────────────────────────────── */
+.prod__hero {
+    position: relative;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 50%, #0a3d8f 100%);
+    overflow: hidden;
+}
+
+.prod__hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 15% 85%,
+            rgba(255, 255, 255, 0.06) 0%,
+            transparent 50%),
+        radial-gradient(circle at 85% 15%,
+            rgba(255, 255, 255, 0.04) 0%,
+            transparent 50%);
+}
+
+.prod__hero::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(to top, #ffffff, transparent);
+    z-index: 3;
+}
+
+.prod__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ─── Hero Shapes ───────────────────────────────────────────── */
+.prod__hero-shapes {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.prod__shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    animation: prodFloat 8s ease-in-out infinite;
+}
+
+.prod__shape--1 {
+    width: 130px;
+    height: 130px;
+    top: 10%;
+    left: 6%;
+    animation-duration: 7s;
+}
+
+.prod__shape--2 {
+    width: 90px;
+    height: 90px;
+    bottom: 15%;
+    right: 8%;
+    animation-duration: 9s;
+    animation-delay: 2s;
+}
+
+.prod__shape--3 {
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    left: 70%;
+    animation-duration: 6s;
+    animation-delay: 1s;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+@keyframes prodFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-18px) rotate(2deg);
+    }
+
+    50% {
+        transform: translateY(-28px) rotate(-3deg);
+    }
+
+    75% {
+        transform: translateY(-12px) rotate(3deg);
+    }
+}
+
+/* ─── Hero Content ──────────────────────────────────────────── */
+.prod__hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 700px;
+}
+
+.prod__hero-anim {
+    opacity: 0;
+    animation: prodHeroIn 0.7s ease forwards;
+}
+
+.prod__hero-anim--1 {
+    animation-delay: 0.1s;
+    transform: translateY(20px);
+}
+
+.prod__hero-anim--2 {
+    animation-delay: 0.25s;
+    transform: translateY(25px);
+}
+
+.prod__hero-anim--3 {
+    animation-delay: 0.4s;
+    transform: translateY(20px);
+}
+
+.prod__hero-anim--4 {
+    animation-delay: 0.55s;
+    transform: scaleX(0);
+}
+
+@keyframes prodHeroIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleX(1);
+    }
+}
+
+.prod__hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.4rem 1.2rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.72rem;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 1.2rem;
+    backdrop-filter: blur(4px);
+}
+
+.prod__hero-badge svg {
+    font-size: 0.7rem;
+}
+
+.prod__hero-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.8rem;
+}
+
+.prod__hero-subtitle {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: "Poppins", sans-serif;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+.prod__hero-line {
+    width: 50px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    margin: 0 auto;
+    transform-origin: center;
+}
+
+/* ─── Container ─────────────────────────────────────────────── */
+.prod__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ─── Stats ─────────────────────────────────────────────────── */
+.prod__stats {
+    padding: 3rem 0;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(26, 115, 232, 0.06);
+}
+
+.prod__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.prod__stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prod__stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(26, 115, 232, 0.08);
+}
+
+.prod__stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    color: #1a73e8;
+    margin-bottom: 0.3rem;
+}
+
+.prod__stat-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    color: #4a4a6a;
+}
+
+/* ─── Section ───────────────────────────────────────────────── */
+.prod__section {
+    padding: 4.5rem 0;
+    background: #ffffff;
+}
+
+.prod__section--alt {
+    background: #f8faff;
+}
+
+.prod__section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.prod__section-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1a73e8, #0d47a1);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    animation: prodIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes prodIconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.prod__section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    color: #1a1a2e;
+    margin-bottom: 0.5rem;
+}
+
+.prod__section-subtitle {
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    color: #4a4a6a;
+    line-height: 1.7;
+}
+
+/* ─── Product Grid ──────────────────────────────────────────── */
+.prod__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* ─── Product Card ──────────────────────────────────────────── */
+.prod__card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(26, 115, 232, 0.07);
+    transition: transform 0.4s ease, box-shadow 0.4s ease,
+        border-color 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.prod__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 50px rgba(26, 115, 232, 0.14);
+    border-color: rgba(26, 115, 232, 0.15);
+}
+
+/* ─── Card Image ────────────────────────────────────────────── */
+.prod__card-image {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #f0f4ff;
+}
+
+.prod__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.prod__card:hover .prod__card-image img {
+    transform: scale(1.08);
+}
+
+.prod__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(26, 115, 232, 0.85) 0%,
+            rgba(26, 115, 232, 0.4) 40%,
+            transparent 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.prod__card:hover .prod__card-overlay {
+    opacity: 1;
+}
+
+.prod__card-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 1.2rem;
+    background: #ffffff;
+    color: #1a73e8;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 500;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prod__card-view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.prod__card-view svg {
+    font-size: 0.65rem;
+    transition: transform 0.3s ease;
+}
+
+.prod__card-view:hover svg {
+    transform: translateX(3px);
+}
+
+.prod__card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1a73e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.prod__card:hover .prod__card-badge {
+    transform: rotate(10deg) scale(1.1);
+}
+
+.prod__card-badge--gear {
+    color: #0d47a1;
+}
+
+/* ─── Card Body ─────────────────────────────────────────────── */
+.prod__card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.prod__card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    color: #1a1a2e;
+    margin-bottom: 0.6rem;
+}
+
+.prod__card-text {
+    font-size: 0.78rem;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    color: #4a4a6a;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+/* ─── Card Features ─────────────────────────────────────────── */
+.prod__card-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.prod__card-feature {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    background: #e8f0fe;
+    color: #1a73e8;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.66rem;
+    font-weight: 400;
+    border-radius: 20px;
+    white-space: nowrap;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.prod__card:hover .prod__card-feature {
+    background: #1a73e8;
+    color: #ffffff;
+}
+
+/* ─── Card Link ─────────────────────────────────────────────── */
+.prod__card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #1a73e8;
+    text-decoration: none;
+    margin-top: auto;
+    transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.prod__card-link:hover {
+    gap: 10px;
+    color: #0d47a1;
+}
+
+.prod__card-arrow {
+    font-size: 0.6rem;
+    transition: transform 0.3s ease;
+}
+
+.prod__card-link:hover .prod__card-arrow {
+    transform: translateX(3px);
+}
+
+/* ─── CTA Section ───────────────────────────────────────────── */
+.prod__cta {
+    padding: 4.5rem 0;
+    background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.prod__cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 20h20v20H20zM0 0h20v20H0z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.prod__cta-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.prod__cta-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.prod__cta-text {
+    font-size: 0.88rem;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.prod__cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.prod__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.65rem 1.8rem;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 400;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+        background 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.prod__cta-btn--primary {
+    background: #ffffff;
+    color: #1a73e8;
+}
+
+.prod__cta-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.prod__cta-btn--primary svg {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.prod__cta-btn--primary:hover svg {
+    transform: translateX(3px);
+}
+
+.prod__cta-btn--secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.prod__cta-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .prod__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .prod__stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .prod__hero {
+        min-height: 300px;
+    }
+
+    .prod__hero-title {
+        font-size: 2rem;
+    }
+
+    .prod__hero-subtitle {
+        font-size: 0.82rem;
+    }
+
+    .prod__hero-content {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .prod__container {
+        padding: 0 1.2rem;
+    }
+
+    .prod__section {
+        padding: 3.5rem 0;
+    }
+
+    .prod__grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .prod__card-image {
+        height: 200px;
+    }
+
+    .prod__stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .prod__section-title {
+        font-size: 1.35rem;
+    }
+
+    .prod__cta-title {
+        font-size: 1.5rem;
+    }
+
+    .prod__shape--3 {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .prod__hero {
+        min-height: 260px;
+    }
+
+    .prod__hero-title {
+        font-size: 1.6rem;
+    }
+
+    .prod__hero-badge {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.9rem;
+    }
+
+    .prod__stat-number {
+        font-size: 1.6rem;
+    }
+
+    .prod__card-body {
+        padding: 1.2rem;
+    }
+
+    .prod__card-title {
+        font-size: 0.92rem;
+    }
+
+    .prod__cta-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .prod__cta-btn {
+        width: 100%;
+        max-width: 260px;
+        justify-content: center;
+    }
+
+    .prod__fade--left {
+        transform: translateX(-20px);
+    }
+
+    .prod__fade--right {
+        transform: translateX(20px);
+    }
+}
+
+@media (max-width: 399px) {
+    .prod__hero-title {
+        font-size: 1.4rem;
+    }
+
+    .prod__container {
+        padding: 0 0.9rem;
+    }
+
+    .prod__section {
+        padding: 2.5rem 0;
+    }
+
+    .prod__card-image {
+        height: 170px;
+    }
+
+    .prod__shape--2 {
+        display: none;
+    }
+}

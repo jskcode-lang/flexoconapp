@@ -1,0 +1,59 @@
+.notfound__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(135deg, #f0f6ff 0%, #ffffff 100%);
+    font-family: "Poppins", sans-serif;
+    padding: 2rem;
+}
+
+.notfound__card {
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+}
+
+.notfound__code {
+    font-size: 7rem;
+    font-weight: 700;
+    color: #1a73e8;
+    line-height: 1;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #1a73e8, #1558b0);
+
+    -webkit-text-fill-color: transparent;
+}
+
+.notfound__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #1a1a2e;
+    margin-bottom: 0.75rem;
+}
+
+.notfound__subtitle {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: #4a4a6a;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.notfound__btn {
+    display: inline-block;
+    padding: 0.65rem 2rem;
+    background: #1a73e8;
+    color: #ffffff;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.notfound__btn:hover {
+    background: #1558b0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.35);
+}

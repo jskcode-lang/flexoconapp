@@ -1,0 +1,497 @@
+/* ═══════════════════════════════════════════════════════════════
+   Footer — .ft scope — Fully Isolated
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Back to Top ───────────────────────────────────────────── */
+.ft__top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a73e8, #0d47a1);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    z-index: 900;
+    box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    opacity: 0.9;
+}
+
+.ft__top-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.45);
+    opacity: 1;
+}
+
+/* ─── Wrap ──────────────────────────────────────────────────── */
+.ft__wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ═══ UPPER FOOTER ════════════════════════════════════════════ */
+.ft__upper {
+    background: #0a1628;
+    padding: 4rem 0 3rem;
+}
+
+.ft__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.7fr 0.9fr 1.2fr;
+    gap: 2.5rem;
+}
+
+/* ─── Column Base ───────────────────────────────────────────── */
+.ft__col-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    color: #ffffff;
+    margin-bottom: 1.2rem;
+    position: relative;
+    padding-bottom: 0.7rem;
+}
+
+.ft__col-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: #1a73e8;
+    border-radius: 10px;
+}
+
+.ft__col-title--mt {
+    margin-top: 1.8rem;
+}
+
+/* ─── Brand Column ──────────────────────────────────────────── */
+.ft__logo {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.ft__logo img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+
+.ft__brand-text {
+    font-size: 0.78rem;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    color: rgba(200, 214, 229, 0.7);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+}
+
+/* ─── Social ────────────────────────────────────────────────── */
+.ft__social {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.ft__social-link {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.ft__social-link--fb {
+    color: #1877f2;
+    background: rgba(24, 119, 242, 0.1);
+}
+
+.ft__social-link--fb:hover {
+    background: #1877f2;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.ft__social-link--tw {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ft__social-link--tw:hover {
+    background: #ffffff;
+    color: #000000;
+    transform: translateY(-2px);
+}
+
+/* ─── Brochure Button ───────────────────────────────────────── */
+.ft__brochure-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.45rem 1rem;
+    background: transparent;
+    color: #1a73e8;
+    border: 1.5px solid rgba(26, 115, 232, 0.35);
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background 0.3s ease, border-color 0.3s ease,
+        transform 0.3s ease, color 0.3s ease;
+}
+
+.ft__brochure-btn:hover {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.ft__brochure-btn svg {
+    font-size: 0.65rem;
+}
+
+/* ─── Links Column ──────────────────────────────────────────── */
+.ft__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.ft__links li a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.38rem 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 300;
+    color: rgba(200, 214, 229, 0.65);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.ft__links li a:hover {
+    color: #1a73e8;
+    transform: translateX(4px);
+}
+
+.ft__links li a svg {
+    font-size: 0.5rem;
+    color: rgba(26, 115, 232, 0.4);
+    transition: color 0.3s ease;
+}
+
+.ft__links li a:hover svg {
+    color: #1a73e8;
+}
+
+/* ─── Links Head (Product Category) ─────────────────────────── */
+.ft__links-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(200, 214, 229, 0.85);
+    padding: 0.35rem 0 0.15rem;
+    margin-top: 0.3rem;
+}
+
+.ft__links-head--mt {
+    margin-top: 0.8rem;
+}
+
+.ft__links-head-icon {
+    font-size: 0.6rem;
+    color: #1a73e8;
+}
+
+/* ─── Contact Column ────────────────────────────────────────── */
+.ft__contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.ft__contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.74rem;
+    font-weight: 300;
+    color: rgba(200, 214, 229, 0.65);
+    line-height: 1.65;
+}
+
+.ft__contact-item strong {
+    font-weight: 500;
+    color: rgba(200, 214, 229, 0.9);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.ft__contact-item p {
+    margin: 0;
+    color: rgba(200, 214, 229, 0.65);
+    line-height: 1.65;
+}
+
+.ft__contact-icon {
+    color: #1a73e8;
+    font-size: 0.78rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.ft__contact-item a {
+    color: rgba(200, 214, 229, 0.65);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.ft__contact-item a:hover {
+    color: #1a73e8;
+}
+
+.ft__contact-sep {
+    margin: 0 4px;
+    color: rgba(200, 214, 229, 0.3);
+}
+
+/* ═══ MIDDLE STRIP ════════════════════════════════════════════ */
+.ft__mid {
+    background: #0d1d33;
+    padding: 1.2rem 0;
+    border-top: 1px solid rgba(26, 115, 232, 0.08);
+    border-bottom: 1px solid rgba(26, 115, 232, 0.08);
+}
+
+.ft__mid-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.ft__mid-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: rgba(200, 214, 229, 0.65);
+}
+
+.ft__mid-item svg {
+    font-size: 0.72rem;
+    color: #1a73e8;
+}
+
+.ft__mid-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(200, 214, 229, 0.15);
+}
+
+/* ═══ BOTTOM BAR ══════════════════════════════════════════════ */
+.ft__bottom {
+    background: #081422;
+    padding: 1.2rem 0;
+}
+
+.ft__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.ft__copy {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: rgba(200, 214, 229, 0.45);
+    margin: 0;
+}
+
+.ft__bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ft__bottom-links a {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: rgba(200, 214, 229, 0.45);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.ft__bottom-links a:hover {
+    color: #1a73e8;
+}
+
+.ft__bottom-dot {
+    color: rgba(200, 214, 229, 0.2);
+    font-size: 0.6rem;
+}
+
+/* ═══ RESPONSIVE ══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .ft__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+    }
+
+    .ft__col--brand {
+        grid-column: span 2;
+        text-align: center;
+    }
+
+    .ft__logo {
+        margin: 0 auto 1rem;
+    }
+
+    .ft__social {
+        justify-content: center;
+    }
+
+    .ft__brochure-btn {
+        margin: 0 auto;
+    }
+
+    .ft__brand-text {
+        max-width: 500px;
+        margin: 0 auto 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ft__grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .ft__col--brand {
+        grid-column: span 1;
+    }
+
+    .ft__upper {
+        padding: 3rem 0 2.5rem;
+    }
+
+    .ft__wrap {
+        padding: 0 1.2rem;
+    }
+
+    .ft__mid-inner {
+        gap: 1rem;
+    }
+
+    .ft__mid-divider {
+        display: none;
+    }
+
+    .ft__bottom-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .ft__col-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ft__col {
+        text-align: center;
+    }
+
+    .ft__links li a {
+        justify-content: center;
+    }
+
+    .ft__links-head {
+        justify-content: center;
+    }
+
+    .ft__contact-item {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .ft__contact-icon {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .ft__upper {
+        padding: 2.5rem 0 2rem;
+    }
+
+    .ft__col-title {
+        font-size: 0.82rem;
+    }
+
+    .ft__logo img {
+        height: 36px;
+    }
+
+    .ft__mid-item {
+        font-size: 0.65rem;
+    }
+
+    .ft__contact-item {
+        font-size: 0.7rem;
+    }
+
+    .ft__top-btn {
+        width: 36px;
+        height: 36px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 399px) {
+    .ft__wrap {
+        padding: 0 0.9rem;
+    }
+
+    .ft__brand-text {
+        font-size: 0.72rem;
+    }
+
+    .ft__mid-inner {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
