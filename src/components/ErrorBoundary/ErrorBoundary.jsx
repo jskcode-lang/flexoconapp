@@ -26,7 +26,7 @@ class ErrorBoundary extends React.Component {
       error: null,
       errorInfo: null,
     });
-    window.location.href = "/";
+    window.location.href = import.meta.env.BASE_URL;
   };
 
   render() {
