@@ -1,0 +1,1 @@
+import{n as e}from"./index-icaoXkH6.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`AboutUs`});export{n as default};
