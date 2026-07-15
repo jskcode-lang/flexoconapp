@@ -1,1 +1,0 @@
-import{n as e}from"./index-icaoXkH6.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`PinBushTyreCoupling`});export{n as default};
