@@ -7,24 +7,14 @@
     <title>Flexocon Engineers Pvt. Ltd.</title>
     <script>
       (function () {
-        var l = window.location;
-        if (l.search[1] === "/") {
-          var decoded = l.search
-            .slice(1)
-            .split("&")
-            .map(function (s) {
-              return s.replace(/~and~/g, "&");
-            })
-            .join("?");
-          window.history.replaceState(
-            null,
-            null,
-            l.pathname.slice(0, -1) + decoded + l.hash,
-          );
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
         }
       })();
     </script>
-    <script type="module" crossorigin src="/flexoconapp/assets/index-CbEcNOz_.js"></script>
+    <script type="module" crossorigin src="/flexoconapp/assets/index-DxGC3Lpw.js"></script>
     <link rel="modulepreload" crossorigin href="/flexoconapp/assets/react-Ca03aNmg.js">
     <link rel="stylesheet" crossorigin href="/flexoconapp/assets/index-CGXTXpj0.css">
   </head>

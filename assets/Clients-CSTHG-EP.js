@@ -1,1 +1,0 @@
-import{n as e}from"./index-CbEcNOz_.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`Clients`});export{n as default};
