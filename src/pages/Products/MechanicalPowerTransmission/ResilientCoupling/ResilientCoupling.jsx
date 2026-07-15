@@ -29,6 +29,7 @@ import {
 } from "react-icons/fa";
 import "./ResilientCoupling.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
 // ── InView ────────────────────────────────────────────────────
 const useInView = (opts = {}) => {
   const ref = useRef(null);
@@ -73,7 +74,7 @@ const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
 };
 
 // ── Constants & Data ──────────────────────────────────────────
-const HERO_IMG = "/assets/img_4.png";
+const HERO_IMG = BASE + "/assets/img_4.png";
 
 const coreParts = [
   {
@@ -234,12 +235,24 @@ const whyUs = [
 ];
 
 const gallery = [
-  { src: "/assets/images/rc-1.jpg", title: "Grid Spring Resilient Coupling" },
-  { src: "/assets/images/rc-2.jpg", title: "Vertically Split Cover Type" },
-  { src: "/assets/images/rc-3.jpg", title: "Grid Spring Element Detail" },
-  { src: "/assets/images/rc-4.jpg", title: "Flanged Resilient Coupling" },
-  { src: "/assets/images/rc-5.jpg", title: "Brake Drum Coupling" },
-  { src: "/assets/images/rc-6.jpg", title: "Spacer Type Configuration" },
+  {
+    src: BASE + "/assets/images/rc-1.jpg",
+    title: "Grid Spring Resilient Coupling",
+  },
+  {
+    src: BASE + "/assets/images/rc-2.jpg",
+    title: "Vertically Split Cover Type",
+  },
+  {
+    src: BASE + "/assets/images/rc-3.jpg",
+    title: "Grid Spring Element Detail",
+  },
+  {
+    src: BASE + "/assets/images/rc-4.jpg",
+    title: "Flanged Resilient Coupling",
+  },
+  { src: BASE + "/assets/images/rc-5.jpg", title: "Brake Drum Coupling" },
+  { src: BASE + "/assets/images/rc-6.jpg", title: "Spacer Type Configuration" },
 ];
 
 // ── Component ─────────────────────────────────────────────────

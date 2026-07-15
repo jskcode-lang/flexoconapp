@@ -27,6 +27,7 @@ import {
 } from "react-icons/fa";
 import "./NonMetallicExpansionJoints.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (options = {}) => {
   const ref = useRef(null);
@@ -79,7 +80,7 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
 };
 
 // ── Constants ─────────────────────────────────────────────────
-const HERO_IMAGE = "/assets/img_1.png";
+const HERO_IMAGE = BASE + "/assets/img_1.png";
 
 // ── Data ──────────────────────────────────────────────────────
 const highlights = [
@@ -233,18 +234,30 @@ const materials = [
 ];
 
 const galleryImages = [
-  { src: "/assets/images/nmej-1.jpg", title: "Round Fabric Expansion Joint" },
-  { src: "/assets/images/nmej-2.jpg", title: "Rectangular Fabric Joint" },
   {
-    src: "/assets/images/nmej-3.jpg",
+    src: BASE + "/assets/images/nmej-1.jpg",
+    title: "Round Fabric Expansion Joint",
+  },
+  {
+    src: BASE + "/assets/images/nmej-2.jpg",
+    title: "Rectangular Fabric Joint",
+  },
+  {
+    src: BASE + "/assets/images/nmej-3.jpg",
     title: "High-Temperature Joint Installation",
   },
-  { src: "/assets/images/nmej-4.jpg", title: "Custom Ducting Expansion Joint" },
   {
-    src: "/assets/images/nmej-5.jpg",
+    src: BASE + "/assets/images/nmej-4.jpg",
+    title: "Custom Ducting Expansion Joint",
+  },
+  {
+    src: BASE + "/assets/images/nmej-5.jpg",
     title: "Multi-Layer Construction Detail",
   },
-  { src: "/assets/images/nmej-6.jpg", title: "ESP Duct Joint Application" },
+  {
+    src: BASE + "/assets/images/nmej-6.jpg",
+    title: "ESP Duct Joint Application",
+  },
 ];
 
 const whyChooseUs = [

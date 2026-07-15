@@ -31,6 +31,8 @@ import {
 } from "react-icons/fa";
 import "./RubberExpansionJoints.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
+
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (options = {}) => {
   const ref = useRef(null);
@@ -83,7 +85,7 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
 };
 
 // ── Constants ─────────────────────────────────────────────────
-const HERO_IMAGE = "/assets/img_3.png";
+const HERO_IMAGE = BASE + "/assets/img_3.png";
 
 // ── Data ──────────────────────────────────────────────────────
 const highlights = [
@@ -300,12 +302,15 @@ const whyChooseUs = [
 ];
 
 const galleryImages = [
-  { src: "/assets/images/rej-1.jpg", title: "Single Arch Rubber Joint" },
-  { src: "/assets/images/rej-2.jpg", title: "Double Arch Expansion Joint" },
-  { src: "/assets/images/rej-3.jpg", title: "EPDM Rubber Joint" },
-  { src: "/assets/images/rej-4.jpg", title: "Large Diameter Joint" },
-  { src: "/assets/images/rej-5.jpg", title: "Flanged Rubber Joint" },
-  { src: "/assets/images/rej-6.jpg", title: "Rectangular Rubber Joint" },
+  { src: BASE + "/assets/images/rej-1.jpg", title: "Single Arch Rubber Joint" },
+  {
+    src: BASE + "/assets/images/rej-2.jpg",
+    title: "Double Arch Expansion Joint",
+  },
+  { src: BASE + "/assets/images/rej-3.jpg", title: "EPDM Rubber Joint" },
+  { src: BASE + "/assets/images/rej-4.jpg", title: "Large Diameter Joint" },
+  { src: BASE + "/assets/images/rej-5.jpg", title: "Flanged Rubber Joint" },
+  { src: BASE + "/assets/images/rej-6.jpg", title: "Rectangular Rubber Joint" },
 ];
 
 // ── Component ─────────────────────────────────────────────────
