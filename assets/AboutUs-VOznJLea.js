@@ -1,1 +1,0 @@
-import{n as e}from"./index-DNan0KVa.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`AboutUs`});export{n as default};
