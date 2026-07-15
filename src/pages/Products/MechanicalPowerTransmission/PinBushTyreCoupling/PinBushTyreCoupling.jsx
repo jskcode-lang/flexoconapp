@@ -29,6 +29,7 @@ import {
 } from "react-icons/fa";
 import "./PinBushTyreCoupling.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
 // ─── Image Assets ─────────────────────────────────────────────
 const HERO_IMAGE = "/assets/images/pbtc/pbtc-hero.jpg";
 const PIN_BUSH_IMAGE = "/assets/images/pbtc/pin-bush-coupling.jpg";
@@ -289,27 +290,27 @@ const whyFlexocon = [
 
 const gallery = [
   {
-    src: "/assets/images/pbtc/pin-bush-coupling.jpg",
+    src: BASE + "/assets/images/pbtc/pin-bush-coupling.jpg",
     title: "Pin Bush Flexible Coupling",
   },
   {
-    src: "/assets/images/pbtc/tyre-coupling.jpg",
+    src: BASE + "/assets/images/pbtc/tyre-coupling.jpg",
     title: "Tyre Flexible Coupling",
   },
   {
-    src: "/assets/images/pbtc/brake-drum-coupling.jpg",
+    src: BASE + "/assets/images/pbtc/brake-drum-coupling.jpg",
     title: "Brake Drum-cum-Flexible Coupling",
   },
   {
-    src: "/assets/images/pbtc/pin-bush-detail.jpg",
+    src: BASE + "/assets/images/pbtc/pin-bush-detail.jpg",
     title: "Pin Bush and Bolt Assembly",
   },
   {
-    src: "/assets/images/pbtc/tyre-element-detail.jpg",
+    src: BASE + "/assets/images/pbtc/tyre-element-detail.jpg",
     title: "Flexible Tyre Element",
   },
   {
-    src: "/assets/images/pbtc/custom-coupling.jpg",
+    src: BASE + "/assets/images/pbtc/custom-coupling.jpg",
     title: "Custom Coupling Configuration",
   },
 ];

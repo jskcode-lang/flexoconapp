@@ -31,6 +31,8 @@ import {
 } from "react-icons/fa";
 import "./GearedCoupling.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
+
 // ── InView ────────────────────────────────────────────────────
 const useInView = (opts = {}) => {
   const ref = useRef(null);
@@ -75,7 +77,7 @@ const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
 };
 
 // ── Data ──────────────────────────────────────────────────────
-const HERO_IMG = "/assets/img_5.png";
+const HERO_IMG = BASE + "/assets/img_5.png";
 
 const coreParts = [
   {
@@ -291,12 +293,15 @@ const whyUs = [
 ];
 
 const gallery = [
-  { src: "/assets/images/gc-1.jpg", title: "Full Geared Coupling" },
-  { src: "/assets/images/gc-2.jpg", title: "Half Geared Half Rigid" },
-  { src: "/assets/images/gc-3.jpg", title: "Mill Motor Type Coupling" },
-  { src: "/assets/images/gc-4.jpg", title: "Crown Gear Teeth Detail" },
-  { src: "/assets/images/gc-5.jpg", title: "Brake Drum Geared Coupling" },
-  { src: "/assets/images/gc-6.jpg", title: "Spacer Type Assembly" },
+  { src: BASE + "/assets/images/gc-1.jpg", title: "Full Geared Coupling" },
+  { src: BASE + "/assets/images/gc-2.jpg", title: "Half Geared Half Rigid" },
+  { src: BASE + "/assets/images/gc-3.jpg", title: "Mill Motor Type Coupling" },
+  { src: BASE + "/assets/images/gc-4.jpg", title: "Crown Gear Teeth Detail" },
+  {
+    src: BASE + "/assets/images/gc-5.jpg",
+    title: "Brake Drum Geared Coupling",
+  },
+  { src: BASE + "/assets/images/gc-6.jpg", title: "Spacer Type Assembly" },
 ];
 
 // ── Component ─────────────────────────────────────────────────
@@ -359,7 +364,7 @@ const GearedCoupling = () => {
               <FaPhoneAlt /> Get a Quote
             </Link>
             <a
-              href="/assets/brochure/brochure.pdf"
+              href={BASE + "/assets/brochure/brochure.pdf"}
               download
               className="gc__btn gc__btn--line"
             >
