@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <title>Redirecting...</title>
     <script>
-      sessionStorage.redirect = location.pathname;
-      window.location.href = "/flexoconapp/";
+      sessionStorage.redirect =
+        location.pathname + location.search + location.hash;
+      window.location.replace("/flexoconapp/");
     </script>
   </head>
 </html>
