@@ -18,6 +18,8 @@ import {
 } from "react-icons/fa";
 import "./Home.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
+
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (opts = {}) => {
   const ref = useRef(null);
@@ -104,58 +106,58 @@ const products = [
   {
     title: "Non Metallic Expansion Joints",
     desc: "Fabric joints for high temp ducts, ESP, and industrial fans — up to 1400°C.",
-    image: "/assets/images/non-metallic-expansion-joint.jpg",
+    image: BASE + "/assets/img_1.png",
     link: "/products/expansion-joints/non-metallic",
     icon: <FaShieldAlt />,
   },
   {
     title: "Metallic Expansion Joints",
     desc: "EJMA standard SS 304/316/321 bellows for high pressure piping systems.",
-    image: "/assets/images/metallic-expansion-joint.jpg",
+    image: BASE + "/assets/metallic-expansion-joint.jpg",
     link: "/products/expansion-joints/metallic",
     icon: <FaBolt />,
   },
   {
     title: "Rubber Expansion Joints",
     desc: "FSA standard flexible joints from 25mm to 2200mm NB — up to 30 kg/cm².",
-    image: "/assets/images/rubber-expansion-joint.jpg",
+    image: BASE + "/assets/rubber-expansion-joint.jpg",
     link: "/products/expansion-joints/rubber",
     icon: <FaBoxOpen />,
   },
   {
     title: "Resilient Coupling",
     desc: "Grid spring coupling with 80% shock damping — all metal construction.",
-    image: "/assets/images/resilient-coupling.jpg",
+    image: BASE + "/assets/resilient-coupling.jpg",
     link: "/products/mechanical-power-transmission/resilient-coupling",
     icon: <FaCog />,
   },
   {
     title: "Geared Coupling",
     desc: "Crown gear teeth coupling with ±1.5° angular misalignment capacity.",
-    image: "/assets/images/geared-coupling.jpg",
+    image: BASE + "/assets/geared-coupling.jpg",
     link: "/products/mechanical-power-transmission/geared-coupling",
     icon: <FaWrench />,
   },
   {
     title: "Pin Bush & Tyre Coupling",
     desc: "Robust coupling for reliable power transmission in industrial setups.",
-    image: "/assets/images/pin-bush-tyre-coupling.jpg",
+    image: BASE + "/assets/pin-bush-tyre-coupling.jpg",
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
     icon: <FaIndustry />,
   },
 ];
 
 const clientLogos = [
-  "/assets/images/clients/client-1.png",
-  "/assets/images/clients/client-2.png",
-  "/assets/images/clients/client-3.png",
-  "/assets/images/clients/client-4.png",
-  "/assets/images/clients/client-5.png",
-  "/assets/images/clients/client-6.png",
-  "/assets/images/clients/client-7.png",
-  "/assets/images/clients/client-8.png",
-  "/assets/images/clients/client-9.png",
-  "/assets/images/clients/client-10.png",
+  BASE + "/assets/images/clients/client-1.png",
+  BASE + "/assets/images/clients/client-2.png",
+  BASE + "/assets/images/clients/client-3.png",
+  BASE + "/assets/images/clients/client-4.png",
+  BASE + "/assets/images/clients/client-5.png",
+  BASE + "/assets/images/clients/client-6.png",
+  BASE + "/assets/images/clients/client-7.png",
+  BASE + "/assets/images/clients/client-8.png",
+  BASE + "/assets/images/clients/client-9.png",
+  BASE + "/assets/images/clients/client-10.png",
 ];
 
 const testimonials = [
@@ -200,9 +202,12 @@ const Home = () => {
             muted
             loop
             playsInline
-            poster="/assets/images/hero-poster.jpg"
+            poster={BASE + "/assets/images/hero-poster.jpg"}
           >
-            <source src="/assets/videos/hero-video.mp4" type="video/mp4" />
+            <source
+              src={BASE + "/assets/videos/hero-video.mp4"}
+              type="video/mp4"
+            />
           </video>
         </div>
         <div className="hm__hero-overlay" />
