@@ -116,9 +116,11 @@ const Navbar = () => {
         <div className="navbar__container">
           {/* ── Logo ── */}
           <Link to="/" className="navbar__logo">
-            <img src="/assets/logo.png" alt="Company Logo" />
+            <img
+              src={import.meta.env.BASE_URL + "assets/logo.png"}
+              alt="Company Logo"
+            />
           </Link>
-
           {/* ── Desktop Menu ── */}
           <ul className="navbar__menu">
             <li className="navbar__item">
