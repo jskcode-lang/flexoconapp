@@ -1,1 +1,0 @@
-import{n as e}from"./index-C3qCY0We.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`AboutUs`});export{n as default};
