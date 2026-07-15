@@ -1,1 +1,0 @@
-import{n as e}from"./index-BLUwpWu6.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`Contact`});export{n as default};
