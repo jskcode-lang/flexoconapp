@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import "./App.css";
 
 // ─── Main Pages ───────────────────────────────────────────────
@@ -17,10 +18,12 @@ const NonMetallicExpansionJoints = lazy(
   () =>
     import("./pages/Products/ExpansionJoints/NonMetallicExpansionJoints/NonMetallicExpansionJoints"),
 );
+
 const MetallicExpansionJoints = lazy(
   () =>
     import("./pages/Products/ExpansionJoints/MetallicExpansionJoints/MetallicExpansionJoints"),
 );
+
 const RubberExpansionJoints = lazy(
   () =>
     import("./pages/Products/ExpansionJoints/RubberExpansionJoints/RubberExpansionJoints"),
@@ -31,10 +34,12 @@ const ResilientCoupling = lazy(
   () =>
     import("./pages/Products/MechanicalPowerTransmission/ResilientCoupling/ResilientCoupling"),
 );
+
 const GearedCoupling = lazy(
   () =>
     import("./pages/Products/MechanicalPowerTransmission/GearedCoupling/GearedCoupling"),
 );
+
 const PinBushTyreCoupling = lazy(
   () =>
     import("./pages/Products/MechanicalPowerTransmission/PinBushTyreCoupling/PinBushTyreCoupling"),
@@ -55,6 +60,9 @@ const App = () => {
   return (
     <div className="app">
       <Navbar />
+
+      <ScrollToTop />
+
       <main className="app__main">
         <Suspense fallback={<Loader />}>
           <Routes>
@@ -99,6 +107,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </main>
+
       <Footer />
     </div>
   );
