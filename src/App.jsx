@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import "./App.css";
 
 // ─── Main Pages ───────────────────────────────────────────────
@@ -18,12 +19,10 @@ const NonMetallicExpansionJoints = lazy(
   () =>
     import("./pages/Products/ExpansionJoints/NonMetallicExpansionJoints/NonMetallicExpansionJoints"),
 );
-
 const MetallicExpansionJoints = lazy(
   () =>
     import("./pages/Products/ExpansionJoints/MetallicExpansionJoints/MetallicExpansionJoints"),
 );
-
 const RubberExpansionJoints = lazy(
   () =>
     import("./pages/Products/ExpansionJoints/RubberExpansionJoints/RubberExpansionJoints"),
@@ -34,18 +33,16 @@ const ResilientCoupling = lazy(
   () =>
     import("./pages/Products/MechanicalPowerTransmission/ResilientCoupling/ResilientCoupling"),
 );
-
 const GearedCoupling = lazy(
   () =>
     import("./pages/Products/MechanicalPowerTransmission/GearedCoupling/GearedCoupling"),
 );
-
 const PinBushTyreCoupling = lazy(
   () =>
     import("./pages/Products/MechanicalPowerTransmission/PinBushTyreCoupling/PinBushTyreCoupling"),
 );
 
-// ─── 404 ─────────────────────────────────────────────────────
+// ─── 404 Page ────────────────────────────────────────────────
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 // ─── Loader ───────────────────────────────────────────────────
@@ -60,52 +57,53 @@ const App = () => {
   return (
     <div className="app">
       <Navbar />
-
       <ScrollToTop />
 
       <main className="app__main">
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            {/* Main */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/quality-policy" element={<QualityPolicy />} />
-            <Route path="/contact" element={<Contact />} />
+        <ErrorBoundary>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              {/* Main */}
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/clients" element={<Clients />} />
+              <Route path="/quality-policy" element={<QualityPolicy />} />
+              <Route path="/contact" element={<Contact />} />
 
-            {/* Expansion Joints */}
-            <Route
-              path="/products/expansion-joints/non-metallic"
-              element={<NonMetallicExpansionJoints />}
-            />
-            <Route
-              path="/products/expansion-joints/metallic"
-              element={<MetallicExpansionJoints />}
-            />
-            <Route
-              path="/products/expansion-joints/rubber"
-              element={<RubberExpansionJoints />}
-            />
+              {/* Expansion Joints */}
+              <Route
+                path="/products/expansion-joints/non-metallic"
+                element={<NonMetallicExpansionJoints />}
+              />
+              <Route
+                path="/products/expansion-joints/metallic"
+                element={<MetallicExpansionJoints />}
+              />
+              <Route
+                path="/products/expansion-joints/rubber"
+                element={<RubberExpansionJoints />}
+              />
 
-            {/* Mechanical Power Transmission */}
-            <Route
-              path="/products/mechanical-power-transmission/resilient-coupling"
-              element={<ResilientCoupling />}
-            />
-            <Route
-              path="/products/mechanical-power-transmission/geared-coupling"
-              element={<GearedCoupling />}
-            />
-            <Route
-              path="/products/mechanical-power-transmission/pin-bush-tyre-coupling"
-              element={<PinBushTyreCoupling />}
-            />
+              {/* Mechanical Power Transmission */}
+              <Route
+                path="/products/mechanical-power-transmission/resilient-coupling"
+                element={<ResilientCoupling />}
+              />
+              <Route
+                path="/products/mechanical-power-transmission/geared-coupling"
+                element={<GearedCoupling />}
+              />
+              <Route
+                path="/products/mechanical-power-transmission/pin-bush-tyre-coupling"
+                element={<PinBushTyreCoupling />}
+              />
 
-            {/* 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+              {/* 404 Fallback */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </main>
 
       <Footer />
