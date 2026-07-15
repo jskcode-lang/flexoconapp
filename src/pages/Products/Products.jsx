@@ -53,14 +53,14 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
     </div>
   );
 };
-
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
 // ── Products Data ─────────────────────────────────────────────
 const expansionJoints = [
   {
     title: "Non Metallic Expansion Joints",
     description:
       "Designed for low-pressure applications, our non-metallic expansion joints offer excellent flexibility, vibration dampening, and resistance to corrosive environments. Ideal for HVAC, power plants, and industrial ducting systems.",
-    image: "/assets/img_1.png",
+    image: BASE + "/assets/img_1.png",
     link: "/products/expansion-joints/non-metallic",
     features: [
       "Low pressure applications",
@@ -73,7 +73,7 @@ const expansionJoints = [
     title: "Metallic Expansion Joints",
     description:
       "Engineered for high-temperature and high-pressure environments, our metallic expansion joints provide superior axial, lateral, and angular movement compensation. Built to withstand extreme industrial conditions.",
-    image: "/assets/img_2.png",
+    image: BASE + "/assets/img_2.png",
     link: "/products/expansion-joints/metallic",
     features: [
       "High temperature rated",
@@ -86,7 +86,7 @@ const expansionJoints = [
     title: "Rubber Expansion Joints",
     description:
       "Our rubber expansion joints excel in absorbing thermal expansion, reducing noise, and isolating vibration in piping systems. Available in multiple elastomers for diverse chemical and temperature requirements.",
-    image: "/assets/img_3.png",
+    image: BASE + "/assets/img_3.png",
     link: "/products/expansion-joints/rubber",
     features: [
       "Thermal expansion absorption",
@@ -102,7 +102,7 @@ const mechanicalCouplings = [
     title: "Resilient Coupling",
     description:
       "Flexible coupling designed to transmit torque while accommodating shaft misalignment. Perfect for pumps, compressors, and general industrial machinery.",
-    image: "/assets/img_4.png",
+    image: BASE + "/assets/img_4.png",
     link: "/products/mechanical-power-transmission/resilient-coupling",
     features: [
       "Torque transmission",
@@ -115,7 +115,7 @@ const mechanicalCouplings = [
     title: "Geared Coupling",
     description:
       "Heavy-duty coupling for high-torque applications with excellent angular and axial misalignment capacity. Widely used in steel plants, paper mills, and heavy equipment.",
-    image: "/assets/img_5.png",
+    image: BASE + "/assets/img_5.png",
     link: "/products/mechanical-power-transmission/geared-coupling",
     features: [
       "High torque capacity",
@@ -128,7 +128,7 @@ const mechanicalCouplings = [
     title: "Pin Bush & Tyre Coupling",
     description:
       "Robust coupling solution featuring pin and bush elements or tyre-type flexible elements for reliable power transmission in various industrial setups.",
-    image: "/assets/img_7.png",
+    image: BASE + "/assets/img_7.png",
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
     features: [
       "Shock absorption",

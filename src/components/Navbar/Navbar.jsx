@@ -10,6 +10,7 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import "./Navbar.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
 // ── State & Reducer ───────────────────────────────────────────
 const initialState = {
   isOpen: false,
@@ -116,7 +117,7 @@ const Navbar = () => {
         <div className="navbar__container">
           {/* ── Logo ── */}
           <Link to="/" className="navbar__logo">
-            <img src="/assets/logo.png" alt="Company Logo" />
+            <img src={BASE + "/assets/logo.png"} alt="Company Logo" />
           </Link>
 
           {/* ── Desktop Menu ── */}
