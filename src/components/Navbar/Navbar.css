@@ -72,9 +72,9 @@
 }
 
 .navbar__logo img {
-    height: 46px;
-    width: auto;
-    object-fit: contain;
+    height: 40px;
+    width: 160px;
+
 }
 
 /* ─── Desktop Menu ──────────────────────────────────────────── */

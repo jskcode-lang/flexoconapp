@@ -12,8 +12,10 @@ import {
 } from "react-icons/fa";
 import "./QualityPolicy.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp/"; // Base path for assets
+
 // ── Certificate image path — change this to your actual file ──
-const CERTIFICATE_IMAGE = "/assets/iso.jpg";
+const CERTIFICATE_IMAGE = BASE + "/assets/iso.jpg";
 
 // ── Hook to detect when element enters viewport ───────────────
 const useInView = (options = {}) => {
