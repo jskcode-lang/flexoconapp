@@ -202,12 +202,9 @@ const Home = () => {
             muted
             loop
             playsInline
-            poster={BASE + "/assets/images/hero-poster.jpg"}
+            poster={BASE + "/assets/hero-poster.jpg"}
           >
-            <source
-              src={BASE + "/assets/videos/hero-video.mp4"}
-              type="video/mp4"
-            />
+            <source src={BASE + "/assets/hero-video.mp4"} type="video/mp4" />
           </video>
         </div>
         <div className="hm__hero-overlay" />
