@@ -347,7 +347,7 @@ const QualityPolicy = () => {
               <FaTimes />
             </button>
             <img
-              src={CERTIFICATE_IMAGE}
+              src={BASE + { CERTIFICATE_IMAGE }}
               alt="ISO 9001:2008 Quality Certificate"
               className="qp__modal-image"
             />
