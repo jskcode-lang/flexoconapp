@@ -1,16 +1,11 @@
 import { useReducer, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import {
-  FaFacebook,
-  FaBars,
-  FaTimes,
-  FaChevronDown,
-  FaDownload,
-} from "react-icons/fa";
+import { FaFacebook, FaChevronDown, FaDownload } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import "./Navbar.css";
 
 const BASE = import.meta.env.BASE_URL || "/flexoconapp";
+
 // ── State & Reducer ───────────────────────────────────────────
 const initialState = {
   isOpen: false,
@@ -69,7 +64,6 @@ const Navbar = () => {
 
   const location = useLocation();
 
-  // ── Scroll ────────────────────────────────────────────────────
   useEffect(() => {
     const handleScroll = () => {
       dispatch({ type: "SET_SCROLLED", payload: window.scrollY > 20 });
@@ -78,7 +72,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ── Resize ────────────────────────────────────────────────────
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1024) {
@@ -86,10 +79,9 @@ const Navbar = () => {
       }
     };
     window.addEventListener("resize", handleResize, { passive: true });
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); // ← FIXED
   }, []);
 
-  // ── Body scroll lock ──────────────────────────────────────────
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -97,22 +89,12 @@ const Navbar = () => {
     };
   }, [isOpen]);
 
-  // ── Close menu on route change ────────────────────────────────
-  // dispatch is stable so this is safe — no setState cascade
   useEffect(() => {
     dispatch({ type: "CLOSE_ALL" });
   }, [location.pathname]);
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className={`navbar__overlay ${
-          isOpen ? "navbar__overlay--visible" : ""
-        }`}
-        onClick={() => dispatch({ type: "CLOSE_ALL" })}
-      />
-
       <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
         <div className="navbar__container">
           {/* ── Logo ── */}
@@ -147,16 +129,10 @@ const Navbar = () => {
 
             {/* ── Products Dropdown ── */}
             <li className="navbar__item navbar__item--dropdown">
-              {/*
-                FIX: Changed <span> to <NavLink>
-                so clicking Products actually navigates
-              */}
               <NavLink
                 to="/products"
                 className={({ isActive }) =>
-                  `navbar__link navbar__link--dropdown ${
-                    isActive ? "active" : ""
-                  }`
+                  `navbar__link navbar__link--dropdown ${isActive ? "active" : ""}`
                 }
               >
                 Products
@@ -170,7 +146,6 @@ const Navbar = () => {
                     Expansion Joints
                     <FaChevronDown className="chevron chevron--right" />
                   </span>
-
                   <ul className="dropdown dropdown--sub">
                     <li className="dropdown__item">
                       <NavLink
@@ -211,7 +186,6 @@ const Navbar = () => {
                     Mechanical Power Transmission
                     <FaChevronDown className="chevron chevron--right" />
                   </span>
-
                   <ul className="dropdown dropdown--sub">
                     <li className="dropdown__item">
                       <NavLink
@@ -314,20 +288,21 @@ const Navbar = () => {
               </a>
             </div>
 
+            {/* ── CUSTOM HAMBURGER (No border, 3 morphing lines) ── */}
             <button
-              className={`navbar__hamburger ${
-                isOpen ? "navbar__hamburger--open" : ""
-              }`}
+              className={`navbar__hamburger ${isOpen ? "navbar__hamburger--open" : ""}`}
               onClick={() => dispatch({ type: "TOGGLE_MENU" })}
               aria-label="Toggle Menu"
               aria-expanded={isOpen}
             >
-              {isOpen ? <FaTimes /> : <FaBars />}
+              <span className="hamburger__line line-1"></span>
+              <span className="hamburger__line line-2"></span>
+              <span className="hamburger__line line-3"></span>
             </button>
           </div>
         </div>
 
-        {/* ── Mobile Menu ── */}
+        {/* ── Mobile Menu (Full-Screen Takeover) ── */}
         <div className={`mobile__menu ${isOpen ? "mobile__menu--open" : ""}`}>
           <ul className="mobile__list">
             <li>
@@ -355,7 +330,7 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {/* ── Mobile Products ── */}
+            {/* Mobile Products */}
             <li>
               <button
                 className={`mobile__link mobile__link--btn ${
@@ -365,9 +340,7 @@ const Navbar = () => {
               >
                 Products
                 <FaChevronDown
-                  className={`chevron ${
-                    mobileProductsOpen ? "chevron--open" : ""
-                  }`}
+                  className={`chevron ${mobileProductsOpen ? "chevron--open" : ""}`}
                 />
               </button>
 
@@ -377,7 +350,6 @@ const Navbar = () => {
                 }`}
               >
                 <ul className="mobile__sub">
-                  {/* View All Products Link */}
                   <li>
                     <NavLink
                       to="/products"
@@ -407,7 +379,6 @@ const Navbar = () => {
                         }`}
                       />
                     </button>
-
                     <div
                       className={`mobile__sub-wrapper ${
                         mobileExpansionOpen ? "mobile__sub-wrapper--open" : ""
@@ -472,7 +443,6 @@ const Navbar = () => {
                         }`}
                       />
                     </button>
-
                     <div
                       className={`mobile__sub-wrapper ${
                         mobileMechanicalOpen ? "mobile__sub-wrapper--open" : ""
@@ -561,7 +531,7 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {/* ── Mobile Bottom ── */}
+            {/* Mobile Bottom */}
             <li className="mobile__bottom">
               <a
                 href="/assets/brochure/brochure.pdf"

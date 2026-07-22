@@ -15,6 +15,7 @@ import {
   FaBolt,
   FaWrench,
   FaBoxOpen,
+  FaCheckCircle,
 } from "react-icons/fa";
 import "./Home.css";
 
@@ -38,7 +39,7 @@ const useInView = (opts = {}) => {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  });
+  }, []);
   return [ref, visible];
 };
 
@@ -50,6 +51,7 @@ const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
     down: "hm__rv--down",
     left: "hm__rv--left",
     right: "hm__rv--right",
+    zoom: "hm__rv--zoom",
     none: "hm__rv--none",
   };
   return (
@@ -88,10 +90,11 @@ const useCounter = (target, duration = 2000) => {
 };
 
 // ── Counter Component ─────────────────────────────────────────
-const Counter = ({ number, suffix = "", label }) => {
+const Counter = ({ number, suffix = "", label, icon }) => {
   const [ref, count] = useCounter(number);
   return (
     <div className="hm__counter" ref={ref}>
+      {icon && <div className="hm__counter-icon">{icon}</div>}
       <span className="hm__counter-num">
         {count}
         {suffix}
@@ -109,6 +112,7 @@ const products = [
     image: BASE + "/assets/img_1.png",
     link: "/products/expansion-joints/non-metallic",
     icon: <FaShieldAlt />,
+    tag: "High Temp",
   },
   {
     title: "Metallic Expansion Joints",
@@ -116,6 +120,7 @@ const products = [
     image: BASE + "/assets/metallic-expansion-joint.jpg",
     link: "/products/expansion-joints/metallic",
     icon: <FaBolt />,
+    tag: "High Pressure",
   },
   {
     title: "Rubber Expansion Joints",
@@ -123,6 +128,7 @@ const products = [
     image: BASE + "/assets/rubber-expansion-joint.jpg",
     link: "/products/expansion-joints/rubber",
     icon: <FaBoxOpen />,
+    tag: "Flexible",
   },
   {
     title: "Resilient Coupling",
@@ -130,6 +136,7 @@ const products = [
     image: BASE + "/assets/resilient-coupling.jpg",
     link: "/products/mechanical-power-transmission/resilient-coupling",
     icon: <FaCog />,
+    tag: "Shock Absorb",
   },
   {
     title: "Geared Coupling",
@@ -137,6 +144,7 @@ const products = [
     image: BASE + "/assets/geared-coupling.jpg",
     link: "/products/mechanical-power-transmission/geared-coupling",
     icon: <FaWrench />,
+    tag: "Precision",
   },
   {
     title: "Pin Bush & Tyre Coupling",
@@ -144,6 +152,7 @@ const products = [
     image: BASE + "/assets/pin-bush-tyre-coupling.jpg",
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
     icon: <FaIndustry />,
+    tag: "Heavy Duty",
   },
 ];
 
@@ -165,16 +174,19 @@ const testimonials = [
     text: "Flexocon's expansion joints have consistently delivered exceptional quality. Their engineering team understood our exact requirements and delivered on time.",
     author: "Senior Engineer",
     company: "Leading Steel Plant",
+    rating: 5,
   },
   {
     text: "We've been using Flexocon couplings for over 10 years. The build quality and after-sales support are outstanding.",
     author: "Maintenance Head",
     company: "Cement Manufacturing Unit",
+    rating: 5,
   },
   {
     text: "Their fabric expansion joints withstand extreme temperatures in our kilns without any issues. Truly reliable products.",
     author: "Plant Manager",
     company: "Power Generation Company",
+    rating: 5,
   },
 ];
 
@@ -210,8 +222,16 @@ const Home = () => {
         <div className="hm__hero-overlay" />
         <div className="hm__hero-grain" />
 
+        {/* Floating orbs */}
+        <div className="hm__hero-orbs">
+          <span className="hm__orb hm__orb--1"></span>
+          <span className="hm__orb hm__orb--2"></span>
+          <span className="hm__orb hm__orb--3"></span>
+        </div>
+
         <div className="hm__hero-content">
           <div className="hm__hero-badge hm__ha hm__ha--1">
+            <span className="hm__hero-badge-dot"></span>
             <FaIndustry />
             <span>Since 2001 — Engineering Excellence</span>
           </div>
@@ -229,10 +249,10 @@ const Home = () => {
 
           <div className="hm__hero-btns hm__ha hm__ha--4">
             <Link to="/products" className="hm__btn hm__btn--fill">
-              Explore Products <FaArrowRight />
+              <span>Explore Products</span> <FaArrowRight />
             </Link>
             <Link to="/contact" className="hm__btn hm__btn--ghost">
-              <FaPhoneAlt /> Contact Us
+              <FaPhoneAlt /> <span>Contact Us</span>
             </Link>
           </div>
 
@@ -256,7 +276,21 @@ const Home = () => {
 
         <div className="hm__hero-scroll">
           <div className="hm__hero-scroll-line" />
-          <span>Scroll</span>
+          <span>SCROLL</span>
+        </div>
+
+        {/* Wavy bottom divider */}
+        <div className="hm__wave-bottom">
+          <svg
+            viewBox="0 0 1440 120"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"
+              fill="#ffffff"
+            />
+          </svg>
         </div>
       </section>
 
@@ -267,8 +301,12 @@ const Home = () => {
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
-              <span className="hm__tag">What We Manufacture</span>
-              <h2 className="hm__h2">Our Products</h2>
+              <span className="hm__tag">
+                <span className="hm__tag-dot"></span> What We Manufacture
+              </span>
+              <h2 className="hm__h2">
+                Our <span className="hm__h2-accent">Products</span>
+              </h2>
               <p className="hm__sub">
                 Precision-engineered expansion joints and couplings for
                 demanding industrial applications
@@ -288,6 +326,7 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="hm__prod-badge">{p.icon}</div>
+                    <div className="hm__prod-tag">{p.tag}</div>
                   </div>
                   <div className="hm__prod-body">
                     <h3 className="hm__prod-title">{p.title}</h3>
@@ -296,6 +335,7 @@ const Home = () => {
                       Learn More <FaChevronRight />
                     </span>
                   </div>
+                  <div className="hm__prod-glow"></div>
                 </Link>
               </Reveal>
             ))}
@@ -304,7 +344,7 @@ const Home = () => {
           <Reveal dir="up" delay={200}>
             <div className="hm__products-cta">
               <Link to="/products" className="hm__btn hm__btn--outline">
-                View All Products <FaArrowRight />
+                <span>View All Products</span> <FaArrowRight />
               </Link>
             </div>
           </Reveal>
@@ -315,15 +355,18 @@ const Home = () => {
           ABOUT
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__about">
+        <div className="hm__about-bg-shape"></div>
         <div className="hm__wrap">
           <div className="hm__about-grid">
             <Reveal dir="left" className="hm__about-left">
               <div className="hm__about-img-box">
-                <img
-                  src="/assets/images/about-factory.jpg"
-                  alt="Flexocon Factory"
-                  loading="lazy"
-                />
+                <div className="hm__about-img-frame">
+                  <img
+                    src={BASE + "/assets/images/about-factory.jpg"}
+                    alt="Flexocon Factory"
+                    loading="lazy"
+                  />
+                </div>
                 <div className="hm__about-exp-badge">
                   <span className="hm__about-exp-num">25+</span>
                   <span className="hm__about-exp-label">
@@ -332,12 +375,18 @@ const Home = () => {
                     Excellence
                   </span>
                 </div>
+                <div className="hm__about-img-dots"></div>
               </div>
             </Reveal>
 
             <Reveal dir="right" delay={150} className="hm__about-right">
-              <span className="hm__tag">About Us</span>
-              <h2 className="hm__h2">Flexocon Engineers Pvt. Ltd.</h2>
+              <span className="hm__tag">
+                <span className="hm__tag-dot"></span> About Us
+              </span>
+              <h2 className="hm__h2">
+                Flexocon Engineers{" "}
+                <span className="hm__h2-accent">Pvt. Ltd.</span>
+              </h2>
               <p className="hm__p">
                 Established in <strong>2001</strong>, Flexocon Engineers Pvt.
                 Ltd. is backed by qualified Mechanical Engineers having more
@@ -370,7 +419,7 @@ const Home = () => {
               </div>
 
               <Link to="/about" className="hm__btn hm__btn--fill">
-                Know More <FaArrowRight />
+                <span>Know More</span> <FaArrowRight />
               </Link>
             </Reveal>
           </div>
@@ -381,12 +430,36 @@ const Home = () => {
           COUNTERS
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__counters">
+        <div className="hm__counters-shapes">
+          <span className="hm__cshape hm__cshape--1"></span>
+          <span className="hm__cshape hm__cshape--2"></span>
+        </div>
         <div className="hm__wrap">
           <div className="hm__counters-grid">
-            <Counter number={25} suffix="+" label="Years Experience" />
-            <Counter number={500} suffix="+" label="Installations" />
-            <Counter number={200} suffix="+" label="Happy Clients" />
-            <Counter number={100} suffix="%" label="Quality Assured" />
+            <Counter
+              number={25}
+              suffix="+"
+              label="Years Experience"
+              icon={<FaAward />}
+            />
+            <Counter
+              number={500}
+              suffix="+"
+              label="Installations"
+              icon={<FaIndustry />}
+            />
+            <Counter
+              number={200}
+              suffix="+"
+              label="Happy Clients"
+              icon={<FaUsers />}
+            />
+            <Counter
+              number={100}
+              suffix="%"
+              label="Quality Assured"
+              icon={<FaCheckCircle />}
+            />
           </div>
         </div>
       </section>
@@ -398,8 +471,12 @@ const Home = () => {
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
-              <span className="hm__tag">Trusted By</span>
-              <h2 className="hm__h2">Our Valued Clients</h2>
+              <span className="hm__tag">
+                <span className="hm__tag-dot"></span> Trusted By
+              </span>
+              <h2 className="hm__h2">
+                Our Valued <span className="hm__h2-accent">Clients</span>
+              </h2>
             </div>
           </Reveal>
         </div>
@@ -423,11 +500,16 @@ const Home = () => {
           WHY CHOOSE US
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__why">
+        <div className="hm__why-bg-shape"></div>
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
-              <span className="hm__tag">Our Strengths</span>
-              <h2 className="hm__h2">Why Choose Flexocon?</h2>
+              <span className="hm__tag">
+                <span className="hm__tag-dot"></span> Our Strengths
+              </span>
+              <h2 className="hm__h2">
+                Why Choose <span className="hm__h2-accent">Flexocon?</span>
+              </h2>
             </div>
           </Reveal>
 
@@ -466,9 +548,12 @@ const Home = () => {
             ].map((w, i) => (
               <Reveal key={i} dir="up" delay={i * 80}>
                 <div className="hm__why-card">
-                  <div className="hm__why-icon">{w.icon}</div>
+                  <div className="hm__why-icon-wrap">
+                    <div className="hm__why-icon">{w.icon}</div>
+                  </div>
                   <h3 className="hm__why-title">{w.title}</h3>
                   <p className="hm__why-text">{w.text}</p>
+                  <div className="hm__why-num">0{i + 1}</div>
                 </div>
               </Reveal>
             ))}
@@ -483,12 +568,19 @@ const Home = () => {
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
-              <span className="hm__tag">Testimonials</span>
-              <h2 className="hm__h2">What Our Clients Say</h2>
+              <span className="hm__tag">
+                <span className="hm__tag-dot"></span> Testimonials
+              </span>
+              <h2 className="hm__h2">
+                What Our <span className="hm__h2-accent">Clients Say</span>
+              </h2>
             </div>
           </Reveal>
 
           <div className="hm__testi-slider">
+            <div className="hm__testi-bg-quote">
+              <FaQuoteLeft />
+            </div>
             {testimonials.map((t, i) => (
               <div
                 key={i}
@@ -496,7 +588,11 @@ const Home = () => {
                   currentTestimonial === i ? "hm__testi-card--active" : ""
                 }`}
               >
-                <FaQuoteLeft className="hm__testi-quote" />
+                <div className="hm__testi-stars">
+                  {Array.from({ length: t.rating }).map((_, s) => (
+                    <FaStar key={s} />
+                  ))}
+                </div>
                 <p className="hm__testi-text">{t.text}</p>
                 <div className="hm__testi-author">
                   <strong>{t.author}</strong>
@@ -524,9 +620,16 @@ const Home = () => {
           CTA
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__cta">
+        <div className="hm__cta-shapes">
+          <span className="hm__cta-shape hm__cta-shape--1"></span>
+          <span className="hm__cta-shape hm__cta-shape--2"></span>
+        </div>
         <div className="hm__wrap">
-          <Reveal dir="up">
+          <Reveal dir="zoom">
             <div className="hm__cta-box">
+              <span className="hm__cta-tag">
+                <span className="hm__tag-dot"></span> Get In Touch
+              </span>
               <h2 className="hm__cta-h2">
                 Ready to Discuss Your Requirements?
               </h2>
@@ -536,11 +639,11 @@ const Home = () => {
               </p>
               <div className="hm__cta-btns">
                 <Link to="/contact" className="hm__btn hm__btn--white">
-                  <FaPhoneAlt /> Contact Us{" "}
+                  <FaPhoneAlt /> <span>Contact Us</span>
                   <FaArrowRight className="hm__btn-arr" />
                 </Link>
                 <Link to="/products" className="hm__btn hm__btn--ghost-white">
-                  View Products
+                  <span>View Products</span>
                 </Link>
               </div>
             </div>
