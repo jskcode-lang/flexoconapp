@@ -292,7 +292,7 @@ const Navbar = () => {
         {/* ── Logo ── */}
         <Link to="/" className="navbar__logo" aria-label="Go to homepage">
           <img
-            src={BASE + "/assets/logo.png"}
+            src={BASE + "assets/logo.png"}
             alt="Company Logo"
             width="160" // ← Prevents layout shift
             height="48"
