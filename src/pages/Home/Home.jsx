@@ -117,7 +117,7 @@ const products = [
   {
     title: "Metallic Expansion Joints",
     desc: "EJMA standard SS 304/316/321 bellows for high pressure piping systems.",
-    image: BASE + "/assets/metallic-expansion-joint.jpg",
+    image: BASE + "/assets/img_2.png",
     link: "/products/expansion-joints/metallic",
     icon: <FaBolt />,
     tag: "High Pressure",
@@ -125,7 +125,7 @@ const products = [
   {
     title: "Rubber Expansion Joints",
     desc: "FSA standard flexible joints from 25mm to 2200mm NB — up to 30 kg/cm².",
-    image: BASE + "/assets/rubber-expansion-joint.jpg",
+    image: BASE + "/assets/img_3.png",
     link: "/products/expansion-joints/rubber",
     icon: <FaBoxOpen />,
     tag: "Flexible",
@@ -133,7 +133,7 @@ const products = [
   {
     title: "Resilient Coupling",
     desc: "Grid spring coupling with 80% shock damping — all metal construction.",
-    image: BASE + "/assets/resilient-coupling.jpg",
+    image: BASE + "/assets/img_4.png",
     link: "/products/mechanical-power-transmission/resilient-coupling",
     icon: <FaCog />,
     tag: "Shock Absorb",
@@ -141,7 +141,7 @@ const products = [
   {
     title: "Geared Coupling",
     desc: "Crown gear teeth coupling with ±1.5° angular misalignment capacity.",
-    image: BASE + "/assets/geared-coupling.jpg",
+    image: BASE + "/assets/img_5.png",
     link: "/products/mechanical-power-transmission/geared-coupling",
     icon: <FaWrench />,
     tag: "Precision",
@@ -149,7 +149,7 @@ const products = [
   {
     title: "Pin Bush & Tyre Coupling",
     desc: "Robust coupling for reliable power transmission in industrial setups.",
-    image: BASE + "/assets/pin-bush-tyre-coupling.jpg",
+    image: BASE + "/assets/img_7.png",
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
     icon: <FaIndustry />,
     tag: "Heavy Duty",
@@ -276,7 +276,6 @@ const Home = () => {
 
         <div className="hm__hero-scroll">
           <div className="hm__hero-scroll-line" />
-          <span>SCROLL</span>
         </div>
 
         {/* Wavy bottom divider */}

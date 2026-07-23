@@ -297,10 +297,7 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background:
-        radial-gradient(circle at 20% 30%, rgba(26, 115, 232, 0.55), transparent 60%),
-        radial-gradient(circle at 80% 70%, rgba(13, 71, 161, 0.65), transparent 60%),
-        linear-gradient(135deg, rgba(10, 61, 143, 0.88), rgba(26, 115, 232, 0.72));
+
 }
 
 .hm__hero-grain {
@@ -1814,5 +1811,513 @@
 
     .hm__marquee-track {
         gap: 2.5rem;
+    }
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   NEW STUNNING ANIMATIONS — Append to existing Home.css
+═══════════════════════════════════════════════════════════════ */
+
+/* ───── Scroll Progress Bar ───── */
+.hm__scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--hm-blue), var(--hm-gold));
+    z-index: 99999;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px var(--hm-blue-glow);
+}
+
+/* ───── New Reveal Directions ───── */
+.hm__rv--rotate {
+    transform: rotate(-8deg) translateY(30px);
+    opacity: 0;
+}
+
+.hm__rv--rotate.hm__rv--vis {
+    transform: rotate(0) translateY(0);
+    opacity: 1;
+}
+
+.hm__rv--blur {
+    filter: blur(20px);
+    opacity: 0;
+    transform: scale(1.05);
+}
+
+.hm__rv--blur.hm__rv--vis {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ───── Split Text Animation ───── */
+.hm__split {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.hm__split-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+    transform-origin: 50% 100%;
+    transition: opacity 0.6s var(--hm-ease), transform 0.7s var(--hm-ease);
+}
+
+.hm__split-char--vis {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+}
+
+/* ───── Word Reveal Animation ───── */
+.hm__wordrev {
+    display: inline-block;
+}
+
+.hm__wordrev-word {
+    display: inline-block;
+    overflow: hidden;
+    margin-right: 0.25em;
+    vertical-align: bottom;
+    line-height: 1.1;
+    padding-bottom: 0.1em;
+}
+
+.hm__wordrev-inner {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform 0.9s var(--hm-ease);
+}
+
+.hm__wordrev-inner--vis {
+    transform: translateY(0);
+}
+
+/* ───── Magnetic Button Wrapper ───── */
+.hm__btn {
+    transition: transform 0.3s var(--hm-ease-smooth), box-shadow 0.4s var(--hm-ease), background 0.4s var(--hm-ease);
+}
+
+.hm__mag-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+}
+
+/* ───── Floating Particles in Hero ───── */
+.hm__particles {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hm__particle {
+    position: absolute;
+    bottom: -10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: hmParticleFloat linear infinite;
+}
+
+.hm__particle:nth-child(3n) {
+    background: rgba(245, 166, 35, 0.6);
+    box-shadow: 0 0 10px rgba(245, 166, 35, 0.5);
+    width: 3px;
+    height: 3px;
+}
+
+.hm__particle:nth-child(5n) {
+    width: 2px;
+    height: 2px;
+    background: rgba(144, 202, 249, 0.7);
+}
+
+@keyframes hmParticleFloat {
+    0% {
+        transform: translateY(0) translateX(0) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100vh) translateX(60px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* ───── Product Card Shine Sweep ───── */
+.hm__prod-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s var(--hm-ease) !important;
+}
+
+.hm__prod-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent 40%,
+            rgba(255, 255, 255, 0.15) 50%,
+            transparent 60%);
+    transition: left 0.8s var(--hm-ease-smooth);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hm__prod-card:hover .hm__prod-shine {
+    left: 150%;
+}
+
+/* Enhance card body (3D lift) */
+.hm__prod-card .hm__prod-badge,
+.hm__prod-card .hm__prod-tag,
+.hm__prod-card .hm__prod-body {
+    transform: translateZ(20px);
+}
+
+/* ───── About Image — Shine Sweep on Scroll ───── */
+.hm__about-img-frame {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.6s var(--hm-ease) !important;
+}
+
+.hm__about-img-shine {
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(120deg,
+            transparent 40%,
+            rgba(255, 255, 255, 0.25) 50%,
+            transparent 60%);
+    transform: rotate(20deg);
+    pointer-events: none;
+    animation: hmShineSweep 6s ease-in-out infinite;
+}
+
+@keyframes hmShineSweep {
+
+    0%,
+    100% {
+        left: -100%;
+    }
+
+    50% {
+        left: 150%;
+    }
+}
+
+/* Rotating ring around about image */
+.hm__about-img-ring {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 100px;
+    height: 100px;
+    border: 2px dashed rgba(26, 115, 232, 0.3);
+    border-radius: 50%;
+    z-index: 0;
+    animation: hmRotateSlow 25s linear infinite;
+}
+
+@keyframes hmRotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ───── Why Card — Shine + Number Bounce ───── */
+.hm__why-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.hm__why-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent 40%,
+            rgba(245, 166, 35, 0.08) 50%,
+            transparent 60%);
+    transition: left 0.9s var(--hm-ease-smooth);
+    pointer-events: none;
+}
+
+.hm__why-card:hover .hm__why-shine {
+    left: 150%;
+}
+
+.hm__why-card:hover .hm__why-num {
+    transform: scale(1.15) translate(-5px, -5px);
+    color: rgba(245, 166, 35, 0.15);
+}
+
+.hm__why-num {
+    transition: all 0.5s var(--hm-ease-smooth) !important;
+}
+
+/* ───── Counter Icon Enhanced ───── */
+.hm__counter {
+    transition: transform 0.5s var(--hm-ease-smooth) !important;
+}
+
+.hm__counter:hover .hm__counter-num {
+    animation: hmPulseText 0.6s ease-in-out;
+}
+
+@keyframes hmPulseText {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* ───── Testimonial Stars Pop ───── */
+.hm__testi-stars svg {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+    animation: hmStarPop 0.6s var(--hm-ease-smooth) forwards;
+}
+
+.hm__testi-card--active .hm__testi-stars svg {
+    animation-play-state: running;
+}
+
+@keyframes hmStarPop {
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* ───── Enhanced Hero Video ───── */
+.hm__hero-video-wrap {
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+/* ───── Section Head Underline Animation ───── */
+.hm__sec-head {
+    position: relative;
+}
+
+.hm__sec-head::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--hm-blue), var(--hm-gold));
+    border-radius: 2px;
+    transition: width 1.2s var(--hm-ease) 0.4s;
+}
+
+.hm__rv--vis .hm__sec-head::after,
+.hm__rv--vis.hm__sec-head::after {
+    width: 60px;
+}
+
+/* Apply when parent Reveal is visible */
+.hm__rv--vis .hm__sec-head::after {
+    width: 60px;
+}
+
+/* ───── Hover Enhancement for About Points ───── */
+.hm__about-point {
+    cursor: pointer;
+}
+
+.hm__about-point-icon {
+    overflow: hidden;
+    position: relative;
+}
+
+.hm__about-point-icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 70%);
+    transform: scale(0);
+    transition: transform 0.5s var(--hm-ease);
+}
+
+.hm__about-point:hover .hm__about-point-icon::after {
+    transform: scale(2);
+}
+
+/* ───── Marquee — Add fade & scale ───── */
+.hm__marquee-item {
+    transition: opacity 0.4s var(--hm-ease), filter 0.4s var(--hm-ease), transform 0.4s var(--hm-ease-smooth) !important;
+}
+
+.hm__marquee-item:hover {
+    transform: scale(1.15) translateY(-3px) !important;
+}
+
+/* ───── CTA Box — Glowing Border on Reveal ───── */
+.hm__cta-box {
+    position: relative;
+    padding: 3rem 2rem;
+    border-radius: var(--hm-radius-lg);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.5s var(--hm-ease);
+}
+
+.hm__cta-box::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: var(--hm-radius-lg);
+    padding: 2px;
+    background: linear-gradient(135deg, var(--hm-gold), transparent, #64b5f6, transparent, var(--hm-gold));
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: hmBorderShift 6s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes hmBorderShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 300% 50%;
+    }
+}
+
+/* ───── Testimonial Slider Wave Border ───── */
+.hm__testi-slider {
+    position: relative;
+    overflow: hidden;
+}
+
+.hm__testi-slider::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--hm-blue), var(--hm-gold), transparent);
+    animation: hmSlide 4s ease-in-out infinite;
+}
+
+@keyframes hmSlide {
+
+    0%,
+    100% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(100%);
+    }
+}
+
+/* ───── Prod Card 3D Layers ───── */
+.hm__prod-img {
+    transform: translateZ(0);
+}
+
+/* ───── Enhanced Scroll Indicator ───── */
+.hm__hero-scroll::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: hmScrollRing 2s ease-in-out infinite;
+}
+
+@keyframes hmScrollRing {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1.2);
+    }
+}
+
+/* ───── Global Smooth Scroll ───── */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ───── Reduce motion for accessibility ───── */
+@media (prefers-reduced-motion: reduce) {
+
+    .hm *,
+    .hm *::before,
+    .hm *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ───── Enhanced Mobile ───── */
+@media (max-width: 768px) {
+    .hm__particles {
+        display: none;
+    }
+
+    .hm__about-img-ring {
+        display: none;
+    }
+
+    .hm__prod-card {
+        transform: none !important;
     }
 }
