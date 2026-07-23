@@ -19,7 +19,17 @@ import {
 } from "react-icons/fa";
 import "./Home.css";
 
-const BASE = import.meta.env.BASE_URL || "/flexoconapp";
+// ── Safe URL helper ──────────────────────────────────────────
+// Ensures paths are properly joined regardless of BASE_URL value
+const BASE = import.meta.env.BASE_URL;
+
+const asset = (path) => {
+  // Remove leading slash from path if present
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  // Ensure BASE ends with slash
+  const base = BASE.endsWith("/") ? BASE : BASE + "/";
+  return base + clean;
+};
 
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (opts = {}) => {
@@ -109,7 +119,7 @@ const products = [
   {
     title: "Non Metallic Expansion Joints",
     desc: "Fabric joints for high temp ducts, ESP, and industrial fans — up to 1400°C.",
-    image: BASE + "/assets/img_1.png",
+    image: asset("assets/img_1.png"),
     link: "/products/expansion-joints/non-metallic",
     icon: <FaShieldAlt />,
     tag: "High Temp",
@@ -117,7 +127,7 @@ const products = [
   {
     title: "Metallic Expansion Joints",
     desc: "EJMA standard SS 304/316/321 bellows for high pressure piping systems.",
-    image: BASE + "/assets/img_2.png",
+    image: asset("assets/img_2.png"),
     link: "/products/expansion-joints/metallic",
     icon: <FaBolt />,
     tag: "High Pressure",
@@ -125,7 +135,7 @@ const products = [
   {
     title: "Rubber Expansion Joints",
     desc: "FSA standard flexible joints from 25mm to 2200mm NB — up to 30 kg/cm².",
-    image: BASE + "/assets/img_3.png",
+    image: asset("assets/img_3.png"),
     link: "/products/expansion-joints/rubber",
     icon: <FaBoxOpen />,
     tag: "Flexible",
@@ -133,7 +143,7 @@ const products = [
   {
     title: "Resilient Coupling",
     desc: "Grid spring coupling with 80% shock damping — all metal construction.",
-    image: BASE + "/assets/img_4.png",
+    image: asset("assets/img_4.png"),
     link: "/products/mechanical-power-transmission/resilient-coupling",
     icon: <FaCog />,
     tag: "Shock Absorb",
@@ -141,7 +151,7 @@ const products = [
   {
     title: "Geared Coupling",
     desc: "Crown gear teeth coupling with ±1.5° angular misalignment capacity.",
-    image: BASE + "/assets/img_5.png",
+    image: asset("assets/img_5.png"),
     link: "/products/mechanical-power-transmission/geared-coupling",
     icon: <FaWrench />,
     tag: "Precision",
@@ -149,7 +159,7 @@ const products = [
   {
     title: "Pin Bush & Tyre Coupling",
     desc: "Robust coupling for reliable power transmission in industrial setups.",
-    image: BASE + "/assets/img_7.png",
+    image: asset("assets/img_7.png"),
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
     icon: <FaIndustry />,
     tag: "Heavy Duty",
@@ -157,16 +167,16 @@ const products = [
 ];
 
 const clientLogos = [
-  BASE + "/assets/images/clients/client-1.png",
-  BASE + "/assets/images/clients/client-2.png",
-  BASE + "/assets/images/clients/client-3.png",
-  BASE + "/assets/images/clients/client-4.png",
-  BASE + "/assets/images/clients/client-5.png",
-  BASE + "/assets/images/clients/client-6.png",
-  BASE + "/assets/images/clients/client-7.png",
-  BASE + "/assets/images/clients/client-8.png",
-  BASE + "/assets/images/clients/client-9.png",
-  BASE + "/assets/images/clients/client-10.png",
+  asset("assets/images/clients/client-1.png"),
+  asset("assets/images/clients/client-2.png"),
+  asset("assets/images/clients/client-3.png"),
+  asset("assets/images/clients/client-4.png"),
+  asset("assets/images/clients/client-5.png"),
+  asset("assets/images/clients/client-6.png"),
+  asset("assets/images/clients/client-7.png"),
+  asset("assets/images/clients/client-8.png"),
+  asset("assets/images/clients/client-9.png"),
+  asset("assets/images/clients/client-10.png"),
 ];
 
 const testimonials = [
@@ -214,9 +224,9 @@ const Home = () => {
             muted
             loop
             playsInline
-            poster={BASE + "/assets/hero-poster.jpg"}
+            poster={asset("assets/hero-poster.jpg")}
           >
-            <source src={BASE + "/assets/hero-video.mp4"} type="video/mp4" />
+            <source src={asset("assets/hero-video.mp4")} type="video/mp4" />
           </video>
         </div>
         <div className="hm__hero-overlay" />
@@ -361,7 +371,7 @@ const Home = () => {
               <div className="hm__about-img-box">
                 <div className="hm__about-img-frame">
                   <img
-                    src={BASE + "/assets/images/about-factory.jpg"}
+                    src={asset("assets/images/about-factory.jpg")}
                     alt="Flexocon Factory"
                     loading="lazy"
                   />
