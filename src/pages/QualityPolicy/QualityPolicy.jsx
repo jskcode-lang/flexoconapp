@@ -12,10 +12,17 @@ import {
 } from "react-icons/fa";
 import "./QualityPolicy.css";
 
-const BASE = import.meta.env.BASE_URL || "/flexoconapp/"; // Base path for assets
+// ── Safe URL helper ──────────────────────────────────────────
+const BASE = import.meta.env.BASE_URL;
 
-// ── Certificate image path — change this to your actual file ──
-const CERTIFICATE_IMAGE = BASE + "/assets/iso.jpg";
+const asset = (path) => {
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  const base = BASE.endsWith("/") ? BASE : BASE + "/";
+  return base + clean;
+};
+
+// ── Certificate image path ────────────────────────────────────
+const CERTIFICATE_IMAGE = asset("assets/iso.jpg");
 
 // ── Hook to detect when element enters viewport ───────────────
 const useInView = (options = {}) => {
@@ -38,7 +45,7 @@ const useInView = (options = {}) => {
 
     observer.observe(element);
     return () => observer.disconnect();
-  });
+  }, []);
 
   return [ref, isVisible];
 };
@@ -325,7 +332,7 @@ const QualityPolicy = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          Certificate Modal
+          Certificate Modal — FIXED
           ══════════════════════════════════════════════════════ */}
       {showCertificate && (
         <div
@@ -347,7 +354,7 @@ const QualityPolicy = () => {
               <FaTimes />
             </button>
             <img
-              src={BASE + { CERTIFICATE_IMAGE }}
+              src={CERTIFICATE_IMAGE}
               alt="ISO 9001:2008 Quality Certificate"
               className="qp__modal-image"
             />
