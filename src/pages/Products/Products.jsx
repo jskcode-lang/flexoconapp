@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import { FaArrowRight, FaCogs, FaIndustry, FaShieldAlt } from "react-icons/fa";
 import "./Product.css";
 
+// ── Safe URL helper ──────────────────────────────────────────
+const BASE = import.meta.env.BASE_URL;
+
+const asset = (path) => {
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  const base = BASE.endsWith("/") ? BASE : BASE + "/";
+  return base + clean;
+};
+
 // ── Intersection Observer Hook ────────────────────────────────
 const useInView = (options = {}) => {
   const ref = useRef(null);
@@ -24,7 +33,7 @@ const useInView = (options = {}) => {
 
     observer.observe(element);
     return () => observer.disconnect();
-  });
+  }, []);
 
   return [ref, isVisible];
 };
@@ -53,7 +62,7 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
     </div>
   );
 };
-const BASE = import.meta.env.BASE_URL || "/flexoconapp";
+
 // ── Products Data ─────────────────────────────────────────────
 const expansionJoints = [
   {
@@ -347,7 +356,7 @@ const Products = () => {
                   <FaArrowRight />
                 </Link>
                 <a
-                  href="/assets/brochure/brochure.pdf"
+                  href={asset("assets/brochure/brochure.pdf")}
                   download
                   className="prod__cta-btn prod__cta-btn--secondary"
                 >
