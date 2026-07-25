@@ -25,8 +25,14 @@ import {
 } from "react-icons/fa";
 import "./AboutUs.css";
 
-// ── Base URL ──────────────────────────────────────────────────
+// ── Safe URL helper ──────────────────────────────────────────
 const BASE = import.meta.env.BASE_URL;
+
+const asset = (path) => {
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  const base = BASE.endsWith("/") ? BASE : BASE + "/";
+  return base + clean;
+};
 
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (options = {}) => {
@@ -302,7 +308,7 @@ const AboutUs = () => {
             <Reveal dir="left" className="abu__story-left">
               <div className="abu__story-img-box">
                 <img
-                  src={BASE + "assets/images/about-factory.jpg"}
+                  src={asset("assets/images/about-factory.jpg")}
                   alt="Flexocon Factory"
                   loading="lazy"
                 />
@@ -445,7 +451,9 @@ const AboutUs = () => {
                 delay={i * 100}
               >
                 <div
-                  className={`abu__tl-item ${i % 2 === 0 ? "abu__tl-item--left" : "abu__tl-item--right"}`}
+                  className={`abu__tl-item ${
+                    i % 2 === 0 ? "abu__tl-item--left" : "abu__tl-item--right"
+                  }`}
                 >
                   <div className="abu__tl-dot">
                     <span>{m.year}</span>
