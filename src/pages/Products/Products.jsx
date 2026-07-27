@@ -372,3 +372,5 @@ const Products = () => {
 };
 
 export default Products;
+
+// this is the product page
