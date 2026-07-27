@@ -404,7 +404,7 @@ const Home = () => {
               <div className="hm__about-img-box">
                 <div className="hm__about-img-frame">
                   <img
-                    src={asset("assets/images/about-factory.jpg")}
+                    src={asset("assets/flexocon_factory.png")}
                     alt="Flexocon Factory"
                     loading="lazy"
                   />
