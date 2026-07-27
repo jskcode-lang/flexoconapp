@@ -167,7 +167,7 @@ const products = [
 ];
 
 const clientLogos = [
-  asset("assets/"),
+  asset("assets/oswal.png"),
   asset("assets/part_1.png"),
   asset("assets/part_2.png"),
   asset("assets/part_3.png"),

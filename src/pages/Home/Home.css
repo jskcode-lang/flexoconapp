@@ -1182,7 +1182,7 @@
 .hm__marquee-track {
     display: flex;
     gap: 4rem;
-    animation: hmMarquee 35s linear infinite;
+    animation: hmMarquee 120s linear infinite;
     width: max-content;
 }
 
@@ -1196,8 +1196,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.45;
-    filter: grayscale(100%);
+
     transition: all 0.4s var(--hm-ease);
 }
 
@@ -1208,8 +1207,8 @@
 }
 
 .hm__marquee-item img {
-    height: 45px;
-    width: auto;
+    height: 100px;
+    width: 150px;
     object-fit: contain;
 }
 
