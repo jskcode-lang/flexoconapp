@@ -1,43 +1,28 @@
 /* ═══════════════════════════════════════════════
-   FONT IMPORT (Add to index.html)
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet">
-═══════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════
    VARIABLES
 ═══════════════════════════════════════════════ */
 :root {
     --nav-height: 80px;
-    --nav-height-scrolled: 70px;
-
-    /* Color Palette — Luxury Onyx & Gold */
-    --nav-bg: rgb(0, 0, 0);
-    --nav-bg-glass: rgba(0, 0, 0, 0.95);
+    --nav-bg-transparent: transparent;
+    --nav-bg-scrolled: rgba(10, 10, 20, 0.92);
     --nav-text: #ffffff;
-    --nav-text-muted: rgba(255, 255, 255, 0.65);
-    --nav-text-dim: rgba(255, 255, 255, 0.4);
-
-    --nav-accent: #f5a623;
-    /* Warm Gold */
-    --nav-accent-rgb: 245, 166, 35;
-    --nav-border: rgba(255, 255, 255, 0.06);
-    --nav-border-glow: rgba(245, 166, 35, 0.15);
-
-    /* Bezier Easings for Ultra-Premium Fluid Motion */
-    --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-expo: cubic-bezier(0.85, 0, 0.15, 1);
-
-    --transition-slow: 0.6s var(--ease-expo);
-    --transition-normal: 0.4s var(--ease-in-out);
-    --transition-fast: 0.22s cubic-bezier(0.19, 1, 0.22, 1);
-
-    --z-overlay: 9998;
-    --z-nav: 9999;
+    --nav-text-muted: rgba(255, 255, 255, 0.75);
+    --nav-accent: #e8a400;
+    --nav-accent-hover: #ffbb33;
+    --nav-dropdown-bg: rgba(10, 10, 20, 0.97);
+    --nav-dropdown-border: rgba(232, 164, 0, 0.25);
+    --nav-mobile-bg: rgba(10, 10, 20, 0.98);
+    --nav-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+    --nav-transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --nav-radius: 10px;
+    --facebook: #1877f2;
+    --twitter: #1da1f2;
+    --z-overlay: 998;
+    --z-nav: 999;
 }
 
 /* ═══════════════════════════════════════════════
-   RESET & SYSTEM BASE
+   RESET
 ═══════════════════════════════════════════════ */
 *,
 *::before,
@@ -47,46 +32,28 @@
     padding: 0;
 }
 
-/* Force luxury font context */
-.navbar,
-.mobile__menu {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* Prevent interaction scrolling when menu is active */
-body[style*="overflow: hidden"] {
-    height: 100vh;
-    overflow: hidden;
-}
-
 /* ═══════════════════════════════════════════════
-   ENTRANCE ANIMATIONS
+   OVERLAY
 ═══════════════════════════════════════════════ */
-@keyframes slideDownIn {
-    from {
-        transform: translateY(-100%);
-    }
-
-    to {
-        transform: translateY(0);
-    }
+.navbar__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: var(--z-overlay);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--nav-transition);
 }
 
-@keyframes linkFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.navbar__overlay--visible {
+    opacity: 1;
+    pointer-events: all;
 }
 
 /* ═══════════════════════════════════════════════
-   NAVBAR WRAPPER (Solid Deep Black)
+   NAVBAR BASE  — fully transparent by default
 ═══════════════════════════════════════════════ */
 .navbar {
     position: fixed;
@@ -94,38 +61,24 @@ body[style*="overflow: hidden"] {
     left: 0;
     right: 0;
     z-index: var(--z-nav);
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--nav-border);
-    animation: slideDownIn 0.8s var(--ease-out) both;
+    background: var(--nav-bg-transparent);
+    /* ← transparent */
     transition:
-        background var(--transition-normal),
-        border-color var(--transition-normal),
-        box-shadow var(--transition-normal);
+        background var(--nav-transition),
+        box-shadow var(--nav-transition),
+        backdrop-filter var(--nav-transition);
 }
 
-/* Subtle accent bottom glow */
-.navbar::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--nav-border-glow), transparent);
-    pointer-events: none;
-}
-
-/* Scrolled State */
+/* When user scrolls > 20 px → frosted-glass dark bar */
 .navbar--scrolled {
-    background: var(--nav-bg-glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-    border-bottom-color: rgba(245, 166, 35, 0.15);
+    background: var(--nav-bg-scrolled);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--nav-shadow);
 }
 
 /* ═══════════════════════════════════════════════
-   CONTAINER GRID
+   CONTAINER
 ═══════════════════════════════════════════════ */
 .navbar__container {
     display: flex;
@@ -134,378 +87,254 @@ body[style*="overflow: hidden"] {
     max-width: 1400px;
     width: 100%;
     margin: 0 auto;
-
+    padding: 0 2rem;
     height: var(--nav-height);
-    transition: height var(--transition-normal);
-}
-
-.navbar--scrolled .navbar__container {
-    height: var(--nav-height-scrolled);
+    gap: 1.5rem;
 }
 
 /* ═══════════════════════════════════════════════
-   LOGO BRANDING
+   LOGO
 ═══════════════════════════════════════════════ */
 .navbar__logo {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     text-decoration: none;
-    z-index: calc(var(--z-nav) + 1);
-    /* Keeps logo interactable over takeover overlay */
 }
 
 .navbar__logo img {
-    height: 44px;
-    width: 100px;
+    height: 150px;
+    width: 200px;
 
-    transition: transform 0.5s var(--ease-out), filter 0.5s var(--ease-out);
-    filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.05));
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+    transition: transform var(--nav-transition), filter var(--nav-transition);
 }
 
-.navbar__logo:hover img {
-    transform: scale(1.03) translateY(-1px);
-    filter: drop-shadow(0 4px 15px rgba(245, 166, 35, 0.25));
+.navbar__logo img:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 12px rgba(232, 164, 0, 0.45));
 }
 
 /* ═══════════════════════════════════════════════
-   DESKTOP MENU (Minimal Stark Aesthetic)
+   DESKTOP MENU
 ═══════════════════════════════════════════════ */
 .navbar__menu {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 2.75rem;
+    gap: 0.25rem;
     flex: 1;
     justify-content: center;
 }
 
 .navbar__item {
     position: relative;
-    animation: linkFadeIn 0.7s var(--ease-out) both;
 }
 
-/* Subtle staggered link reveals */
-.navbar__item:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-.navbar__item:nth-child(2) {
-    animation-delay: 0.15s;
-}
-
-.navbar__item:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-.navbar__item:nth-child(4) {
-    animation-delay: 0.25s;
-}
-
-.navbar__item:nth-child(5) {
-    animation-delay: 0.3s;
-}
-
-.navbar__item:nth-child(6) {
-    animation-delay: 0.35s;
-}
-
-/* ── Menu Links ── */
+/* ── Desktop Link ── */
 .navbar__link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 0;
-    color: var(--nav-text-muted);
+    gap: 0.35rem;
+    padding: 0.55rem 0.85rem;
+    color: var(--nav-text);
     text-decoration: none;
-    font-size: 0.72rem;
-    font-weight: 400;
-    /* Ultra Thin */
-    letter-spacing: 0.24em;
-    /* Broad spacing */
-    text-transform: uppercase;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    border-radius: 6px;
     white-space: nowrap;
-    background: transparent;
-    border: none;
+    transition:
+        color var(--nav-transition),
+        background var(--nav-transition);
     position: relative;
-    cursor: pointer;
-    transition: color var(--transition-fast);
 }
 
-/* Modern luxury underline */
+/* Underline indicator */
 .navbar__link::after {
     content: "";
     position: absolute;
-    bottom: -2px;
+    bottom: 4px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 1px;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 2px;
     background: var(--nav-accent);
-    transition: width 0.35s var(--ease-out);
-}
-
-.navbar__link:hover {
-    color: var(--nav-text);
+    border-radius: 2px;
+    transition: transform var(--nav-transition);
 }
 
 .navbar__link:hover::after,
 .navbar__link.active::after {
-    width: 100%;
+    transform: translateX(-50%) scaleX(1);
+}
+
+.navbar__link:hover {
+    color: var(--nav-accent);
 }
 
 .navbar__link.active {
     color: var(--nav-accent);
-    font-weight: 300;
 }
 
-/* Chevron */
+/* Chevron inside desktop link */
 .navbar__link .chevron {
-    font-size: 0.5rem;
-    margin-left: 0.15rem;
-    transition: transform 0.4s var(--ease-out);
+    font-size: 0.65rem;
+    transition: transform var(--nav-transition);
 }
 
 .navbar__item--dropdown:hover .navbar__link .chevron {
-    transform: rotate(-180deg);
-    color: var(--nav-accent);
+    transform: rotate(180deg);
 }
 
 /* ═══════════════════════════════════════════════
-   DROPDOWN OVERLAYS (Desktop Level 1 & 2)
+   DROPDOWN — level 1
 ═══════════════════════════════════════════════ */
 .dropdown {
     position: absolute;
-    top: calc(100% + 20px);
+    top: calc(100% + 10px);
     left: 50%;
-    transform: translateX(-50%) translateY(12px) scale(0.97);
-    min-width: 270px;
-    background: #080808;
-    border: 1px solid var(--nav-border);
-    border-top: 1.5px solid var(--nav-accent);
-    border-radius: 2px;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 230px;
+    background: var(--nav-dropdown-bg);
+    border: 1px solid var(--nav-dropdown-border);
+    border-radius: var(--nav-radius);
     list-style: none;
-    padding: 0.75rem 0;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(245, 166, 35, 0.04);
+    padding: 0.5rem 0;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform-origin: top center;
     transition:
-        opacity 0.3s var(--ease-out),
-        transform 0.35s var(--ease-out),
-        visibility 0.3s var(--ease-out);
+        opacity var(--nav-transition),
+        transform var(--nav-transition),
+        visibility var(--nav-transition);
     z-index: 100;
-}
-
-/* Gap bridge */
-.dropdown::before {
-    content: "";
-    position: absolute;
-    top: -20px;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background: transparent;
 }
 
 .navbar__item--dropdown:hover>.dropdown {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
-    transform: translateX(-50%) translateY(0) scale(1);
+    transform: translateX(-50%) translateY(0);
 }
 
-/* Stagger dropdown entries */
+/* ── Dropdown Item ── */
 .dropdown__item {
     position: relative;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 
-.navbar__item--dropdown:hover .dropdown__item {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.navbar__item--dropdown:hover .dropdown__item:nth-child(1) {
-    transition-delay: 0.05s;
-}
-
-.navbar__item--dropdown:hover .dropdown__item:nth-child(2) {
-    transition-delay: 0.1s;
-}
-
-.navbar__item--dropdown:hover .dropdown__item:nth-child(3) {
-    transition-delay: 0.15s;
-}
-
-/* Dropdown Link style */
 .dropdown__link {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.85rem 1.75rem;
+    padding: 0.65rem 1.1rem;
     color: var(--nav-text-muted);
     text-decoration: none;
-    font-size: 0.68rem;
-    font-weight: 200;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 450;
     white-space: nowrap;
+    transition:
+        color var(--nav-transition),
+        background var(--nav-transition),
+        padding-left var(--nav-transition);
     cursor: pointer;
     border: none;
     background: transparent;
     width: 100%;
     text-align: left;
-    position: relative;
-    transition:
-        color var(--transition-fast),
-        background-color var(--transition-normal),
-        padding-left var(--transition-normal);
-}
-
-.dropdown__link::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--nav-accent);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.3s var(--ease-out);
-}
-
-.dropdown__link:hover::before {
-    transform: scaleY(1);
 }
 
 .dropdown__link:hover {
     color: var(--nav-accent);
-    padding-left: 2rem;
-    background: rgba(245, 166, 35, 0.04);
+    background: rgba(232, 164, 0, 0.08);
+    padding-left: 1.4rem;
 }
 
 .dropdown__link--active {
     color: var(--nav-accent);
-    background: rgba(245, 166, 35, 0.06);
+    background: rgba(232, 164, 0, 0.1);
 }
 
-.dropdown__link--active::before {
-    transform: scaleY(1);
-}
-
+/* Chevron right */
 .chevron--right {
-    font-size: 0.45rem;
-    transition: transform 0.3s var(--ease-out);
+    font-size: 0.6rem;
+    transition: transform var(--nav-transition);
 }
 
-/* ── Sub dropdowns (Level 2) ── */
+/* ── Sub-dropdown — level 2 ── */
 .dropdown--sub {
     position: absolute;
-    top: -0.75rem;
+    top: 0;
     left: 100%;
-    transform: translateX(12px) scale(0.97);
-    min-width: 280px;
+    transform: translateX(6px);
+    min-width: 240px;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform-origin: left center;
     transition:
-        opacity 0.3s var(--ease-out),
-        transform 0.35s var(--ease-out),
-        visibility 0.3s var(--ease-out);
+        opacity var(--nav-transition),
+        transform var(--nav-transition),
+        visibility var(--nav-transition);
 }
 
 .dropdown__item--has-sub:hover>.dropdown--sub {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
-    transform: translateX(0) scale(1);
+    transform: translateX(0);
 }
 
 .dropdown__item--has-sub:hover>.dropdown__link .chevron--right {
     transform: rotate(90deg);
-    color: var(--nav-accent);
 }
 
 /* ═══════════════════════════════════════════════
-   ACTIONS
+   ACTIONS  (brochure + social + hamburger)
 ═══════════════════════════════════════════════ */
 .navbar__actions {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: 0.75rem;
     flex-shrink: 0;
-    animation: linkFadeIn 0.8s var(--ease-out) 0.3s both;
-    z-index: calc(var(--z-nav) + 1);
-    /* Remains interactive over full-screen panel */
 }
 
-/* ── Brochure button (Luxury Outline) ── */
+/* ── Brochure Button ── */
 .navbar__brochure {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.55rem;
-    padding: 0.6rem 1.35rem;
-    background: transparent;
-    color: var(--nav-text);
-    font-size: 0.68rem;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    border: 1px solid var(--nav-accent);
-    border-radius: 1px;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem;
+    background: var(--nav-accent);
+    color: #000;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border-radius: 6px;
     text-decoration: none;
     white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
     transition:
-        color 0.4s var(--ease-out),
-        transform 0.3s var(--ease-out),
-        box-shadow 0.4s var(--ease-out);
-    z-index: 1;
-}
-
-.navbar__brochure::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--nav-accent);
-    transform: translateX(-101%);
-    transition: transform 0.45s var(--ease-out);
-    z-index: -1;
-}
-
-.navbar__brochure:hover::before {
-    transform: translateX(0);
+        background var(--nav-transition),
+        transform var(--nav-transition),
+        box-shadow var(--nav-transition);
 }
 
 .navbar__brochure:hover {
-    color: #000000;
+    background: var(--nav-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(245, 166, 35, 0.3);
+    box-shadow: 0 6px 20px rgba(232, 164, 0, 0.4);
 }
 
 .brochure__icon {
-    font-size: 0.68rem;
-    transition: transform 0.3s var(--ease-out);
+    font-size: 0.8rem;
 }
 
-.navbar__brochure:hover .brochure__icon {
-    transform: translateY(1px);
-}
-
-/* ── Social icons (Outlined circles) ── */
+/* ── Social Icons ── */
 .navbar__social {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.5rem;
 }
 
 .social__link {
@@ -515,316 +344,206 @@ body[style*="overflow: hidden"] {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    font-size: 0.8rem;
-    color: var(--nav-text-muted);
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.95rem;
+    color: var(--nav-text);
+    background: rgba(255, 255, 255, 0.1);
     text-decoration: none;
-    position: relative;
-    overflow: hidden;
     transition:
-        color 0.35s var(--ease-out),
-        border-color 0.35s var(--ease-out),
-        transform 0.35s var(--ease-out);
-}
-
-.social__link::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: transform 0.4s var(--ease-out);
-    z-index: -1;
-}
-
-.social__link--facebook::before {
-    background: var(--facebook);
-}
-
-.social__link--twitter::before {
-    background: #ffffff;
+        background var(--nav-transition),
+        color var(--nav-transition),
+        transform var(--nav-transition);
 }
 
 .social__link:hover {
-    transform: translateY(-2px);
-    border-color: transparent;
-}
-
-.social__link:hover::before {
-    transform: scale(1);
+    transform: translateY(-2px) scale(1.1);
 }
 
 .social__link--facebook:hover {
-    color: #ffffff;
+    background: var(--facebook);
+    color: #fff;
 }
 
 .social__link--twitter:hover {
-    color: #000000;
+    background: var(--twitter);
+    color: #fff;
 }
 
-/* ═══════════════════════════════════════════════
-   🍔 HIGH-END CUSTOM BORDERLESS HAMBURGER 🍔
-═══════════════════════════════════════════════ */
+/* ── Hamburger ── */
 .navbar__hamburger {
     display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 18px;
-    background: transparent;
-    border: none;
-    outline: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--nav-text);
+    font-size: 1.1rem;
     cursor: pointer;
-    position: relative;
-    padding: 0;
-    margin: 0;
-}
-
-/* Minimalist core styling for lines */
-.hamburger__line {
-    display: block;
-    width: 100%;
-    height: 1.5px;
-    /* Razor-thin bar */
-    background-color: var(--nav-text);
-    transform-origin: left center;
     transition:
-        transform 0.28s var(--ease-expo),
-        opacity 0.2s var(--ease-expo),
-        background-color 0.28s var(--ease-expo);
+        background var(--nav-transition),
+        border-color var(--nav-transition),
+        color var(--nav-transition);
 }
 
-/* Rapid rotate animations on active trigger */
-.navbar__hamburger--open .line-1 {
-    transform: rotate(45deg) translate(2px, -3px);
-    background-color: var(--nav-accent);
-}
-
-.navbar__hamburger--open .line-2 {
-    opacity: 0;
-    transform: scaleX(0);
-}
-
-.navbar__hamburger--open .line-3 {
-    transform: rotate(-45deg) translate(2px, 3px);
-    background-color: var(--nav-accent);
-}
-
-.navbar__hamburger:hover .hamburger__line {
-    background-color: var(--nav-accent);
+.navbar__hamburger:hover,
+.navbar__hamburger--open {
+    background: var(--nav-accent);
+    border-color: var(--nav-accent);
+    color: #000;
 }
 
 /* ═══════════════════════════════════════════════
-   🌌 LUXURY MOBILE SCREEN TAKEOVER OVERLAY 🌌
+   MOBILE MENU
 ═══════════════════════════════════════════════ */
 .mobile__menu {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000000;
-    z-index: var(--z-overlay);
+    max-height: 0;
     overflow-y: auto;
-    pointer-events: none;
-
-    /* Slides from extreme top of screen */
-    transform: translateY(-100%);
-    transition: transform 0.65s var(--ease-expo);
-
-    scrollbar-width: none;
-}
-
-.mobile__menu::-webkit-scrollbar {
-    display: none;
-}
-
-/* Open/Visible overlay state */
-.mobile__menu--open {
-    pointer-events: all;
-    transform: translateY(0);
-}
-
-/* ── Content Container ── */
-.mobile__list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    min-height: 100%;
-    width: 100%;
-    list-style: none;
-    padding: 6.5rem 2.5rem 4rem;
-    /* Room at top to clear logo & hamburger */
-}
-
-/* Stagger slide mechanics when takeover activates */
-.mobile__list>li {
-    width: 100%;
-    max-width: 480px;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
+    background: var(--nav-mobile-bg);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
     transition:
-        opacity 0.6s var(--ease-out),
-        transform 0.6s var(--ease-out);
+        max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity var(--nav-transition);
+    opacity: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--nav-accent) transparent;
 }
 
-.mobile__menu--open .mobile__list>li {
+.mobile__menu--open {
+    max-height: 85vh;
     opacity: 1;
-    transform: translateY(0);
 }
 
-.mobile__menu--open .mobile__list>li:nth-child(1) {
-    transition-delay: 0.1s;
+.mobile__list {
+    list-style: none;
+    padding: 0.75rem 0 0.5rem;
 }
 
-.mobile__menu--open .mobile__list>li:nth-child(2) {
-    transition-delay: 0.16s;
-}
-
-.mobile__menu--open .mobile__list>li:nth-child(3) {
-    transition-delay: 0.22s;
-}
-
-.mobile__menu--open .mobile__list>li:nth-child(4) {
-    transition-delay: 0.28s;
-}
-
-.mobile__menu--open .mobile__list>li:nth-child(5) {
-    transition-delay: 0.34s;
-}
-
-.mobile__menu--open .mobile__list>li:nth-child(6) {
-    transition-delay: 0.4s;
-}
-
-.mobile__menu--open .mobile__list>li:nth-child(7) {
-    transition-delay: 0.46s;
-}
-
-/* ── Links within Mobile Takeover ── */
+/* ── Mobile Link base ── */
 .mobile__link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: auto;
-    padding: 0.6rem 1.5rem;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
     color: var(--nav-text-muted);
     text-decoration: none;
-    font-size: 0.88rem;
-    font-weight: 200;
-    /* Razor Thin text */
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     border: none;
     background: transparent;
     cursor: pointer;
-    transition: color var(--transition-fast), transform var(--transition-normal);
+    text-align: left;
+    transition:
+        color var(--nav-transition),
+        background var(--nav-transition),
+        padding-left var(--nav-transition);
 }
 
 .mobile__link:hover {
     color: var(--nav-accent);
-    transform: scale(1.05);
+    background: rgba(232, 164, 0, 0.06);
+    padding-left: 1.9rem;
 }
 
 .mobile__link--active {
     color: var(--nav-accent) !important;
-    font-weight: 300;
+    background: rgba(232, 164, 0, 0.09);
 }
 
-/* Button variants (Nested toggles) */
+/* ── Button variant ── */
 .mobile__link--btn {
     width: 100%;
+    justify-content: space-between;
 }
 
-/* ── Nest Level Sub-links ── */
+/* ── Sub level ── */
 .mobile__link--sub {
-    font-size: 0.78rem;
-    color: var(--nav-text-dim);
+    padding-left: 2.25rem;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.65);
 }
 
-/* ── Nest Level Deep-links ── */
+.mobile__link--sub:hover {
+    padding-left: 2.75rem;
+}
+
+/* ── Deep level ── */
 .mobile__link--deep {
-    font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.28);
+    padding-left: 3rem;
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.55);
 }
 
-/* ── Sub accordion drawer wraps ── */
+.mobile__link--deep:hover {
+    padding-left: 3.5rem;
+}
+
+/* ── Sub wrapper (accordion) ── */
 .mobile__sub-wrapper {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s var(--ease-expo);
+    transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mobile__sub-wrapper--open {
-    max-height: 500px;
+    max-height: 600px;
 }
 
 .mobile__sub {
     list-style: none;
-    padding: 0.5rem 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    background: rgba(255, 255, 255, 0.015);
-    border-radius: 4px;
-    margin-top: 0.5rem;
+    border-left: 2px solid rgba(232, 164, 0, 0.3);
+    margin: 0 1.5rem 0.25rem;
+    border-radius: 0 0 6px 6px;
 }
 
 .mobile__sub--deep {
-    background: rgba(255, 255, 255, 0.005);
+    border-left: 2px solid rgba(232, 164, 0, 0.15);
+    margin: 0 1.5rem 0.25rem 2.75rem;
 }
 
-/* Accompanying chevrons */
+/* ── Chevron animation ── */
+.chevron {
+    font-size: 0.65rem;
+    transition: transform var(--nav-transition);
+    flex-shrink: 0;
+}
+
 .chevron--open {
-    transform: rotate(-180deg);
-    color: var(--nav-accent);
+    transform: rotate(180deg);
 }
 
-/* ── Takeover Footer Block ── */
+/* ── Mobile Bottom ── */
 .mobile__bottom {
-    display: flex !important;
-    flex-direction: column;
+    display: flex;
     align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.5rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 0.5rem;
 }
 
 .mobile__brochure {
-    width: 100%;
+    flex: 1;
+    justify-content: center;
 }
 
 .mobile__social {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.mobile__social .social__link {
-    border-color: rgba(255, 255, 255, 0.1);
+    gap: 0.6rem;
 }
 
 /* ═══════════════════════════════════════════════
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
 ═══════════════════════════════════════════════ */
-@media (max-width: 1100px) {
-    .navbar__container {
-        padding: 0 2rem;
-    }
 
-    .navbar__menu {
-        gap: 1.75rem;
-    }
-}
-
+/* ── Tablet (≤ 1024px) — show hamburger, hide desktop menu ── */
 @media (max-width: 1024px) {
     .navbar__menu {
         display: none;
@@ -832,7 +551,6 @@ body[style*="overflow: hidden"] {
 
     .navbar__hamburger {
         display: flex;
-        /* Swapped standard icon wrapper for minimal custom cross-toggle */
     }
 
     .mobile__menu {
@@ -848,25 +566,48 @@ body[style*="overflow: hidden"] {
     }
 
     .navbar__brochure {
-        padding: 0.55rem 0.85rem;
+        padding: 0.5rem 0.65rem;
     }
 }
 
+/* ── Small mobile (≤ 480px) ── */
 @media (max-width: 480px) {
     .navbar__container {
-        padding: 0 1.5rem;
+        padding: 0 1rem;
+        gap: 0.75rem;
     }
 
     .navbar__logo img {
-        height: 38px;
-    }
-
-    .navbar--scrolled .navbar__logo img {
-        height: 34px;
+        height: 42px;
     }
 
     .navbar__brochure {
         display: none;
-        /* Safely kept in bottom of takeover panel */
+        /* brochure hidden — shown inside mobile menu instead */
     }
+
+    .mobile__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mobile__brochure {
+        width: 100%;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLLBAR (mobile menu)
+═══════════════════════════════════════════════ */
+.mobile__menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mobile__menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mobile__menu::-webkit-scrollbar-thumb {
+    background: var(--nav-accent);
+    border-radius: 4px;
 }

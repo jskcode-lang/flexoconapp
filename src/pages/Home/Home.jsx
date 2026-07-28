@@ -18,6 +18,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import "./Home.css";
+import PageHeader from "../../components/PageHeader/PageHeader";
 
 // ── Safe URL helper ──────────────────────────────────────────
 // Ensures paths are properly joined regardless of BASE_URL value
@@ -250,6 +251,7 @@ const Home = () => {
           HERO — Video Background
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
+        <PageHeader />
         <div className="hm__hero-video-wrap">
           <video
             className="hm__hero-video"
@@ -306,12 +308,12 @@ const Home = () => {
             </div>
             <div className="hm__hero-stat-divider" />
             <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">500+</span>
+              <span className="hm__hero-stat-num">10000+</span>
               <span className="hm__hero-stat-label">Installations</span>
             </div>
             <div className="hm__hero-stat-divider" />
             <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">200+</span>
+              <span className="hm__hero-stat-num">2000+</span>
               <span className="hm__hero-stat-label">Clients</span>
             </div>
           </div>

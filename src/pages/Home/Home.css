@@ -4,6 +4,13 @@
 ═══════════════════════════════════════════════════════════════ */
 
 /* ───── CSS Variables (scoped) ───── */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+}
+
 .hm {
     --hm-blue: #1a73e8;
     --hm-blue-deep: #0d47a1;

@@ -15,6 +15,7 @@ import {
   FaHandshake,
 } from "react-icons/fa";
 import "./Clients.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -336,6 +337,7 @@ const Clients = () => {
       {/* ═══════════════════════════════════════════════════════
           HERO
           ═══════════════════════════════════════════════════════ */}
+      <Navbar />
       <section className="cli__hero">
         <div className="cli__hero-pattern" />
         <div className="cli__hero-gradient" />
@@ -523,11 +525,11 @@ const Clients = () => {
           <div className="cli__stats-grid">
             {[
               { icon: <FaAward />, num: "25+", label: "Years of Trust" },
-              { icon: <FaUsers />, num: "200+", label: "Valued Clients" },
+              { icon: <FaUsers />, num: "2000+", label: "Valued Clients" },
               { icon: <FaIndustry />, num: "11", label: "Industry Sectors" },
               {
                 icon: <FaGlobeAmericas />,
-                num: "500+",
+                num: "10000+",
                 label: "Installations",
               },
             ].map((s, i) => (

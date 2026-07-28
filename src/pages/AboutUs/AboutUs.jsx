@@ -24,6 +24,7 @@ import {
   FaTools,
 } from "react-icons/fa";
 import "./AboutUs.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 // ── Safe URL helper ──────────────────────────────────────────
 const BASE = import.meta.env.BASE_URL;
@@ -137,7 +138,7 @@ const milestones = [
   },
   {
     year: "2015",
-    title: "500+ Installations",
+    title: "10000+ Installations",
     desc: "Crossed 500 successful installations across power plants, steel mills, and cement industries.",
   },
   {
@@ -235,6 +236,7 @@ const team = [
 const AboutUs = () => {
   return (
     <div className="abu">
+      <Navbar />
       {/* ═══════════════════════════════════════════════════════
           HERO
           ═══════════════════════════════════════════════════════ */}
@@ -278,13 +280,13 @@ const AboutUs = () => {
               icon={<FaStar />}
             />
             <Counter
-              number={500}
+              number={10000}
               suffix="+"
               label="Installations"
               icon={<FaIndustry />}
             />
             <Counter
-              number={200}
+              number={2000}
               suffix="+"
               label="Happy Clients"
               icon={<FaUsers />}

@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
+
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
@@ -56,7 +56,6 @@ const Loader = () => (
 const App = () => {
   return (
     <div className="app">
-      <Navbar />
       <ScrollToTop />
 
       <main className="app__main">

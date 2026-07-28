@@ -15,13 +15,12 @@
   --text-dark: #1a1a2e;
   --text-light: #4a4a6a;
   --white: #ffffff;
-  --nav-height: 70px;
   --transition: 0.3s ease;
   --font-family: "Poppins", sans-serif;
   --scrollbar-compensation: 0px;
+  /* ❌ REMOVED --nav-height */
 }
 
-/* ── This is the KEY fix ─────────────────────────────────────── */
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -65,23 +64,25 @@ body.menu-open {
   overflow-x: hidden;
 }
 
+/* ✅ FIXED — No more padding-top */
 .app__main {
   flex: 1;
   width: 100%;
-  padding-top: var(--nav-height);
   overflow-x: hidden;
 }
 
+/* ✅ FIXED — Full viewport height */
 .page__wrapper {
   width: 100%;
-  min-height: calc(100vh - var(--nav-height));
+  min-height: 100vh;
   overflow-x: hidden;
   position: relative;
 }
 
+/* ✅ FIXED */
 .loader__wrapper {
   width: 100%;
-  min-height: calc(100vh - var(--nav-height));
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,10 +199,6 @@ section {
 }
 
 @media (max-width: 768px) {
-  :root {
-    --nav-height: 70px;
-  }
-
   .container {
     padding-left: 1.2rem;
     padding-right: 1.2rem;
