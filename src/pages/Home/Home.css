@@ -73,6 +73,7 @@
     padding: 0 2rem;
     position: relative;
     z-index: 2;
+
 }
 
 .hm__sec-head {
@@ -377,6 +378,7 @@
 
 .hm__hero-content {
     position: relative;
+    top: 10px;
     z-index: 3;
     text-align: center;
     padding: 2rem;

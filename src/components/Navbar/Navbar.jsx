@@ -1,13 +1,13 @@
 import { useReducer, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {
-  FaFacebook,
-  FaBars,
+  FaLinkedin,
   FaTimes,
   FaChevronDown,
+  FaChevronRight,
   FaDownload,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { HiMenuAlt4 } from "react-icons/hi";
 import "./Navbar.css";
 
 const BASE = import.meta.env.BASE_URL || "/flexoconapp";
@@ -21,58 +21,31 @@ const asset = (path) => {
 const initialState = {
   isOpen: false,
   scrolled: false,
-  mobileProductsOpen: false,
-  mobileExpansionOpen: false,
-  mobileMechanicalOpen: false,
+  activeSubmenu: null, // 'products' | 'expansion' | 'mechanical' | null
 };
 
 function navReducer(state, action) {
   switch (action.type) {
     case "TOGGLE_MENU":
-      return { ...state, isOpen: !state.isOpen };
+      return { ...state, isOpen: !state.isOpen, activeSubmenu: null };
     case "CLOSE_ALL":
-      return {
-        ...state,
-        isOpen: false,
-        mobileProductsOpen: false,
-        mobileExpansionOpen: false,
-        mobileMechanicalOpen: false,
-      };
+      return { ...state, isOpen: false, activeSubmenu: null };
     case "SET_SCROLLED":
       return { ...state, scrolled: action.payload };
-    case "TOGGLE_PRODUCTS":
+    case "SET_SUBMENU":
       return {
         ...state,
-        mobileProductsOpen: !state.mobileProductsOpen,
-        mobileExpansionOpen: false,
-        mobileMechanicalOpen: false,
-      };
-    case "TOGGLE_EXPANSION":
-      return {
-        ...state,
-        mobileExpansionOpen: !state.mobileExpansionOpen,
-      };
-    case "TOGGLE_MECHANICAL":
-      return {
-        ...state,
-        mobileMechanicalOpen: !state.mobileMechanicalOpen,
+        activeSubmenu:
+          state.activeSubmenu === action.payload ? null : action.payload,
       };
     default:
       return state;
   }
 }
 
-// ── Component ─────────────────────────────────────────────────
 const Navbar = () => {
   const [state, dispatch] = useReducer(navReducer, initialState);
-  const {
-    isOpen,
-    scrolled,
-    mobileProductsOpen,
-    mobileExpansionOpen,
-    mobileMechanicalOpen,
-  } = state;
-
+  const { isOpen, scrolled, activeSubmenu } = state;
   const location = useLocation();
 
   useEffect(() => {
@@ -81,16 +54,6 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 1024) {
-        dispatch({ type: "CLOSE_ALL" });
-      }
-    };
-    window.addEventListener("resize", handleResize, { passive: true });
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -104,176 +67,19 @@ const Navbar = () => {
     dispatch({ type: "CLOSE_ALL" });
   }, [location.pathname]);
 
+  const closeMenu = () => dispatch({ type: "CLOSE_ALL" });
+
   return (
     <>
-      {/* Overlay */}
-      <div
-        className={`navbar__overlay ${isOpen ? "navbar__overlay--visible" : ""}`}
-        onClick={() => dispatch({ type: "CLOSE_ALL" })}
-      />
-
+      {/* ── Top Navbar Bar ── */}
       <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
         <div className="navbar__container">
-          {/* ── Logo ── */}
-          <Link to="/" className="navbar__logo">
+          {/* Logo */}
+          <Link to="/" className="navbar__logo" onClick={closeMenu}>
             <img src={asset("assets/logo_3.png")} alt="Company Logo" />
           </Link>
 
-          {/* ── Desktop Menu ── */}
-          <ul className="navbar__menu">
-            <li className="navbar__item">
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "active" : ""}`
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-
-            <li className="navbar__item">
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "active" : ""}`
-                }
-              >
-                About Us
-              </NavLink>
-            </li>
-
-            {/* ── Products Dropdown ── */}
-            <li className="navbar__item navbar__item--dropdown">
-              <NavLink
-                to="/products"
-                className={({ isActive }) =>
-                  `navbar__link navbar__link--dropdown ${isActive ? "active" : ""}`
-                }
-              >
-                Products
-                <FaChevronDown className="chevron" />
-              </NavLink>
-
-              <ul className="dropdown">
-                {/* Expansion Joints */}
-                <li className="dropdown__item dropdown__item--has-sub">
-                  <span className="dropdown__link">
-                    Expansion Joints
-                    <FaChevronDown className="chevron chevron--right" />
-                  </span>
-                  <ul className="dropdown dropdown--sub">
-                    <li className="dropdown__item">
-                      <NavLink
-                        to="/products/expansion-joints/non-metallic"
-                        className={({ isActive }) =>
-                          `dropdown__link ${isActive ? "dropdown__link--active" : ""}`
-                        }
-                      >
-                        Non Metallic Expansion Joints
-                      </NavLink>
-                    </li>
-                    <li className="dropdown__item">
-                      <NavLink
-                        to="/products/expansion-joints/metallic"
-                        className={({ isActive }) =>
-                          `dropdown__link ${isActive ? "dropdown__link--active" : ""}`
-                        }
-                      >
-                        Metallic Expansion Joints
-                      </NavLink>
-                    </li>
-                    <li className="dropdown__item">
-                      <NavLink
-                        to="/products/expansion-joints/rubber"
-                        className={({ isActive }) =>
-                          `dropdown__link ${isActive ? "dropdown__link--active" : ""}`
-                        }
-                      >
-                        Rubber Expansion Joints
-                      </NavLink>
-                    </li>
-                  </ul>
-                </li>
-
-                {/* Mechanical Power Transmission */}
-                <li className="dropdown__item dropdown__item--has-sub">
-                  <span className="dropdown__link">
-                    Mechanical Power Transmission
-                    <FaChevronDown className="chevron chevron--right" />
-                  </span>
-                  <ul className="dropdown dropdown--sub">
-                    <li className="dropdown__item">
-                      <NavLink
-                        to="/products/mechanical-power-transmission/resilient-coupling"
-                        className={({ isActive }) =>
-                          `dropdown__link ${isActive ? "dropdown__link--active" : ""}`
-                        }
-                      >
-                        Resilient Coupling
-                      </NavLink>
-                    </li>
-                    <li className="dropdown__item">
-                      <NavLink
-                        to="/products/mechanical-power-transmission/geared-coupling"
-                        className={({ isActive }) =>
-                          `dropdown__link ${isActive ? "dropdown__link--active" : ""}`
-                        }
-                      >
-                        Geared Coupling
-                      </NavLink>
-                    </li>
-                    <li className="dropdown__item">
-                      <NavLink
-                        to="/products/mechanical-power-transmission/pin-bush-tyre-coupling"
-                        className={({ isActive }) =>
-                          `dropdown__link ${isActive ? "dropdown__link--active" : ""}`
-                        }
-                      >
-                        Pin Bush & Tyre Coupling
-                      </NavLink>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-
-            <li className="navbar__item">
-              <NavLink
-                to="/clients"
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "active" : ""}`
-                }
-              >
-                Clients
-              </NavLink>
-            </li>
-
-            <li className="navbar__item">
-              <NavLink
-                to="/quality-policy"
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "active" : ""}`
-                }
-              >
-                Quality Policy
-              </NavLink>
-            </li>
-
-            <li className="navbar__item">
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "active" : ""}`
-                }
-              >
-                Contact
-              </NavLink>
-            </li>
-          </ul>
-
-          {/* ── Actions ── */}
+          {/* Right Actions */}
           <div className="navbar__actions">
             <a
               href="/assets/brochure/brochure.pdf"
@@ -284,303 +90,357 @@ const Navbar = () => {
               <span>Brochure</span>
             </a>
 
-            <div className="navbar__social">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="social__link social__link--facebook"
-                aria-label="Facebook"
-              >
-                <FaFacebook />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                className="social__link social__link--twitter"
-                aria-label="X Twitter"
-              >
-                <FaXTwitter />
-              </a>
-            </div>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noreferrer"
+              className="navbar__linkedin"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin />
+            </a>
 
             <button
-              className={`navbar__hamburger ${isOpen ? "navbar__hamburger--open" : ""}`}
+              className={`navbar__menu-btn ${isOpen ? "navbar__menu-btn--open" : ""}`}
               onClick={() => dispatch({ type: "TOGGLE_MENU" })}
               aria-label="Toggle Menu"
               aria-expanded={isOpen}
             >
-              {isOpen ? <FaTimes /> : <FaBars />}
+              <HiMenuAlt4 />
             </button>
           </div>
         </div>
-
-        {/* ── Mobile Menu ── */}
-        <div className={`mobile__menu ${isOpen ? "mobile__menu--open" : ""}`}>
-          <ul className="mobile__list">
-            <li>
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) =>
-                  `mobile__link ${isActive ? "mobile__link--active" : ""}`
-                }
-                onClick={() => dispatch({ type: "CLOSE_ALL" })}
-              >
-                Home
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  `mobile__link ${isActive ? "mobile__link--active" : ""}`
-                }
-                onClick={() => dispatch({ type: "CLOSE_ALL" })}
-              >
-                About Us
-              </NavLink>
-            </li>
-
-            {/* Mobile Products */}
-            <li>
-              <button
-                className={`mobile__link mobile__link--btn ${
-                  mobileProductsOpen ? "mobile__link--active" : ""
-                }`}
-                onClick={() => dispatch({ type: "TOGGLE_PRODUCTS" })}
-              >
-                Products
-                <FaChevronDown
-                  className={`chevron ${mobileProductsOpen ? "chevron--open" : ""}`}
-                />
-              </button>
-
-              <div
-                className={`mobile__sub-wrapper ${
-                  mobileProductsOpen ? "mobile__sub-wrapper--open" : ""
-                }`}
-              >
-                <ul className="mobile__sub">
-                  <li>
-                    <NavLink
-                      to="/products"
-                      className={({ isActive }) =>
-                        `mobile__link mobile__link--sub ${
-                          isActive ? "mobile__link--active" : ""
-                        }`
-                      }
-                      onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                    >
-                      View All Products
-                    </NavLink>
-                  </li>
-
-                  {/* Expansion Joints */}
-                  <li>
-                    <button
-                      className={`mobile__link mobile__link--sub mobile__link--btn ${
-                        mobileExpansionOpen ? "mobile__link--active" : ""
-                      }`}
-                      onClick={() => dispatch({ type: "TOGGLE_EXPANSION" })}
-                    >
-                      Expansion Joints
-                      <FaChevronDown
-                        className={`chevron ${
-                          mobileExpansionOpen ? "chevron--open" : ""
-                        }`}
-                      />
-                    </button>
-                    <div
-                      className={`mobile__sub-wrapper ${
-                        mobileExpansionOpen ? "mobile__sub-wrapper--open" : ""
-                      }`}
-                    >
-                      <ul className="mobile__sub mobile__sub--deep">
-                        <li>
-                          <NavLink
-                            to="/products/expansion-joints/non-metallic"
-                            className={({ isActive }) =>
-                              `mobile__link mobile__link--deep ${
-                                isActive ? "mobile__link--active" : ""
-                              }`
-                            }
-                            onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                          >
-                            Non Metallic Expansion Joints
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/products/expansion-joints/metallic"
-                            className={({ isActive }) =>
-                              `mobile__link mobile__link--deep ${
-                                isActive ? "mobile__link--active" : ""
-                              }`
-                            }
-                            onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                          >
-                            Metallic Expansion Joints
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/products/expansion-joints/rubber"
-                            className={({ isActive }) =>
-                              `mobile__link mobile__link--deep ${
-                                isActive ? "mobile__link--active" : ""
-                              }`
-                            }
-                            onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                          >
-                            Rubber Expansion Joints
-                          </NavLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-
-                  {/* Mechanical */}
-                  <li>
-                    <button
-                      className={`mobile__link mobile__link--sub mobile__link--btn ${
-                        mobileMechanicalOpen ? "mobile__link--active" : ""
-                      }`}
-                      onClick={() => dispatch({ type: "TOGGLE_MECHANICAL" })}
-                    >
-                      Mechanical Power Transmission
-                      <FaChevronDown
-                        className={`chevron ${
-                          mobileMechanicalOpen ? "chevron--open" : ""
-                        }`}
-                      />
-                    </button>
-                    <div
-                      className={`mobile__sub-wrapper ${
-                        mobileMechanicalOpen ? "mobile__sub-wrapper--open" : ""
-                      }`}
-                    >
-                      <ul className="mobile__sub mobile__sub--deep">
-                        <li>
-                          <NavLink
-                            to="/products/mechanical-power-transmission/resilient-coupling"
-                            className={({ isActive }) =>
-                              `mobile__link mobile__link--deep ${
-                                isActive ? "mobile__link--active" : ""
-                              }`
-                            }
-                            onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                          >
-                            Resilient Coupling
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/products/mechanical-power-transmission/geared-coupling"
-                            className={({ isActive }) =>
-                              `mobile__link mobile__link--deep ${
-                                isActive ? "mobile__link--active" : ""
-                              }`
-                            }
-                            onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                          >
-                            Geared Coupling
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/products/mechanical-power-transmission/pin-bush-tyre-coupling"
-                            className={({ isActive }) =>
-                              `mobile__link mobile__link--deep ${
-                                isActive ? "mobile__link--active" : ""
-                              }`
-                            }
-                            onClick={() => dispatch({ type: "CLOSE_ALL" })}
-                          >
-                            Pin Bush & Tyre Coupling
-                          </NavLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li>
-              <NavLink
-                to="/clients"
-                className={({ isActive }) =>
-                  `mobile__link ${isActive ? "mobile__link--active" : ""}`
-                }
-                onClick={() => dispatch({ type: "CLOSE_ALL" })}
-              >
-                Clients
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/quality-policy"
-                className={({ isActive }) =>
-                  `mobile__link ${isActive ? "mobile__link--active" : ""}`
-                }
-                onClick={() => dispatch({ type: "CLOSE_ALL" })}
-              >
-                Quality Policy
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `mobile__link ${isActive ? "mobile__link--active" : ""}`
-                }
-                onClick={() => dispatch({ type: "CLOSE_ALL" })}
-              >
-                Contact
-              </NavLink>
-            </li>
-
-            {/* Mobile Bottom */}
-            <li className="mobile__bottom">
-              <a
-                href="/assets/brochure/brochure.pdf"
-                download
-                className="navbar__brochure mobile__brochure"
-                onClick={() => dispatch({ type: "CLOSE_ALL" })}
-              >
-                <FaDownload className="brochure__icon" />
-                <span>Download Brochure</span>
-              </a>
-
-              <div className="mobile__social">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="social__link social__link--facebook"
-                  aria-label="Facebook"
-                >
-                  <FaFacebook />
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="social__link social__link--twitter"
-                  aria-label="X Twitter"
-                >
-                  <FaXTwitter />
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
       </nav>
+
+      {/* ── Fullscreen Menu Overlay ── */}
+      <div
+        className={`fullscreen-menu ${isOpen ? "fullscreen-menu--open" : ""}`}
+      >
+        {/* Close Button */}
+        <button
+          className="fullscreen-menu__close"
+          onClick={closeMenu}
+          aria-label="Close Menu"
+        >
+          <FaTimes />
+        </button>
+
+        <div className="fullscreen-menu__container">
+          {/* LEFT SIDE — MAIN LINKS */}
+          <div className="fullscreen-menu__left">
+            <ul className="fullscreen-menu__list">
+              <li className="fullscreen-menu__item" style={{ "--i": 1 }}>
+                <NavLink
+                  to="/"
+                  end
+                  className={({ isActive }) =>
+                    `fullscreen-menu__link ${isActive ? "fullscreen-menu__link--active" : ""}`
+                  }
+                  onClick={closeMenu}
+                >
+                  <span>Home</span>
+                </NavLink>
+              </li>
+
+              <li className="fullscreen-menu__item" style={{ "--i": 2 }}>
+                <NavLink
+                  to="/about"
+                  className={({ isActive }) =>
+                    `fullscreen-menu__link ${isActive ? "fullscreen-menu__link--active" : ""}`
+                  }
+                  onClick={closeMenu}
+                >
+                  <span>About Us</span>
+                </NavLink>
+              </li>
+
+              {/* Products with submenu */}
+              <li className="fullscreen-menu__item" style={{ "--i": 3 }}>
+                <button
+                  className={`fullscreen-menu__link fullscreen-menu__link--btn ${
+                    activeSubmenu === "products"
+                      ? "fullscreen-menu__link--open"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    dispatch({ type: "SET_SUBMENU", payload: "products" })
+                  }
+                >
+                  <span>Products</span>
+                  <FaChevronRight className="fullscreen-menu__chevron" />
+                </button>
+
+                <div
+                  className={`fullscreen-submenu ${
+                    activeSubmenu === "products"
+                      ? "fullscreen-submenu--open"
+                      : ""
+                  }`}
+                >
+                  <ul className="fullscreen-submenu__list">
+                    <li>
+                      <NavLink
+                        to="/products"
+                        className="fullscreen-submenu__link"
+                        onClick={closeMenu}
+                      >
+                        View All Products
+                      </NavLink>
+                    </li>
+
+                    {/* Expansion Joints */}
+                    <li>
+                      <button
+                        className={`fullscreen-submenu__link fullscreen-submenu__link--btn ${
+                          activeSubmenu === "expansion"
+                            ? "fullscreen-submenu__link--open"
+                            : ""
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch({
+                            type: "SET_SUBMENU",
+                            payload: "expansion",
+                          });
+                        }}
+                      >
+                        Expansion Joints
+                        <FaChevronDown
+                          className={`fullscreen-submenu__chevron ${
+                            activeSubmenu === "expansion"
+                              ? "fullscreen-submenu__chevron--open"
+                              : ""
+                          }`}
+                        />
+                      </button>
+                      <div
+                        className={`fullscreen-deep ${
+                          activeSubmenu === "expansion"
+                            ? "fullscreen-deep--open"
+                            : ""
+                        }`}
+                      >
+                        <ul>
+                          <li>
+                            <NavLink
+                              to="/products/expansion-joints/non-metallic"
+                              className="fullscreen-deep__link"
+                              onClick={closeMenu}
+                            >
+                              Non Metallic Expansion Joints
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/products/expansion-joints/metallic"
+                              className="fullscreen-deep__link"
+                              onClick={closeMenu}
+                            >
+                              Metallic Expansion Joints
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/products/expansion-joints/rubber"
+                              className="fullscreen-deep__link"
+                              onClick={closeMenu}
+                            >
+                              Rubber Expansion Joints
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+
+                    {/* Mechanical */}
+                    <li>
+                      <button
+                        className={`fullscreen-submenu__link fullscreen-submenu__link--btn ${
+                          activeSubmenu === "mechanical"
+                            ? "fullscreen-submenu__link--open"
+                            : ""
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch({
+                            type: "SET_SUBMENU",
+                            payload: "mechanical",
+                          });
+                        }}
+                      >
+                        Mechanical Power Transmission
+                        <FaChevronDown
+                          className={`fullscreen-submenu__chevron ${
+                            activeSubmenu === "mechanical"
+                              ? "fullscreen-submenu__chevron--open"
+                              : ""
+                          }`}
+                        />
+                      </button>
+                      <div
+                        className={`fullscreen-deep ${
+                          activeSubmenu === "mechanical"
+                            ? "fullscreen-deep--open"
+                            : ""
+                        }`}
+                      >
+                        <ul>
+                          <li>
+                            <NavLink
+                              to="/products/mechanical-power-transmission/resilient-coupling"
+                              className="fullscreen-deep__link"
+                              onClick={closeMenu}
+                            >
+                              Resilient Coupling
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/products/mechanical-power-transmission/geared-coupling"
+                              className="fullscreen-deep__link"
+                              onClick={closeMenu}
+                            >
+                              Geared Coupling
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/products/mechanical-power-transmission/pin-bush-tyre-coupling"
+                              className="fullscreen-deep__link"
+                              onClick={closeMenu}
+                            >
+                              Pin Bush & Tyre Coupling
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li className="fullscreen-menu__item" style={{ "--i": 4 }}>
+                <NavLink
+                  to="/clients"
+                  className={({ isActive }) =>
+                    `fullscreen-menu__link ${isActive ? "fullscreen-menu__link--active" : ""}`
+                  }
+                  onClick={closeMenu}
+                >
+                  <span>Clients</span>
+                </NavLink>
+              </li>
+
+              <li className="fullscreen-menu__item" style={{ "--i": 5 }}>
+                <NavLink
+                  to="/quality-policy"
+                  className={({ isActive }) =>
+                    `fullscreen-menu__link ${isActive ? "fullscreen-menu__link--active" : ""}`
+                  }
+                  onClick={closeMenu}
+                >
+                  <span>Quality Policy</span>
+                </NavLink>
+              </li>
+
+              <li className="fullscreen-menu__item" style={{ "--i": 6 }}>
+                <NavLink
+                  to="/contact"
+                  className={({ isActive }) =>
+                    `fullscreen-menu__link ${isActive ? "fullscreen-menu__link--active" : ""}`
+                  }
+                  onClick={closeMenu}
+                >
+                  <span>Contact</span>
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+
+          {/* RIGHT SIDE — TOPLINKS / QUICK ACCESS */}
+          <div className="fullscreen-menu__right">
+            <h3 className="fullscreen-menu__title">Toplinks</h3>
+            <ul className="fullscreen-menu__toplinks">
+              <li style={{ "--i": 2 }}>
+                <NavLink
+                  to="/products/expansion-joints/non-metallic"
+                  onClick={closeMenu}
+                >
+                  Non Metallic Expansion Joints
+                </NavLink>
+              </li>
+              <li style={{ "--i": 3 }}>
+                <NavLink
+                  to="/products/expansion-joints/metallic"
+                  onClick={closeMenu}
+                >
+                  Metallic Expansion Joints
+                </NavLink>
+              </li>
+              <li style={{ "--i": 4 }}>
+                <NavLink
+                  to="/products/expansion-joints/rubber"
+                  onClick={closeMenu}
+                >
+                  Rubber Expansion Joints
+                </NavLink>
+              </li>
+              <li style={{ "--i": 5 }}>
+                <NavLink
+                  to="/products/mechanical-power-transmission/resilient-coupling"
+                  onClick={closeMenu}
+                >
+                  Resilient Coupling
+                </NavLink>
+              </li>
+              <li style={{ "--i": 6 }}>
+                <NavLink
+                  to="/products/mechanical-power-transmission/geared-coupling"
+                  onClick={closeMenu}
+                >
+                  Geared Coupling
+                </NavLink>
+              </li>
+            </ul>
+
+            <div className="fullscreen-menu__divider" />
+
+            <a
+              href="/assets/brochure/brochure.pdf"
+              download
+              className="fullscreen-menu__cta"
+              onClick={closeMenu}
+            >
+              <FaDownload />
+              <span>Download Brochure</span>
+            </a>
+
+            <div className="fullscreen-menu__social">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Footer Links */}
+        <div className="fullscreen-menu__footer">
+          <NavLink to="/about" onClick={closeMenu}>
+            About
+          </NavLink>
+          <NavLink to="/contact" onClick={closeMenu}>
+            Contact
+          </NavLink>
+          <NavLink to="/quality-policy" onClick={closeMenu}>
+            Quality Policy
+          </NavLink>
+        </div>
+      </div>
     </>
   );
 };

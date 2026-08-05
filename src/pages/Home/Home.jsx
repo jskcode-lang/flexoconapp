@@ -248,7 +248,7 @@ const Home = () => {
   return (
     <div className="hm">
       {/* ═══════════════════════════════════════════════════════
-          HERO — Video Background
+          HERO — Video Background   slider pictures will eb added
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
         <PageHeader />
