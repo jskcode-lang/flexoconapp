@@ -21,16 +21,23 @@ import "./Home.css";
 import PageHeader from "../../components/PageHeader/PageHeader";
 
 // ── Safe URL helper ──────────────────────────────────────────
-// Ensures paths are properly joined regardless of BASE_URL value
 const BASE = import.meta.env.BASE_URL;
 
 const asset = (path) => {
-  // Remove leading slash from path if present
   const clean = path.startsWith("/") ? path.slice(1) : path;
-  // Ensure BASE ends with slash
   const base = BASE.endsWith("/") ? BASE : BASE + "/";
   return base + clean;
 };
+
+// ── Hero Carousel Images (6 images from public/assets/) ──────
+const heroImages = [
+  asset("assets/hero-1.png"),
+  asset("assets/hero-2.png"),
+  asset("assets/hero-3.png"),
+  asset("assets/hero-4.png"),
+  asset("assets/hero-5.png"),
+  asset("assets/hero- 6.png"),
+];
 
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (opts = {}) => {
@@ -237,7 +244,17 @@ const testimonials = [
 // ── Component ─────────────────────────────────────────────────
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Auto-slide carousel every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Testimonial auto-rotate
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -248,22 +265,31 @@ const Home = () => {
   return (
     <div className="hm">
       {/* ═══════════════════════════════════════════════════════
-          HERO — Video Background   slider pictures will eb added
+          HERO — Image Carousel Background
           ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
         <PageHeader />
-        <div className="hm__hero-video-wrap">
-          <video
-            className="hm__hero-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={asset("assets/hero-poster.jpg")}
-          >
-            <source src={asset("assets/hero-video.mp4")} type="video/mp4" />
-          </video>
+
+        {/* ── Image Carousel ── */}
+        <div className="hm__hero-carousel">
+          {heroImages.map((img, i) => (
+            <div
+              key={i}
+              className={`hm__hero-slide ${
+                i === currentSlide ? "hm__hero-slide--active" : ""
+              }`}
+            >
+              <img
+                src={img}
+                alt={`Hero slide ${i + 1}`}
+                className="hm__hero-slide-img"
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
         </div>
+
+        {/* ── Overlays (kept exactly as before) ── */}
         <div className="hm__hero-overlay" />
         <div className="hm__hero-grain" />
 
@@ -317,6 +343,22 @@ const Home = () => {
               <span className="hm__hero-stat-label">Clients</span>
             </div>
           </div>
+        </div>
+
+        {/* ── Carousel Indicators ── */}
+        <div className="hm__hero-indicators">
+          {heroImages.map((_, i) => (
+            <button
+              key={i}
+              className={`hm__hero-indicator ${
+                i === currentSlide ? "hm__hero-indicator--active" : ""
+              }`}
+              onClick={() => setCurrentSlide(i)}
+              aria-label={`Go to slide ${i + 1}`}
+            >
+              <span className="hm__hero-indicator-fill" />
+            </button>
+          ))}
         </div>
 
         <div className="hm__hero-scroll">
