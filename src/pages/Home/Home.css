@@ -2384,7 +2384,7 @@ HERO CAROUSEL — Replaces Video Background
     align-items: center;
 }
 
-.hm__hero-indicator {
+/* .hm__hero-indicator {
     width: 36px;
     height: 4px;
     border-radius: 4px;
@@ -2395,7 +2395,7 @@ HERO CAROUSEL — Replaces Video Background
     position: relative;
     overflow: hidden;
     transition: background 0.3s ease;
-}
+} */
 
 .hm__hero-indicator:hover {
     background: rgba(255, 255, 255, 0.4);
