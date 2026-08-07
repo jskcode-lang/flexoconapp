@@ -76,13 +76,13 @@ const Navbar = () => {
         <div className="navbar__container">
           {/* Logo */}
           <Link to="/" className="navbar__logo" onClick={closeMenu}>
-            <img src={asset("assets/logo_3.png")} alt="Company Logo" />
+            <img src={asset("assets/logo.png")} alt="Company Logo" />
           </Link>
 
           {/* Right Actions */}
           <div className="navbar__actions">
             <a
-              href="/assets/brochure/brochure.pdf"
+              href="/assets/Brochure.pdf"
               download
               className="navbar__brochure"
             >
