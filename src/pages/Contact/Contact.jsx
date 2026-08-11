@@ -11,44 +11,52 @@ import {
   FaCog,
   FaShieldAlt,
   FaPaperPlane,
-  FaUserTie,
   FaMobileAlt,
   FaGlobe,
   FaArrowRight,
   FaFileDownload,
-  FaUser,
+  FaHandshake,
+  FaLongArrowAltRight,
 } from "react-icons/fa";
 import "./Contact.css";
 
 const BASE = import.meta.env.BASE_URL;
 
-const useInView = () => {
+const useInView = (threshold = 0.1) => {
   const ref = useRef(null);
-  const [v, setV] = useState(false);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const o = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setV(true);
-          o.unobserve(el);
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.unobserve(el);
         }
       },
-      { threshold: 0.15 },
+      { threshold },
     );
-    o.observe(el);
-    return () => o.disconnect();
-  }, []);
-  return [ref, v];
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
 };
+
 const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
   const [ref, vis] = useInView();
-  const m = { up: "ct__rv--up", left: "ct__rv--left", right: "ct__rv--right" };
+  const dirMap = {
+    up: "ct__rv--up",
+    down: "ct__rv--down",
+    left: "ct__rv--left",
+    right: "ct__rv--right",
+    fade: "ct__rv--fade",
+    scale: "ct__rv--scale",
+  };
   return (
     <div
       ref={ref}
-      className={`ct__rv ${m[dir]} ${vis ? "ct__rv--vis" : ""} ${className}`}
+      className={`ct__rv ${dirMap[dir] || dirMap.up} ${vis ? "ct__rv--vis" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -77,6 +85,7 @@ const couplingTeam = [
     email: "sales2@flexoconindia.com",
   },
 ];
+
 const expansionTeam = [
   {
     name: "Mr. Amitava Das",
@@ -104,6 +113,50 @@ const expansionTeam = [
   },
 ];
 
+const associates = [
+  {
+    id: 1,
+    company: "Power Transmissions International Ltd",
+    region: "UK & EUROPE",
+    flag: "🇬🇧",
+    address: "2, Chillingham, Dosthill, Staffordshire, B77 1JH, England",
+    person: "Paul Selini",
+    designation: "Managing Director",
+    phones: ["+44 1827 261202", "+44 7780 613170"],
+    emails: ["sales@ptigroup.co.uk", "pselini@ptigroup.co.uk"],
+    website: "www.ptigroup.co.uk",
+    pinPos: { left: "46.5%", top: "27%" },
+  },
+  {
+    id: 2,
+    company: "Le Duong Trading Investment Co. Ltd",
+    region: "VIETNAM",
+    flag: "🇻🇳",
+    address:
+      "No 28A, 26 Street, Tang Nhon Phu A Ward, District 9, HCM City, Vietnam",
+    person: "Duong Hien Kha (Henry Duong)",
+    designation: "Director",
+    phones: ["(+84) 0982 599 499"],
+    emails: ["hienkhabk@gmail.com"],
+    website: "www.leduonggroup.com",
+    pinPos: { left: "79.2%", top: "51.5%" },
+  },
+  {
+    id: 3,
+    company: "Power Flow Company (PFC)",
+    region: "SAUDI ARABIA",
+    flag: "🇸🇦",
+    address:
+      "Building 6917, Street 7A, An Nahdah District, P.O.-34241, Dammam 31518, Saudi Arabia",
+    person: "Saifulla Shareef",
+    designation: "Representative",
+    phones: ["+966 13 814 3773", "+966 54 054 6789"],
+    emails: ["saif@powerflow.com.sa"],
+    website: "www.powerflow.com.sa",
+    pinPos: { left: "57.2%", top: "42.5%" },
+  },
+];
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -114,8 +167,12 @@ export default function Contact() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [divRef, divVis] = useInView(0.06);
+  const [assocRef, assocVis] = useInView(0.05);
+
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const subject = encodeURIComponent(formData.subject || "Website Inquiry");
@@ -131,26 +188,39 @@ export default function Contact() {
     <>
       <Navbar />
       <div className="ct">
+        {/* ═══════════ HERO ═══════════ */}
         <section className="ct__hero">
           <div
             className="ct__hero-bg"
             style={{ backgroundImage: `url(${BASE}assets/hero-2.png)` }}
           />
           <div className="ct__hero-overlay" />
+          <div className="ct__hero-particles">
+            {[...Array(6)].map((_, i) => (
+              <div className="ct__hero-particle" key={i} />
+            ))}
+          </div>
           <div className="ct__hero-content">
             <div className="ct__hero-badge ct__ha ct__ha--1">
               <FaGlobeAmericas /> WORLDWIDE SUPPLIER
             </div>
             <h1 className="ct__hero-h1 ct__ha ct__ha--2">
-              GET IN TOUCH <span>FOR EXPANSION JOINTS & COUPLINGS</span>
+              GET IN TOUCH
+              <span>FOR EXPANSION JOINTS &amp; COUPLINGS</span>
             </h1>
             <div className="ct__hero-line ct__ha ct__ha--3" />
             <p className="ct__hero-p ct__ha ct__ha--4">
-              Connecting engineering excellence across India, Europe & Asia
+              Connecting engineering excellence across India, Europe &amp; Asia
             </p>
+          </div>
+          <div className="ct__hero-scroll">
+            <div className="ct__hero-scroll-mouse">
+              <div className="ct__hero-scroll-wheel" />
+            </div>
           </div>
         </section>
 
+        {/* ═══════════ INTRO ═══════════ */}
         <section className="ct__intro">
           <div className="ct__wrap">
             <Reveal dir="up">
@@ -160,249 +230,286 @@ export default function Contact() {
                 The <strong>Flexocon Engineers Pvt. Ltd.</strong> team and our
                 official associate partners are always ready to help you.
                 Whether you need technical guidance, a custom solution or a
-                quick quotation — reach out and we respond within 24 hours.
+                quick quotation — reach out and we respond within 24&nbsp;hours.
               </p>
             </Reveal>
           </div>
         </section>
 
-        <section className="ct__split">
-          <div className="ct__split-img">
-            <img
-              src={`${BASE}assets/india-office.png`}
-              alt="India Office"
-              className="ct__split-real-img"
-              onError={(e) => (e.currentTarget.style.display = "none")}
-            />
-            <div className="ct__split-img-fallback" />
-            <span className="ct__split-label">INDIA 🇮🇳</span>
-          </div>
-          <div className="ct__split-info ct__split-info--india">
-            <Reveal dir="right" delay={100}>
-              <span className="ct__split-eyebrow">INDIA • HEAD OFFICE</span>
-              <h2 className="ct__split-h2">
-                FLEXOCON ENGINEERS
-                <br />
-                PVT. LTD.
-              </h2>
-              <div className="ct__split-grid">
-                <div className="ct__split-col">
-                  <h4>
-                    <FaBuilding /> Factory & Registered Office
+        {/* ═══════════ HEAD OFFICE ═══════════ */}
+        <section className="ct__offices">
+          <div className="ct__wrap">
+            <Reveal dir="up">
+              <div className="ct__sec-head">
+                <span className="ct__tag">
+                  <FaBuilding /> Head Office
+                </span>
+                <h2 className="ct__h2">Flexocon Engineers Pvt. Ltd.</h2>
+                <p className="ct__sub">India • Kolkata</p>
+              </div>
+            </Reveal>
+            <div className="ct__office-cards">
+              <Reveal dir="left" delay={100}>
+                <div className="ct__office-card">
+                  <div className="ct__office-icon-wrap">
+                    <FaBuilding />
+                  </div>
+                  <h4 className="ct__office-label">
+                    Factory &amp; Registered Office
                   </h4>
-                  <p>
-                    <strong>Flexocon Engineers Pvt. Ltd.</strong>
-                    <br />
+                  <p className="ct__office-addr">
                     29 Dr. Gopal Chatterjee Road, Sukchar,
                     <br />
                     Kolkata – 700 115, West Bengal, India.
                   </p>
-                  <a href="tel:+913325230864">
-                    <FaPhoneAlt /> +91 33 2523 0864
-                  </a>
-                  <a href="mailto:info@flexoconindia.com">
-                    <FaEnvelope /> info@flexoconindia.com
+                  <div className="ct__office-links">
+                    <a href="tel:+913325230864">
+                      <FaPhoneAlt /> +91 33 2523 0864
+                    </a>
+                    <a href="mailto:info@flexoconindia.com">
+                      <FaEnvelope /> info@flexoconindia.com
+                    </a>
+                  </div>
+                  <a
+                    href="https://maps.google.com/?q=29+Dr+Gopal+Chatterjee+Road+Sukchar+Kolkata"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ct__office-map-btn"
+                  >
+                    <FaMapMarkerAlt /> View on Map
                   </a>
                 </div>
-                <div className="ct__split-col">
-                  <h4>
-                    <FaIndustry /> Sales & Marketing Office
+              </Reveal>
+              <Reveal dir="right" delay={200}>
+                <div className="ct__office-card">
+                  <div className="ct__office-icon-wrap ct__office-icon-wrap--alt">
+                    <FaIndustry />
+                  </div>
+                  <h4 className="ct__office-label">
+                    Sales &amp; Marketing Office
                   </h4>
-                  <p>
+                  <p className="ct__office-addr">
                     Abakash Apartment, Flat No-1C, 1st Floor,
                     <br />
                     14, MIG Housing Estate, Sodepur,
                     <br />
                     Kolkata - 700 110, West Bengal, India.
                   </p>
-                  <a href="tel:+913335578207">
-                    <FaPhoneAlt /> +91 33 3557 8207
-                  </a>
-                  <a href="mailto:info@flexoconindia.com">
-                    <FaEnvelope /> info@flexoconindia.com
+                  <div className="ct__office-links">
+                    <a href="tel:+913335578207">
+                      <FaPhoneAlt /> +91 33 3557 8207
+                    </a>
+                    <a href="mailto:info@flexoconindia.com">
+                      <FaEnvelope /> info@flexoconindia.com
+                    </a>
+                  </div>
+                  <a
+                    href="https://maps.google.com/?q=Sodepur+Kolkata+700110"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ct__office-map-btn"
+                  >
+                    <FaMapMarkerAlt /> View on Map
                   </a>
                 </div>
-              </div>
-              <div className="ct__split-actions">
-                <a
-                  href="https://maps.google.com/?q=29+Dr+Gopal+Chatterjee+Road+Sukchar+Kolkata"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ct__btn-split"
-                >
-                  VIEW LOCATION
-                </a>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
         </section>
 
-        <section className="ct__split ct__split--reverse">
-          <div className="ct__split-info ct__split-info--vietnam">
-            <Reveal dir="left" delay={100}>
-              <span className="ct__split-eyebrow">
-                ASSOCIATE OFFICE • VIETNAM 🇻🇳
-              </span>
-              <h2 className="ct__split-h2">
-                LE DUONG TRADING
-                <br />
-                INVESTMENT CO. LTD.
+        {/* ═══════════ CONTACT INFORMATION — FULL SPLIT ═══════════ */}
+        <section
+          className={`ct__divsplit ${divVis ? "ct__divsplit--active" : ""}`}
+          ref={divRef}
+        >
+          {/* LEFT — COUPLING */}
+          <div className="ct__divsplit-half ct__divsplit-half--left">
+            <div className="ct__divsplit-inner">
+              <div className="ct__divsplit-label">
+                <span className="ct__divsplit-num">01</span>
+                <FaCog className="ct__divsplit-label-icon" />
+              </div>
+              <h2 className="ct__divsplit-title">
+                For <br />
+                <span>Coupling</span>
               </h2>
-              <div className="ct__split-grid ct__split-grid--single">
-                <div className="ct__split-col">
-                  <h4>Vietnam Office</h4>
-                  <p>
-                    No 28A, 26 Street, Tang Nhon Phu A Ward,
-                    <br />
-                    District 9, HCM City, Vietnam
-                  </p>
-                  <p className="ct__person-line">
-                    <FaUser /> Duong Hien Kha (Henry Duong){" "}
-                    <span>— Director</span>
-                  </p>
-                  <a href="tel:+84982599499">
-                    <FaPhoneAlt /> (+84) 0982 599 499
-                  </a>
-                  <a href="mailto:hienkhabk@gmail.com">
-                    <FaEnvelope /> hienkhabk@gmail.com
-                  </a>
-                  <a href="mailto:flexoconvietnam@gmail.com">
-                    <FaEnvelope /> flexoconvietnam@gmail.com
-                  </a>
-                </div>
-              </div>
-              <div className="ct__split-actions">
-                <a
-                  href="mailto:flexoconvietnam@gmail.com"
-                  className="ct__btn-split ct__btn-split--light"
-                >
-                  EMAIL VIETNAM
-                </a>
-                <a
-                  href="https://maps.google.com/?q=District+9+HCM+City+Vietnam"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ct__btn-split-outline"
-                >
-                  VIEW LOCATION
-                </a>
-              </div>
-            </Reveal>
-          </div>
-          <div className="ct__split-img">
-            <img
-              src={`${BASE}assets/vietnam-office.png`}
-              alt="Vietnam Office"
-              className="ct__split-real-img"
-              onError={(e) => (e.currentTarget.style.display = "none")}
-            />
-            <div className="ct__split-img-fallback ct__split-img-fallback--vn" />
-            <span className="ct__split-label">VIETNAM 🇻🇳</span>
-          </div>
-        </section>
-
-        <section className="ct__team-sec">
-          <div className="ct__wrap">
-            <Reveal dir="up">
-              <div className="ct__sec-head">
-                <span className="ct__tag">
-                  <FaCog /> For Coupling
-                </span>
-                <h2 className="ct__h2">Coupling Division Contacts</h2>
-                <p className="ct__sub">
-                  Resilient, Geared, Pin Bush & Tyre Couplings
-                </p>
-              </div>
-            </Reveal>
-            <div className="ct__team-grid">
-              {couplingTeam.map((p, i) => (
-                <Reveal key={i} dir="up" delay={i * 130}>
-                  <div className="ct__person-card">
-                    <div className="ct__person-top">
-                      <div className="ct__person-avatar">
-                        <FaUserTie />
-                      </div>
-                      <span className="ct__person-num">0{i + 1}</span>
+              <p className="ct__divsplit-desc">
+                Resilient, Geared, Pin Bush &amp; Tyre Couplings
+              </p>
+              <div className="ct__divsplit-line" />
+              <div className="ct__divsplit-people">
+                {couplingTeam.map((p, i) => (
+                  <div
+                    className={`ct__divsplit-person ${divVis ? "ct__divsplit-person--show" : ""}`}
+                    style={{ transitionDelay: `${400 + i * 150}ms` }}
+                    key={i}
+                  >
+                    <div className="ct__divsplit-person-row">
+                      <h4 className="ct__divsplit-pname">{p.name}</h4>
+                      <span className="ct__divsplit-prole">{p.role}</span>
                     </div>
-                    <h3 className="ct__person-name">{p.name}</h3>
-                    <span className="ct__person-role">{p.role}</span>
-                    <div className="ct__person-divider" />
-                    <div className="ct__person-contacts">
-                      <a
-                        href={`tel:${p.phone.replace(/\s/g, "")}`}
-                        className="ct__person-link"
-                      >
-                        <i>
-                          <FaMobileAlt />
-                        </i>{" "}
-                        {p.phone}
+                    <div className="ct__divsplit-plinks">
+                      <a href={`tel:${p.phone.replace(/\s/g, "")}`}>
+                        <FaMobileAlt /> {p.phone}
                       </a>
-                      <a href={`mailto:${p.email}`} className="ct__person-link">
-                        <i>
-                          <FaEnvelope />
-                        </i>{" "}
-                        {p.email}
+                      <a href={`mailto:${p.email}`}>
+                        <FaEnvelope /> {p.email}
                       </a>
                       {p.email2 && (
-                        <a
-                          href={`mailto:${p.email2}`}
-                          className="ct__person-link"
-                        >
-                          <i>
-                            <FaEnvelope />
-                          </i>{" "}
-                          {p.email2}
+                        <a href={`mailto:${p.email2}`}>
+                          <FaEnvelope /> {p.email2}
                         </a>
                       )}
                     </div>
                   </div>
-                </Reveal>
-              ))}
+                ))}
+              </div>
+            </div>
+            <div className="ct__divsplit-bg-text">COUPLING</div>
+          </div>
+
+          {/* RIGHT — EXPANSION JOINTS */}
+          <div className="ct__divsplit-half ct__divsplit-half--right">
+            <div className="ct__divsplit-inner">
+              <div className="ct__divsplit-label ct__divsplit-label--light">
+                <span className="ct__divsplit-num ct__divsplit-num--light">
+                  02
+                </span>
+                <FaShieldAlt className="ct__divsplit-label-icon" />
+              </div>
+              <h2 className="ct__divsplit-title ct__divsplit-title--light">
+                For <br />
+                <span>Expansion Joints</span>
+              </h2>
+              <p className="ct__divsplit-desc ct__divsplit-desc--light">
+                Metallic, Non Metallic &amp; Rubber Expansion Joints
+              </p>
+              <div className="ct__divsplit-line ct__divsplit-line--light" />
+              <div className="ct__divsplit-people">
+                {expansionTeam.map((p, i) => (
+                  <div
+                    className={`ct__divsplit-person ct__divsplit-person--dark ${divVis ? "ct__divsplit-person--show" : ""}`}
+                    style={{ transitionDelay: `${500 + i * 150}ms` }}
+                    key={i}
+                  >
+                    <div className="ct__divsplit-person-row">
+                      <h4 className="ct__divsplit-pname ct__divsplit-pname--light">
+                        {p.name}
+                      </h4>
+                      <span className="ct__divsplit-prole ct__divsplit-prole--light">
+                        {p.role}
+                      </span>
+                    </div>
+                    <div className="ct__divsplit-plinks ct__divsplit-plinks--light">
+                      <a href={`tel:${p.phone.replace(/\s/g, "")}`}>
+                        <FaMobileAlt /> {p.phone}
+                      </a>
+                      <a href={`mailto:${p.email}`}>
+                        <FaEnvelope /> {p.email}
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="ct__divsplit-bg-text ct__divsplit-bg-text--light">
+              EXPANSION
+            </div>
+          </div>
+
+          {/* CENTER BADGE */}
+          <div className="ct__divsplit-center">
+            <div className="ct__divsplit-center-badge">
+              <span>Contact</span>
+              <strong>Information</strong>
             </div>
           </div>
         </section>
 
-        <section className="ct__team-sec ct__team-sec--alt">
-          <div className="ct__wrap">
+        {/* ═══════════ ASSOCIATES — FULL WIDTH PREMIUM ═══════════ */}
+        <section
+          className={`ct__assoc ${assocVis ? "ct__assoc--active" : ""}`}
+          ref={assocRef}
+        >
+          <div className="ct__assoc-bg-pattern" />
+          <div className="ct__assoc-glow ct__assoc-glow--1" />
+          <div className="ct__assoc-glow ct__assoc-glow--2" />
+          <div className="ct__assoc-glow ct__assoc-glow--3" />
+
+          <div className="ct__assoc-wrap">
             <Reveal dir="up">
-              <div className="ct__sec-head">
-                <span className="ct__tag ct__tag--dark">
-                  <FaShieldAlt /> For Expansion Joints / Bellows
+              <div className="ct__assoc-header">
+                <span className="ct__assoc-eyebrow">
+                  <FaHandshake /> OUR GLOBAL NETWORK
                 </span>
-                <h2 className="ct__h2">Expansion Joint Division Contacts</h2>
-                <p className="ct__sub">
-                  Metallic, Non Metallic & Rubber Expansion Joints
+                <h2 className="ct__assoc-main-title">
+                  Official Associate
+                  <br />
+                  <span className="ct__assoc-main-title-highlight">
+                    Partners
+                  </span>
+                </h2>
+                <div className="ct__assoc-title-line" />
+                <p className="ct__assoc-main-sub">
+                  Trusted engineering partnerships spanning continents
                 </p>
               </div>
             </Reveal>
-            <div className="ct__team-grid">
-              {expansionTeam.map((p, i) => (
-                <Reveal key={i} dir="up" delay={i * 130}>
-                  <div className="ct__person-card ct__person-card--alt">
-                    <div className="ct__person-top">
-                      <div className="ct__person-avatar ct__person-avatar--dark">
-                        <FaUserTie />
-                      </div>
-                      <span className="ct__person-num">0{i + 1}</span>
+
+            <div className="ct__assoc-list">
+              {associates.map((a, i) => (
+                <Reveal dir="up" delay={i * 220} key={a.id}>
+                  <div className="ct__assoc-block">
+                    <div className="ct__assoc-block-top">
+                      <span className="ct__assoc-block-num">0{a.id}</span>
+                      <span className="ct__assoc-block-flag">{a.flag}</span>
                     </div>
-                    <h3 className="ct__person-name">{p.name}</h3>
-                    <span className="ct__person-role">{p.role}</span>
-                    <div className="ct__person-divider" />
-                    <div className="ct__person-contacts">
+
+                    <span className="ct__assoc-block-region">
+                      <FaMapMarkerAlt /> {a.region}
+                    </span>
+
+                    <h3 className="ct__assoc-block-company">{a.company}</h3>
+
+                    <p className="ct__assoc-block-addr">{a.address}</p>
+
+                    <div className="ct__assoc-block-divider" />
+
+                    <div className="ct__assoc-block-person">
+                      <span className="ct__assoc-block-person-name">
+                        {a.person}
+                      </span>
+                      <span className="ct__assoc-block-person-role">
+                        {a.designation}
+                      </span>
+                    </div>
+
+                    <div className="ct__assoc-block-contacts">
+                      {a.phones.map((ph, j) => (
+                        <a
+                          href={`tel:${ph.replace(/[\s()]/g, "")}`}
+                          key={`ph-${j}`}
+                          className="ct__assoc-block-link"
+                        >
+                          <FaPhoneAlt /> {ph}
+                        </a>
+                      ))}
+                      {a.emails.map((em, j) => (
+                        <a
+                          href={`mailto:${em}`}
+                          key={`em-${j}`}
+                          className="ct__assoc-block-link"
+                        >
+                          <FaEnvelope /> {em}
+                        </a>
+                      ))}
                       <a
-                        href={`tel:${p.phone.replace(/\s/g, "")}`}
-                        className="ct__person-link"
+                        href={`https://${a.website}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ct__assoc-block-link ct__assoc-block-link--web"
                       >
-                        <i>
-                          <FaMobileAlt />
-                        </i>{" "}
-                        {p.phone}
-                      </a>
-                      <a href={`mailto:${p.email}`} className="ct__person-link">
-                        <i>
-                          <FaEnvelope />
-                        </i>{" "}
-                        {p.email}
+                        <FaGlobe /> {a.website}
                       </a>
                     </div>
                   </div>
@@ -412,6 +519,62 @@ export default function Contact() {
           </div>
         </section>
 
+        {/* ═══════════ WORLD MAP ═══════════ */}
+        <section className="ct__worldmap">
+          <img
+            src={`${BASE}assets/world-map.png`}
+            alt="World Map"
+            className="ct__worldmap-img"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg";
+              e.currentTarget.style.filter = "none";
+              e.currentTarget.style.opacity = "0.9";
+            }}
+          />
+          <div className="ct__worldmap-tint" />
+          <div className="ct__worldmap-pins">
+            <div
+              className="ct__map-pin"
+              style={{ left: "70.5%", top: "46.5%" }}
+            >
+              <div className="ct__map-pin-dot ct__map-pin-dot--india">
+                <FaMapMarkerAlt />
+              </div>
+              <div className="ct__map-pin-pulse ct__map-pin-pulse--india" />
+              <div className="ct__map-pin-card">
+                FLEXOCON INDIA (HQ)
+                <br />
+                <span>Kolkata, West Bengal</span>
+              </div>
+            </div>
+            {associates.map((a) => (
+              <div
+                className="ct__map-pin"
+                key={a.id}
+                style={{ left: a.pinPos.left, top: a.pinPos.top }}
+              >
+                <div
+                  className={`ct__map-pin-dot ct__map-pin-dot--assoc-${a.id}`}
+                >
+                  <FaMapMarkerAlt />
+                </div>
+                <div className="ct__map-pin-pulse" />
+                <div className="ct__map-pin-card">
+                  {a.company}
+                  <br />
+                  <span>{a.region}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="ct__worldmap-title">
+            <span>GLOBAL NETWORK</span>
+            <h3>Flexocon &amp; Associate Offices Worldwide</h3>
+          </div>
+        </section>
+
+        {/* ═══════════ CONTACT FORM ═══════════ */}
         <section className="ct__form-sec">
           <div className="ct__wrap">
             <Reveal dir="up">
@@ -431,8 +594,8 @@ export default function Contact() {
                 <div className="ct__form-info">
                   <h3>Have a Question?</h3>
                   <p>
-                    Fill the form and our team will reply within 24 hours. For
-                    urgent matters call us.
+                    Fill the form and our team will reply within 24&nbsp;hours.
+                    For urgent matters call us directly.
                   </p>
                   <div className="ct__form-quick">
                     <a href="tel:+913325230864">
@@ -442,13 +605,21 @@ export default function Contact() {
                       <FaEnvelope /> info@flexoconindia.com
                     </a>
                   </div>
+                  <div className="ct__form-hours">
+                    <h4>Office Hours</h4>
+                    <p>
+                      Monday – Saturday: 10:00 AM – 6:00 PM (IST)
+                      <br />
+                      Sunday: Closed
+                    </p>
+                  </div>
                 </div>
               </Reveal>
               <Reveal dir="right" delay={150}>
                 <form className="ct__form" onSubmit={handleSubmit}>
                   {submitted && (
                     <div className="ct__form-success">
-                      <FaPaperPlane /> Opening your email app...
+                      <FaPaperPlane /> Opening your email app…
                     </div>
                   )}
                   <div className="ct__form-row">
@@ -539,107 +710,19 @@ export default function Contact() {
           </div>
         </section>
 
-        {/* WORLD MAP - FIXED: India + Vietnam + Saudi Arabia with Address Logo */}
-        <section className="ct__worldmap">
-          <img
-            src={`${BASE}assets/world-map.png`}
-            alt="World Map"
-            className="ct__worldmap-img"
-            onError={(e) => {
-              e.currentTarget.src =
-                "https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg";
-              e.currentTarget.style.filter = "none";
-              e.currentTarget.style.opacity = "0.9";
-            }}
-          />
-          <div className="ct__worldmap-tint" />
-          <div className="ct__worldmap-pins">
-            {/* INDIA */}
-            <div
-              className="ct__map-pin"
-              style={{ left: "70.5%", top: "46.5%" }}
-            >
-              <div className="ct__map-pin-dot ct__map-pin-dot--india">
-                <FaMapMarkerAlt />
-              </div>
-              <div className="ct__map-pin-pulse" />
-              <div className="ct__map-pin-card">
-                FLEXOCON INDIA
-                <br />
-                <span>29 Dr. Gopal Chatterjee Rd, Kolkata</span>
-              </div>
-            </div>
-            {/* VIETNAM */}
-            <div
-              className="ct__map-pin"
-              style={{ left: "79.2%", top: "51.5%" }}
-            >
-              <div className="ct__map-pin-dot ct__map-pin-dot--vietnam">
-                <FaMapMarkerAlt />
-              </div>
-              <div className="ct__map-pin-pulse" />
-              <div className="ct__map-pin-card">
-                VIETNAM ASSOCIATE
-                <br />
-                <span>No 28A, St 26, Dist 9, HCM City</span>
-              </div>
-            </div>
-            {/* SAUDI ARABIA */}
-            <div
-              className="ct__map-pin"
-              style={{ left: "57.2%", top: "42.5%" }}
-            >
-              <div className="ct__map-pin-dot ct__map-pin-dot--saudi">
-                <FaMapMarkerAlt />
-              </div>
-              <div className="ct__map-pin-pulse" />
-              <div className="ct__map-pin-card">
-                SAUDI ARABIA ASSOCIATE
-                <br />
-                <span>Riyadh, Saudi Arabia</span>
-              </div>
-            </div>
-          </div>
-          <div className="ct__magnifier">
-            <div className="ct__magnifier-circle">
-              <img
-                src={`${BASE}assets/world-map.png`}
-                alt=""
-                className="ct__magnifier-img"
-                onError={(e) =>
-                  (e.currentTarget.src =
-                    "https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg")
-                }
-              />
-              <div className="ct__magnifier-pin">
-                <div className="ct__magnifier-dot">
-                  <FaMapMarkerAlt />
-                </div>
-              </div>
-              <div className="ct__magnifier-label">
-                FLEXOCON
-                <br />
-                <strong>INDIA</strong>
-              </div>
-            </div>
-          </div>
-          <div className="ct__worldmap-title">
-            <span>GLOBAL NETWORK</span>
-            <h3>Our Associate Offices Worldwide</h3>
-          </div>
-        </section>
-
-        <section className="ct__map">
+        {/* ═══════════ GOOGLE MAP ═══════════ */}
+        <section className="ct__gmap">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3682.6!2d88.38!3d22.68!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDQwJzQ4LjAiTiA4OMKwMjInNDguMCJF!5e0!3m2!1sen!2sin!4v1"
-            className="ct__map-iframe"
+            className="ct__gmap-iframe"
             loading="lazy"
-            title="Map"
+            title="Flexocon Engineers Location"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
           />
         </section>
 
+        {/* ═══════════ CTA ═══════════ */}
         <section className="ct__cta">
           <div className="ct__wrap">
             <Reveal dir="up">

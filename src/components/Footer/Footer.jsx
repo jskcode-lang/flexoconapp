@@ -32,17 +32,18 @@ const Footer = () => {
         <FaArrowUp />
       </button>
 
-      {/* ══════════════════════════════════════════════════════
+      {/* ═══════════════    ═══════════════════════════════════════
           Upper Footer
           ══════════════════════════════════════════════════════ */}
       <div className="ft__upper">
+        fOOTER
         <div className="ft__wrap">
           <div className="ft__grid">
             {/* ── Col 1: Company ── */}
             <div className="ft__col ft__col--brand">
               <Link to="/" className="ft__logo">
                 <img
-                  src="/assets/images/logo.png"
+                  src="/assets/logo.png"
                   alt="Flexocon Engineers Pvt. Ltd."
                 />
               </Link>
