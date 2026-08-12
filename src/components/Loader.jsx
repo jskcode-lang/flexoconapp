@@ -14,14 +14,13 @@ const Loader = ({ onFinish }) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Simulate smooth progress (0 → 100)
     let start = 0;
     const interval = setInterval(() => {
-      start += Math.random() * 8 + 2; // random increment
+      start += Math.random() * 8 + 2;
       if (start >= 100) {
         start = 100;
         clearInterval(interval);
-        // Wait a bit, then fade out
+
         setTimeout(() => {
           setFadeOut(true);
           setTimeout(() => onFinish && onFinish(), 800);
@@ -30,7 +29,6 @@ const Loader = ({ onFinish }) => {
       setProgress(Math.min(start, 100));
     }, 100);
 
-    // Also wait for window load event as fallback
     const handleLoad = () => {
       start = 100;
       setProgress(100);

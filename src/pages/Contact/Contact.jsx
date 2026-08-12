@@ -76,7 +76,7 @@ const couplingTeam = [
     name: "Mr. Sarthak Sarkar",
     role: "Sales & Marketing",
     phone: "+91 91473 69951",
-    email: "sarthak.flexocon@gmail.com",
+    email: "sarthak@flexoconindia.com",
   },
   {
     name: "Ms. Babita Oraon",
@@ -227,8 +227,8 @@ export default function Contact() {
               <span className="ct__eyebrow">WE ARE READY TO HELP YOU</span>
               <h2 className="ct__intro-h2">CONTACT US</h2>
               <p className="ct__intro-p">
-                The <strong>Flexocon Engineers Pvt. Ltd.</strong> team and our
-                official associate partners are always ready to help you.
+                The <strong>Flexocon Engineers Private Limited</strong> team and
+                our official associate partners are always ready to help you.
                 Whether you need technical guidance, a custom solution or a
                 quick quotation — reach out and we respond within 24&nbsp;hours.
               </p>
@@ -244,7 +244,7 @@ export default function Contact() {
                 <span className="ct__tag">
                   <FaBuilding /> Head Office
                 </span>
-                <h2 className="ct__h2">Flexocon Engineers Pvt. Ltd.</h2>
+                <h2 className="ct__h2">Flexocon Engineers Private Limited</h2>
                 <p className="ct__sub">India • Kolkata</p>
               </div>
             </Reveal>
