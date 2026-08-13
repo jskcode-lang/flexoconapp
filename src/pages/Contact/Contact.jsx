@@ -236,7 +236,7 @@ export default function Contact() {
           </div>
         </section>
 
-        {/* ═══════════ HEAD OFFICE ═══════════ */}
+        {/* ═══════════ HEAD OFFICE — MAP + ADDRESSES SPLIT ═══════════ */}
         <section className="ct__offices">
           <div className="ct__wrap">
             <Reveal dir="up">
@@ -248,8 +248,29 @@ export default function Contact() {
                 <p className="ct__sub">India • Kolkata</p>
               </div>
             </Reveal>
-            <div className="ct__office-cards">
-              <Reveal dir="left" delay={100}>
+          </div>
+          <div className="ct__offices-split">
+            {/* LEFT — Google Map */}
+            <Reveal dir="left" delay={100} className="ct__offices-map-reveal">
+              <div className="ct__offices-map-side">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3682.6!2d88.38!3d22.68!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDQwJzQ4LjAiTiA4OMKwMjInNDguMCJF!5e0!3m2!1sen!2sin!4v1"
+                  className="ct__offices-map-iframe"
+                  loading="lazy"
+                  title="Flexocon Engineers Location"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <div className="ct__offices-map-overlay-strip">
+                  <FaMapMarkerAlt />
+                  <span>Kolkata, West Bengal, India</span>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* RIGHT — Both Office Cards */}
+            <div className="ct__offices-cards-side">
+              <Reveal dir="right" delay={200}>
                 <div className="ct__office-card">
                   <div className="ct__office-icon-wrap">
                     <FaBuilding />
@@ -280,7 +301,7 @@ export default function Contact() {
                   </a>
                 </div>
               </Reveal>
-              <Reveal dir="right" delay={200}>
+              <Reveal dir="right" delay={350}>
                 <div className="ct__office-card">
                   <div className="ct__office-icon-wrap ct__office-icon-wrap--alt">
                     <FaIndustry />
@@ -708,18 +729,6 @@ export default function Contact() {
               </Reveal>
             </div>
           </div>
-        </section>
-
-        {/* ═══════════ GOOGLE MAP ═══════════ */}
-        <section className="ct__gmap">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3682.6!2d88.38!3d22.68!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDQwJzQ4LjAiTiA4OMKwMjInNDguMCJF!5e0!3m2!1sen!2sin!4v1"
-            className="ct__gmap-iframe"
-            loading="lazy"
-            title="Flexocon Engineers Location"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-          />
         </section>
 
         {/* ═══════════ CTA ═══════════ */}

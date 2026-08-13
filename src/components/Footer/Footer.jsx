@@ -250,7 +250,7 @@ const Footer = () => {
             <div className="ft__mid-divider" />
             <div className="ft__mid-item">
               <FaCog />
-              <span>500+ Installations</span>
+              <span>10000+ Installations</span>
             </div>
             <div className="ft__mid-divider" />
             <div className="ft__mid-item">
@@ -268,7 +268,7 @@ const Footer = () => {
         <div className="ft__wrap">
           <div className="ft__bottom-inner">
             <p className="ft__copy">
-              &copy; {currentYear} Flexocon Engineers Pvt. Ltd. All Rights
+              &copy; {currentYear} Flexocon Engineers Private Limited All Rights
               Reserved.
             </p>
             <div className="ft__bottom-links">
