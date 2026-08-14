@@ -13,51 +13,51 @@ import {
   FaStar,
   FaGlobeAmericas,
   FaHandshake,
+  FaChevronRight,
+  FaCircle,
 } from "react-icons/fa";
 import "./Clients.css";
 import Navbar from "../../components/Navbar/Navbar";
 
 const BASE = import.meta.env.BASE_URL;
 
-// ── InView ────────────────────────────────────────────────────
-const useInView = (options = {}) => {
+/* ── InView Hook ── */
+const useInView = (threshold = 0.08) => {
   const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const optsRef = useRef(options);
-
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(el);
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          obs.unobserve(el);
         }
       },
-      { threshold: 0.08, ...optsRef.current },
+      { threshold },
     );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return [ref, isVisible];
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
 };
 
-// ── Reveal ────────────────────────────────────────────────────
+/* ── Reveal ── */
 const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
   const [ref, vis] = useInView();
-  const d = {
+  const map = {
     up: "cli__rv--up",
     down: "cli__rv--down",
     left: "cli__rv--left",
     right: "cli__rv--right",
+    scale: "cli__rv--scale",
     none: "cli__rv--none",
   };
   return (
     <div
       ref={ref}
-      className={`cli__rv ${d[dir]} ${vis ? "cli__rv--vis" : ""} ${className}`}
+      className={`cli__rv ${map[dir] || map.up} ${vis ? "cli__rv--vis" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -65,478 +65,404 @@ const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
   );
 };
 
-// ── Industry Data ─────────────────────────────────────────────
+/* ── Counter Animation ── */
+const AnimatedCounter = ({ target, suffix = "" }) => {
+  const [count, setCount] = useState(0);
+  const [ref, visible] = useInView(0.3);
+  const num = parseInt(target.replace(/[^0-9]/g, ""), 10);
+
+  useEffect(() => {
+    if (!visible) return;
+    let start = 0;
+    const duration = 2000;
+    const step = Math.ceil(num / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= num) {
+        setCount(num);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [visible, num]);
+
+  return (
+    <span ref={ref} className="cli__stat-num">
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
+};
+
+/* ── Industry Data ── */
 const industries = [
   {
     id: "cement",
     name: "Cement Plants",
     icon: <FaCubes />,
     color: "#8D6E63",
+    gradient: "linear-gradient(135deg, #8D6E63, #A1887F)",
     logos: [
-      {
-        src: BASE + "assets/images/clients/cement/cement-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/cement/cement-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/cement/cement-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/cement/cement-4.png",
-        name: "Client 4",
-      },
-      {
-        src: BASE + "assets/images/clients/cement/cement-5.png",
-        name: "Client 5",
-      },
-      {
-        src: BASE + "assets/images/clients/cement/cement-6.png",
-        name: "Client 6",
-      },
+      { src: BASE + "assets/cement-1.png", name: "Client 1" },
+      { src: BASE + "assets/cement-2.png", name: "Client 2" },
+      { src: BASE + "assets/cement-3.png", name: "Client 3" },
+      { src: BASE + "assets/cement-4.png", name: "Client 4" },
+      { src: BASE + "assets/cement-5.png", name: "Client 5" },
+      { src: BASE + "assets/cement-6.jpg", name: "Client 6" },
+      { src: BASE + "assets/cement-7.png", name: "Client 7" },
+      { src: BASE + "assets/cement-8.png", name: "Client 8" },
+      { src: BASE + "assets/cement-9.png", name: "Client 9" },
+      { src: BASE + "assets/cement-10.png", name: "Client 10" },
+      { src: BASE + "assets/cement-11.png", name: "Client 11" },
+      { src: BASE + "assets/cement-12.png", name: "Client 12" },
+      { src: BASE + "assets/cement-13.png", name: "Client 13" },
     ],
   },
   {
     id: "steel",
-    name: "Steel Plants",
+    name: "Steel & Metallurgy",
     icon: <FaIndustry />,
     color: "#546E7A",
+    gradient: "linear-gradient(135deg, #546E7A, #78909C)",
     logos: [
-      {
-        src: BASE + "assets/images/clients/steel/steel-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/steel/steel-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/steel/steel-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/steel/steel-4.png",
-        name: "Client 4",
-      },
-      {
-        src: BASE + "assets/images/clients/steel/steel-5.png",
-        name: "Client 5",
-      },
-      {
-        src: BASE + "assets/images/clients/steel/steel-6.png",
-        name: "Client 6",
-      },
+      { src: BASE + "assets/steel-1.png", name: "Client 1" },
+      { src: BASE + "assets/steel-2.png", name: "Client 2" },
+      { src: BASE + "assets/steel-3.png", name: "Client 3" },
+      { src: BASE + "assets/steel-4.png", name: "Client 4" },
+      { src: BASE + "assets/steel-5.png", name: "Client 5" },
+      { src: BASE + "assets/steel-6.png", name: "Client 6" },
+      { src: BASE + "assets/steel-7.png", name: "Client 7" },
+      { src: BASE + "assets/steel-8.png", name: "Client 8" },
+      { src: BASE + "assets/steel-9.png", name: "Client 9" },
+      { src: BASE + "assets/steel-10.png", name: "Client 10" },
+      { src: BASE + "assets/steel-11.png", name: "Client 11" },
     ],
   },
   {
     id: "oil",
-    name: "Oil & Refinery",
+    name: "Oil, Gas & Petrochemical Refineries",
     icon: <FaOilCan />,
     color: "#F57F17",
+    gradient: "linear-gradient(135deg, #F57F17, #FFB300)",
     logos: [
-      { src: BASE + "assets/images/clients/oil/oil-1.png", name: "Client 1" },
-      { src: BASE + "assets/images/clients/oil/oil-2.png", name: "Client 2" },
-      { src: BASE + "assets/images/clients/oil/oil-3.png", name: "Client 3" },
-      { src: BASE + "assets/images/clients/oil/oil-4.png", name: "Client 4" },
-      { src: BASE + "assets/images/clients/oil/oil-5.png", name: "Client 5" },
-      { src: BASE + "assets/images/clients/oil/oil-6.png", name: "Client 6" },
+      { src: BASE + "assets/oilgas-1.png", name: "Client 1" },
+      { src: BASE + "assets/oilgas-2.png", name: "Client 2" },
+      { src: BASE + "assets/oilgas-3.png", name: "Client 3" },
+      { src: BASE + "assets/oilgas-4.png", name: "Client 4" },
+      { src: BASE + "assets/oilgas-5.png", name: "Client 5" },
     ],
   },
   {
     id: "fertiliser",
-    name: "Fertiliser",
+    name: "Fertilizers & Chemical",
     icon: <FaLeaf />,
     color: "#43A047",
+    gradient: "linear-gradient(135deg, #43A047, #66BB6A)",
     logos: [
-      {
-        src: BASE + "assets/images/clients/fertiliser/fert-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/fertiliser/fert-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/fertiliser/fert-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/fertiliser/fert-4.png",
-        name: "Client 4",
-      },
+      { src: BASE + "assets/chem-1.png", name: "Client 1" },
+      { src: BASE + "assets/chem-2.jpg", name: "Client 2" },
+      { src: BASE + "assets/chem-3.png", name: "Client 3" },
+      { src: BASE + "assets/chem-4.png", name: "Client 4" },
+      { src: BASE + "assets/chem-5.jpeg", name: "Client 5" },
+      { src: BASE + "assets/chem-6.png", name: "Client 6" },
+      { src: BASE + "assets/chem-7.png", name: "Client 7" },
     ],
   },
-  {
-    id: "sugar",
-    name: "Sugar Plant",
-    icon: <FaCubes />,
-    color: "#E65100",
-    logos: [
-      {
-        src: BASE + "assets/images/clients/sugar/sugar-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/sugar/sugar-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/sugar/sugar-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/sugar/sugar-4.png",
-        name: "Client 4",
-      },
-    ],
-  },
-  {
-    id: "aluminium",
-    name: "Aluminium",
-    icon: <FaCog />,
-    color: "#78909C",
-    logos: [
-      {
-        src: BASE + "assets/images/clients/aluminium/alu-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/aluminium/alu-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/aluminium/alu-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/aluminium/alu-4.png",
-        name: "Client 4",
-      },
-    ],
-  },
-  {
-    id: "port",
-    name: "Port",
-    icon: <FaShip />,
-    color: "#0277BD",
-    logos: [
-      { src: BASE + "assets/images/clients/port/port-1.png", name: "Client 1" },
-      { src: BASE + "assets/images/clients/port/port-2.png", name: "Client 2" },
-      { src: BASE + "assets/images/clients/port/port-3.png", name: "Client 3" },
-    ],
-  },
+
   {
     id: "paper",
-    name: "Paper",
+    name: "Pulp & Paper Manufacturing",
     icon: <FaScroll />,
     color: "#6D4C41",
+    gradient: "linear-gradient(135deg, #6D4C41, #8D6E63)",
     logos: [
       {
-        src: BASE + "assets/images/clients/paper/paper-1.png",
+        src: BASE + "assets/paper-1.jpg",
         name: "Client 1",
       },
       {
-        src: BASE + "assets/images/clients/paper/paper-2.png",
+        src: BASE + "assets/paper-2.png",
         name: "Client 2",
       },
       {
-        src: BASE + "assets/images/clients/paper/paper-3.png",
+        src: BASE + "assets/paper-3.jpg",
         name: "Client 3",
       },
       {
-        src: BASE + "assets/images/clients/paper/paper-4.png",
+        src: BASE + "assets/paper-4.png",
         name: "Client 4",
       },
     ],
   },
   {
     id: "power",
-    name: "Power Plants",
+    name: "Power Generation, Infrastructure & Heavy EPC",
     icon: <FaBolt />,
     color: "#FF6F00",
+    gradient: "linear-gradient(135deg, #FF6F00, #FF8F00)",
     logos: [
-      {
-        src: BASE + "assets/images/clients/power/power-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/power/power-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/power/power-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/power/power-4.png",
-        name: "Client 4",
-      },
-      {
-        src: BASE + "assets/images/clients/power/power-5.png",
-        name: "Client 5",
-      },
-      {
-        src: BASE + "assets/images/clients/power/power-6.png",
-        name: "Client 6",
-      },
+      { src: BASE + "assets/power-1.png", name: "Client 1" },
+      { src: BASE + "assets/power-2.png", name: "Client 2" },
+      { src: BASE + "assets/power-3.png", name: "Client 3" },
+      { src: BASE + "assets/power-4.png", name: "Client 4" },
+      { src: BASE + "assets/power-5.png", name: "Client 5" },
+      { src: BASE + "assets/power-6.png", name: "Client 6" },
+      { src: BASE + "assets/power-7.png", name: "Client 7" },
+      { src: BASE + "assets/power-8.png", name: "Client 8" },
+      { src: BASE + "assets/power-9.png", name: "Client 9" },
+      { src: BASE + "assets/power-10.png", name: "Client 10" },
+      { src: BASE + "assets/power-11.png", name: "Client 11" },
+      { src: BASE + "assets/power-12.jpg", name: "Client 12" },
+      { src: BASE + "assets/power-13.jpg", name: "Client 13" },
+      { src: BASE + "assets/power-14.png", name: "Client 14" },
+      { src: BASE + "assets/power-15.png", name: "Client 15" },
     ],
   },
+
   {
-    id: "sponge",
-    name: "Sponge Iron",
-    icon: <FaIndustry />,
-    color: "#4E342E",
-    logos: [
-      {
-        src: BASE + "assets/images/clients/sponge/sponge-1.png",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/images/clients/sponge/sponge-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/images/clients/sponge/sponge-3.png",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/images/clients/sponge/sponge-4.png",
-        name: "Client 4",
-      },
-    ],
+    id: "tyre",
+    name: "Tyre & Rubber Processing",
+    icon: <FaCog />,
+    color: "#37474F",
+    gradient: "linear-gradient(135deg, #37474F, #546E7A)",
+    logos: [],
   },
   {
     id: "oem",
     name: "OEM",
     icon: <FaCog />,
     color: "#1565C0",
+    gradient: "linear-gradient(135deg, #1565C0, #1E88E5)",
     logos: [
-      { src: BASE + "assets/images/clients/oem/oem-1.png", name: "Client 1" },
-      { src: BASE + "assets/images/clients/oem/oem-2.png", name: "Client 2" },
-      { src: BASE + "assets/images/clients/oem/oem-3.png", name: "Client 3" },
-      { src: BASE + "assets/images/clients/oem/oem-4.png", name: "Client 4" },
-      { src: BASE + "assets/images/clients/oem/oem-5.png", name: "Client 5" },
+      { src: BASE + "assets/fans-1.png", name: "Client 1" },
+      { src: BASE + "assets/fans-2.png", name: "Client 2" },
+      { src: BASE + "assets/fans-3.png", name: "Client 3" },
+      { src: BASE + "assets/fans-4.png", name: "Client 4" },
+      { src: BASE + "assets/fans-5.png", name: "Client 5" },
+      { src: BASE + "assets/fans-6.png", name: "Client 6" },
+      { src: BASE + "assets/fans-7.png", name: "Client 7" },
+      { src: BASE + "assets/fans-8.png", name: "Client 8" },
     ],
   },
 ];
 
-// ── Component ─────────────────────────────────────────────────
+const totalClients = industries.reduce((s, i) => s + i.logos.length, 0);
+
+/* ── Component ── */
 const Clients = () => {
   const [activeIndustry, setActiveIndustry] = useState("all");
+  const [heroRef, heroVis] = useInView(0.05);
 
   const filteredIndustries =
     activeIndustry === "all"
-      ? industries
-      : industries.filter((ind) => ind.id === activeIndustry);
+      ? industries.filter((i) => i.logos.length > 0)
+      : industries.filter((i) => i.id === activeIndustry && i.logos.length > 0);
 
   return (
     <div className="cli">
-      {/* ═══════════════════════════════════════════════════════
-          HERO
-          ═══════════════════════════════════════════════════════ */}
       <Navbar />
-      <section className="cli__hero">
-        <div className="cli__hero-pattern" />
-        <div className="cli__hero-gradient" />
+
+      {/* ═══ HERO ═══ */}
+      <section className="cli__hero" ref={heroRef}>
+        <div className="cli__hero-bg">
+          <div className="cli__hero-grid-pattern" />
+          <div className="cli__hero-radial cli__hero-radial--1" />
+          <div className="cli__hero-radial cli__hero-radial--2" />
+          <div className="cli__hero-radial cli__hero-radial--3" />
+        </div>
+        <div className="cli__hero-floats">
+          {[...Array(8)].map((_, i) => (
+            <div className="cli__hero-float" key={i} />
+          ))}
+        </div>
 
         <div className="cli__hero-content">
           <div className="cli__hero-badge cli__ha cli__ha--1">
             <FaHandshake />
-            <span>Trusted Partnerships</span>
+            <span>Trusted Partnerships Worldwide</span>
           </div>
+
           <h1 className="cli__hero-h1 cli__ha cli__ha--2">
             Our Valued
             <span className="cli__hero-accent">Clients</span>
           </h1>
+
           <p className="cli__hero-p cli__ha cli__ha--3">
-            Trusted by leading industries across <strong>11 sectors</strong> —
-            from cement and steel plants to power generation and oil refineries
+            Trusted by leading industries across{" "}
+            <strong>{industries.length} sectors</strong> — from cement &amp;
+            steel to power generation, oil refineries &amp; heavy EPC
           </p>
+
           <div className="cli__hero-line cli__ha cli__ha--4" />
 
-          <div className="cli__hero-counters cli__ha cli__ha--5">
-            <div className="cli__hero-counter">
-              <FaUsers className="cli__hero-counter-icon" />
-              <span className="cli__hero-counter-num">200+</span>
-              <span className="cli__hero-counter-label">Clients</span>
-            </div>
-            <div className="cli__hero-counter-divider" />
-            <div className="cli__hero-counter">
-              <FaIndustry className="cli__hero-counter-icon" />
-              <span className="cli__hero-counter-num">11</span>
-              <span className="cli__hero-counter-label">Industries</span>
-            </div>
-            <div className="cli__hero-counter-divider" />
-            <div className="cli__hero-counter">
-              <FaGlobeAmericas className="cli__hero-counter-icon" />
-              <span className="cli__hero-counter-num">500+</span>
-              <span className="cli__hero-counter-label">Installations</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="cli__hero-wave">
-          <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-            <path
-              d="M0,40 C360,100 720,0 1080,60 C1260,80 1380,40 1440,50 L1440,100 L0,100 Z"
-              fill="#f4f7ff"
-            />
-          </svg>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          INDUSTRY FILTER
-          ═══════════════════════════════════════════════════════ */}
-      <section className="cli__filter">
-        <div className="cli__wrap">
-          <Reveal dir="up">
-            <div className="cli__filter-bar">
-              <button
-                className={`cli__filter-btn ${
-                  activeIndustry === "all" ? "cli__filter-btn--active" : ""
-                }`}
-                onClick={() => setActiveIndustry("all")}
-              >
-                <FaStar />
-                All Industries
-              </button>
-              {industries.map((ind) => (
-                <button
-                  key={ind.id}
-                  className={`cli__filter-btn ${
-                    activeIndustry === ind.id ? "cli__filter-btn--active" : ""
-                  }`}
-                  onClick={() =>
-                    setActiveIndustry(
-                      activeIndustry === ind.id ? "all" : ind.id,
-                    )
-                  }
-                  style={{
-                    "--cli-accent": ind.color,
-                  }}
-                >
-                  {ind.icon}
-                  {ind.name}
-                </button>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          INDUSTRY SECTIONS
-          ═══════════════════════════════════════════════════════ */}
-      <section className="cli__industries">
-        <div className="cli__wrap">
-          {filteredIndustries.map((industry, idx) => (
-            <Reveal key={industry.id} dir="up" delay={idx * 80}>
-              <div className="cli__industry-block">
-                <div className="cli__industry-header">
-                  <div
-                    className="cli__industry-icon"
-                    style={{ background: industry.color }}
-                  >
-                    {industry.icon}
-                  </div>
-                  <div>
-                    <h2 className="cli__industry-name">{industry.name}</h2>
-                    <span className="cli__industry-count">
-                      {industry.logos.length} Client
-                      {industry.logos.length > 1 ? "s" : ""}
-                    </span>
-                  </div>
-                  <div
-                    className="cli__industry-line"
-                    style={{ background: industry.color }}
-                  />
-                </div>
-
-                <div className="cli__logos-grid">
-                  {industry.logos.map((logo, i) => (
-                    <Reveal key={i} dir="up" delay={i * 60}>
-                      <div className="cli__logo-card">
-                        <div className="cli__logo-img-wrap">
-                          <img src={logo.src} alt={logo.name} loading="lazy" />
-                        </div>
-                        <div
-                          className="cli__logo-bar"
-                          style={{ background: industry.color }}
-                        />
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          MARQUEE — ALL LOGOS SCROLLING
-          ═══════════════════════════════════════════════════════ */}
-      <section className="cli__marquee-sec">
-        <div className="cli__wrap">
-          <Reveal dir="up">
-            <div className="cli__sec-head">
-              <span className="cli__tag">Our Network</span>
-              <h2 className="cli__h2">Trusted Across Industries</h2>
-            </div>
-          </Reveal>
-        </div>
-
-        <div className="cli__marquee">
-          <div className="cli__marquee-track">
+          <div className="cli__hero-stats cli__ha cli__ha--5">
             {[
-              ...industries.flatMap((i) => i.logos),
-              ...industries.flatMap((i) => i.logos),
-            ].map((logo, i) => (
-              <div className="cli__marquee-item" key={i}>
-                <img src={logo.src} alt={logo.name} loading="lazy" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="cli__marquee cli__marquee--reverse">
-          <div className="cli__marquee-track cli__marquee-track--reverse">
-            {[
-              ...industries.flatMap((i) => i.logos).reverse(),
-              ...industries.flatMap((i) => i.logos).reverse(),
-            ].map((logo, i) => (
-              <div className="cli__marquee-item" key={i}>
-                <img src={logo.src} alt={logo.name} loading="lazy" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          STATS
-          ═══════════════════════════════════════════════════════ */}
-      <section className="cli__stats">
-        <div className="cli__wrap">
-          <div className="cli__stats-grid">
-            {[
-              { icon: <FaAward />, num: "25+", label: "Years of Trust" },
-              { icon: <FaUsers />, num: "2000+", label: "Valued Clients" },
-              { icon: <FaIndustry />, num: "11", label: "Industry Sectors" },
+              {
+                icon: <FaUsers />,
+                num: "5000+",
+                label: "Clients",
+              },
+              {
+                icon: <FaIndustry />,
+                num: `${industries.length}`,
+                label: "Industries",
+              },
               {
                 icon: <FaGlobeAmericas />,
                 num: "10000+",
                 label: "Installations",
               },
             ].map((s, i) => (
-              <Reveal key={i} dir="up" delay={i * 100}>
+              <div className="cli__hero-stat" key={i}>
+                {i > 0 && <div className="cli__hero-stat-sep" />}
+                <div className="cli__hero-stat-inner">
+                  <span className="cli__hero-stat-icon">{s.icon}</span>
+                  <span className="cli__hero-stat-num">{s.num}</span>
+                  <span className="cli__hero-stat-label">{s.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="cli__hero-bottom">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path
+              d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120Z"
+              fill="#f3f6ff"
+            />
+          </svg>
+        </div>
+
+        <div className="cli__hero-scroll-ind">
+          <div className="cli__hero-scroll-dot" />
+        </div>
+      </section>
+
+      {/* ═══ FILTER ═══ */}
+      <section className="cli__filter">
+        <div className="cli__wrap">
+          <Reveal dir="up">
+            <div className="cli__filter-head">
+              <h2 className="cli__filter-title">Browse by Industry</h2>
+              <p className="cli__filter-sub">
+                Select an industry to view our clients in that sector
+              </p>
+            </div>
+          </Reveal>
+          <Reveal dir="up" delay={100}>
+            <div className="cli__filter-bar">
+              <button
+                className={`cli__fbtn ${activeIndustry === "all" ? "cli__fbtn--on" : ""}`}
+                onClick={() => setActiveIndustry("all")}
+              >
+                <FaStar /> All Industries
+              </button>
+              {industries
+                .filter((i) => i.logos.length > 0)
+                .map((ind) => (
+                  <button
+                    key={ind.id}
+                    className={`cli__fbtn ${activeIndustry === ind.id ? "cli__fbtn--on" : ""}`}
+                    onClick={() =>
+                      setActiveIndustry(
+                        activeIndustry === ind.id ? "all" : ind.id,
+                      )
+                    }
+                    style={{ "--cli-c": ind.color }}
+                  >
+                    {ind.icon} {ind.name}
+                  </button>
+                ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ═══ INDUSTRY SECTIONS ═══ */}
+      <section className="cli__sectors">
+        <div className="cli__wrap">
+          {filteredIndustries.map((industry, idx) => (
+            <IndustryBlock key={industry.id} industry={industry} index={idx} />
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ MARQUEE ═══ */}
+      <section className="cli__marquee-sec">
+        <div className="cli__wrap">
+          <Reveal dir="up">
+            <div className="cli__sec-head">
+              <span className="cli__tag">
+                <FaGlobeAmericas /> Our Network
+              </span>
+              <h2 className="cli__h2">Trusted Across Industries</h2>
+            </div>
+          </Reveal>
+        </div>
+        <div className="cli__marquee">
+          <div className="cli__marquee-track">
+            {[
+              ...industries.flatMap((i) => i.logos),
+              ...industries.flatMap((i) => i.logos),
+            ].map((logo, i) => (
+              <div className="cli__marquee-item" key={`a-${i}`}>
+                <img src={logo.src} alt={logo.name} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="cli__marquee cli__marquee--rev">
+          <div className="cli__marquee-track cli__marquee-track--rev">
+            {[
+              ...industries.flatMap((i) => i.logos).reverse(),
+              ...industries.flatMap((i) => i.logos).reverse(),
+            ].map((logo, i) => (
+              <div className="cli__marquee-item" key={`b-${i}`}>
+                <img src={logo.src} alt={logo.name} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ STATS ═══ */}
+      <section className="cli__stats">
+        <div className="cli__stats-bg" />
+        <div className="cli__wrap">
+          <div className="cli__stats-grid">
+            {[
+              {
+                num: "25",
+                suffix: "+",
+                label: "Years of Trust",
+                icon: <FaAward />,
+              },
+              {
+                num: "5000",
+                suffix: "+",
+                label: "Valued Clients",
+                icon: <FaUsers />,
+              },
+              {
+                num: `${industries.length}`,
+                suffix: "",
+                label: "Industry Sectors",
+                icon: <FaIndustry />,
+              },
+              {
+                num: "10000",
+                suffix: "+",
+                label: "Installations",
+                icon: <FaGlobeAmericas />,
+              },
+            ].map((s, i) => (
+              <Reveal key={i} dir="up" delay={i * 120}>
                 <div className="cli__stat-card">
                   <div className="cli__stat-icon">{s.icon}</div>
-                  <span className="cli__stat-num">{s.num}</span>
+                  <AnimatedCounter target={s.num} suffix={s.suffix} />
                   <span className="cli__stat-label">{s.label}</span>
                 </div>
               </Reveal>
@@ -545,13 +471,12 @@ const Clients = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          CTA
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ CTA ═══ */}
       <section className="cli__cta">
         <div className="cli__wrap">
           <Reveal dir="up">
             <div className="cli__cta-box">
+              <div className="cli__cta-glow" />
               <FaHandshake className="cli__cta-icon" />
               <h2 className="cli__cta-h2">
                 Join Our Growing List of Satisfied Clients
@@ -561,12 +486,65 @@ const Clients = () => {
                 industrial requirements
               </p>
               <a href="/contact" className="cli__cta-btn">
-                Get In Touch
+                Get In Touch <FaChevronRight />
               </a>
             </div>
           </Reveal>
         </div>
       </section>
+    </div>
+  );
+};
+
+/* ── Industry Block Sub-Component ── */
+const IndustryBlock = ({ industry, index }) => {
+  const [ref, vis] = useInView(0.05);
+
+  return (
+    <div
+      ref={ref}
+      className={`cli__sector ${vis ? "cli__sector--vis" : ""}`}
+      style={{ transitionDelay: `${index * 60}ms` }}
+    >
+      <div className="cli__sector-head">
+        <div className="cli__sector-head-left">
+          <div
+            className="cli__sector-icon"
+            style={{ background: industry.gradient }}
+          >
+            {industry.icon}
+          </div>
+          <div>
+            <h2 className="cli__sector-name">{industry.name}</h2>
+            <span className="cli__sector-count">
+              <FaCircle /> {industry.logos.length} Client
+              {industry.logos.length > 1 ? "s" : ""}
+            </span>
+          </div>
+        </div>
+        <div
+          className="cli__sector-line"
+          style={{ background: industry.color }}
+        />
+      </div>
+
+      <div className="cli__logo-grid">
+        {industry.logos.map((logo, i) => (
+          <div
+            className={`cli__logo-card ${vis ? "cli__logo-card--vis" : ""}`}
+            style={{ transitionDelay: `${200 + i * 50}ms` }}
+            key={i}
+          >
+            <div className="cli__logo-inner">
+              <img src={logo.src} alt={logo.name} loading="lazy" />
+            </div>
+            <div
+              className="cli__logo-accent"
+              style={{ background: industry.gradient }}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
