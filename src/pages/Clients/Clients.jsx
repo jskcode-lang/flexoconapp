@@ -194,6 +194,14 @@ const industries = [
         src: BASE + "assets/paper-4.png",
         name: "Client 4",
       },
+      {
+        src: BASE + "assets/paper-5.png",
+        name: "Client 5",
+      },
+      {
+        src: BASE + "assets/paper-6.png",
+        name: "Client 4",
+      },
     ],
   },
   {
