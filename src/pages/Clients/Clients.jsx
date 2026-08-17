@@ -14,7 +14,6 @@ import {
   FaGlobeAmericas,
   FaHandshake,
   FaChevronRight,
-  FaCircle,
 } from "react-icons/fa";
 import "./Clients.css";
 import Navbar from "../../components/Navbar/Navbar";
@@ -170,7 +169,6 @@ const industries = [
       { src: BASE + "assets/chem-7.png", name: "Client 7" },
     ],
   },
-
   {
     id: "paper",
     name: "Pulp & Paper Manufacturing",
@@ -178,30 +176,12 @@ const industries = [
     color: "#6D4C41",
     gradient: "linear-gradient(135deg, #6D4C41, #8D6E63)",
     logos: [
-      {
-        src: BASE + "assets/paper-1.jpg",
-        name: "Client 1",
-      },
-      {
-        src: BASE + "assets/paper-2.png",
-        name: "Client 2",
-      },
-      {
-        src: BASE + "assets/paper-3.jpg",
-        name: "Client 3",
-      },
-      {
-        src: BASE + "assets/paper-4.png",
-        name: "Client 4",
-      },
-      {
-        src: BASE + "assets/paper-5.png",
-        name: "Client 5",
-      },
-      {
-        src: BASE + "assets/paper-6.png",
-        name: "Client 4",
-      },
+      { src: BASE + "assets/paper-1.jpg", name: "Client 1" },
+      { src: BASE + "assets/paper-2.png", name: "Client 2" },
+      { src: BASE + "assets/paper-3.jpg", name: "Client 3" },
+      { src: BASE + "assets/paper-4.png", name: "Client 4" },
+      { src: BASE + "assets/paper-5.png", name: "Client 5" },
+      { src: BASE + "assets/paper-6.png", name: "Client 6" },
     ],
   },
   {
@@ -228,7 +208,6 @@ const industries = [
       { src: BASE + "assets/power-15.png", name: "Client 15" },
     ],
   },
-
   {
     id: "tyre",
     name: "Tyre & Rubber Processing",
@@ -256,9 +235,7 @@ const industries = [
   },
 ];
 
-const totalClients = industries.reduce((s, i) => s + i.logos.length, 0);
-
-/* ── Component ── */
+/* ── Main Component ── */
 const Clients = () => {
   const [activeIndustry, setActiveIndustry] = useState("all");
   const [heroRef, heroVis] = useInView(0.05);
@@ -307,11 +284,7 @@ const Clients = () => {
 
           <div className="cli__hero-stats cli__ha cli__ha--5">
             {[
-              {
-                icon: <FaUsers />,
-                num: "5000+",
-                label: "Clients",
-              },
+              { icon: <FaUsers />, num: "5000+", label: "Clients" },
               {
                 icon: <FaIndustry />,
                 num: `${industries.length}`,
@@ -366,7 +339,7 @@ const Clients = () => {
                 className={`cli__fbtn ${activeIndustry === "all" ? "cli__fbtn--on" : ""}`}
                 onClick={() => setActiveIndustry("all")}
               >
-                <FaStar /> All Industries
+                All Industries
               </button>
               {industries
                 .filter((i) => i.logos.length > 0)
@@ -381,7 +354,7 @@ const Clients = () => {
                     }
                     style={{ "--cli-c": ind.color }}
                   >
-                    {ind.icon} {ind.name}
+                    {ind.name}
                   </button>
                 ))}
             </div>
@@ -516,19 +489,7 @@ const IndustryBlock = ({ industry, index }) => {
     >
       <div className="cli__sector-head">
         <div className="cli__sector-head-left">
-          <div
-            className="cli__sector-icon"
-            style={{ background: industry.gradient }}
-          >
-            {industry.icon}
-          </div>
-          <div>
-            <h2 className="cli__sector-name">{industry.name}</h2>
-            <span className="cli__sector-count">
-              <FaCircle /> {industry.logos.length} Client
-              {industry.logos.length > 1 ? "s" : ""}
-            </span>
-          </div>
+          <h2 className="cli__sector-name">{industry.name}</h2>
         </div>
         <div
           className="cli__sector-line"
