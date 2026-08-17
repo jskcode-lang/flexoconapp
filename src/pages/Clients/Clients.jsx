@@ -434,7 +434,7 @@ const Clients = () => {
                 icon: <FaIndustry />,
               },
               {
-                num: "10000",
+                num: "20000",
                 suffix: "+",
                 label: "Installations",
                 icon: <FaGlobeAmericas />,
