@@ -138,7 +138,7 @@ const milestones = [
   },
   {
     year: "2015",
-    title: "10000+ Installations",
+    title: "20000+ Installations",
     desc: "Crossed 500 successful installations across power plants, steel mills, and cement industries.",
   },
   {
@@ -280,13 +280,13 @@ const AboutUs = () => {
               icon={<FaStar />}
             />
             <Counter
-              number={10000}
+              number={20000}
               suffix="+"
               label="Installations"
               icon={<FaIndustry />}
             />
             <Counter
-              number={2000}
+              number={5000}
               suffix="+"
               label="Happy Clients"
               icon={<FaUsers />}
