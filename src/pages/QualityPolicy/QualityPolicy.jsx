@@ -9,65 +9,56 @@ import {
   FaChevronRight,
   FaTimes,
   FaSearchPlus,
+  FaShieldAlt,
+  FaStar,
 } from "react-icons/fa";
 import "./QualityPolicy.css";
 
-// ── Safe URL helper ──────────────────────────────────────────
 const BASE = import.meta.env.BASE_URL;
-
 const asset = (path) => {
   const clean = path.startsWith("/") ? path.slice(1) : path;
   const base = BASE.endsWith("/") ? BASE : BASE + "/";
   return base + clean;
 };
-
-// ── Certificate image path ────────────────────────────────────
 const CERTIFICATE_IMAGE = asset("assets/iso.jpg");
 
-// ── Hook to detect when element enters viewport ───────────────
-const useInView = (options = {}) => {
+/* ── InView ── */
+const useInView = (threshold = 0.12) => {
   const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(element);
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          obs.unobserve(el);
         }
       },
-      { threshold: 0.15, ...options },
+      { threshold },
     );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  return [ref, isVisible];
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
 };
 
-// ── Animated wrapper component ────────────────────────────────
+/* ── FadeIn ── */
 const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
-  const [ref, isVisible] = useInView();
-
-  const directionClass = {
+  const [ref, visible] = useInView();
+  const dirMap = {
     up: "qp__fade--up",
     down: "qp__fade--down",
     left: "qp__fade--left",
     right: "qp__fade--right",
     none: "qp__fade--none",
+    scale: "qp__fade--scale",
   };
-
   return (
     <div
       ref={ref}
-      className={`qp__fade ${directionClass[direction]} ${
-        isVisible ? "qp__fade--visible" : ""
-      } ${className}`}
+      className={`qp__fade ${dirMap[direction] || dirMap.up} ${visible ? "qp__fade--visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -75,11 +66,54 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
   );
 };
 
-// ── Main Component ────────────────────────────────────────────
+/* ── Data ── */
+const commitments = [
+  {
+    icon: <FaAward />,
+    title: "ISO 9001:2008 Compliance",
+    description:
+      "Full compliance with ISO 9001:2008 Quality Management Systems ensuring world-class standards in every product we deliver.",
+  },
+  {
+    icon: <FaHandshake />,
+    title: "Total Customer Satisfaction",
+    description:
+      "Dedicated to achieving complete customer satisfaction through consistent quality and reliable service delivery.",
+  },
+  {
+    icon: <FaUsers />,
+    title: "Team Involvement",
+    description:
+      "Integrated effort and active involvement of our skilled workforce to maintain the highest quality benchmarks.",
+  },
+  {
+    icon: <FaCogs />,
+    title: "Continual Improvement",
+    description:
+      "Striving for continual improvement in all processes, products, and services we offer to our valued clients.",
+  },
+];
+
+const principles = [
+  "Customer Focus",
+  "Leadership",
+  "Process Approach",
+  "Continual Improvement",
+  "Evidence-Based Decision Making",
+  "Relationship Management",
+];
+
+const certChecklist = [
+  "ISO 9001:2008 Certified Quality Systems",
+  "Statutory & Regulatory Compliance",
+  "Documented Quality Procedures",
+  "Regular Internal & External Audits",
+];
+
+/* ── Component ── */
 const QualityPolicy = () => {
   const [showCertificate, setShowCertificate] = useState(false);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = showCertificate ? "hidden" : "";
     return () => {
@@ -87,112 +121,89 @@ const QualityPolicy = () => {
     };
   }, [showCertificate]);
 
-  // Close modal on Escape key
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") setShowCertificate(false);
     };
-    if (showCertificate) {
-      window.addEventListener("keydown", handleEsc);
-    }
+    if (showCertificate) window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, [showCertificate]);
 
-  const commitments = [
-    {
-      icon: <FaAward />,
-      title: "ISO 9001:2008 Compliance",
-      description:
-        "Full compliance with ISO 9001:2008 Quality Management Systems ensuring world-class standards in every product we deliver.",
-    },
-    {
-      icon: <FaHandshake />,
-      title: "Total Customer Satisfaction",
-      description:
-        "Dedicated to achieving complete customer satisfaction through consistent quality and reliable service delivery.",
-    },
-    {
-      icon: <FaUsers />,
-      title: "Team Involvement",
-      description:
-        "Integrated effort and active involvement of our skilled workforce to maintain the highest quality benchmarks.",
-    },
-    {
-      icon: <FaCogs />,
-      title: "Continual Improvement",
-      description:
-        "Striving for continual improvement in all processes, products, and services we offer to our valued clients.",
-    },
-  ];
-
-  const principles = [
-    "Customer Focus",
-    "Leadership",
-    "Process Approach",
-    "Continual Improvement",
-    "Evidence-Based Decision Making",
-    "Relationship Management",
-  ];
-
-  const certChecklist = [
-    "ISO 9001:2008 Certified Quality Systems",
-    "Statutory & Regulatory Compliance",
-    "Documented Quality Procedures",
-    "Regular Internal & External Audits",
-  ];
-
   return (
     <div className="qp">
-      {/* ══════════════════════════════════════════════════════
-          Hero Section
-          ══════════════════════════════════════════════════════ */}
+      {/* ═══ HERO ═══ */}
       <section className="qp__hero">
-        <div className="qp__hero-overlay" />
+        <div className="qp__hero-grid" />
+        <div className="qp__hero-radial qp__hero-radial--1" />
+        <div className="qp__hero-radial qp__hero-radial--2" />
+        <div className="qp__hero-radial qp__hero-radial--3" />
 
-        <div className="qp__hero-shapes">
-          <div className="qp__shape qp__shape--1" />
-          <div className="qp__shape qp__shape--2" />
-          <div className="qp__shape qp__shape--3" />
-          <div className="qp__shape qp__shape--4" />
+        <div className="qp__hero-floats">
+          {[...Array(6)].map((_, i) => (
+            <div className="qp__hero-float" key={i} />
+          ))}
         </div>
 
         <div className="qp__hero-content">
-          <div className="qp__hero-badge qp__hero-animate qp__hero-animate--1">
+          <div className="qp__hero-badge qp__ha qp__ha--1">
             <FaCertificate />
             <span>ISO 9001:2008 Certified</span>
           </div>
-          <h1 className="qp__hero-title qp__hero-animate qp__hero-animate--2">
-            Quality Policy
+          <h1 className="qp__hero-h1 qp__ha qp__ha--2">
+            Quality
+            <span className="qp__hero-h1-accent"> Policy</span>
           </h1>
-          <p className="qp__hero-subtitle qp__hero-animate qp__hero-animate--3">
+          <p className="qp__hero-sub qp__ha qp__ha--3">
             Excellence is not a destination — it is a continuous journey
           </p>
-          <div className="qp__hero-line qp__hero-animate qp__hero-animate--4" />
+          <div className="qp__hero-line qp__ha qp__ha--4" />
+          <div className="qp__hero-chips qp__ha qp__ha--5">
+            {["ISO Certified", "Customer First", "Continual Improvement"].map(
+              (c, i) => (
+                <span className="qp__hero-chip" key={i}>
+                  <FaStar /> {c}
+                </span>
+              ),
+            )}
+          </div>
+        </div>
+
+        <div className="qp__hero-wave">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+            <path
+              d="M0,50 C360,100 720,0 1080,60 C1260,80 1380,30 1440,50 L1440,100 L0,100Z"
+              fill="#ffffff"
+            />
+          </svg>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          Main Content
-          ══════════════════════════════════════════════════════ */}
+      {/* ═══ CONTENT ═══ */}
       <section className="qp__content">
         <div className="qp__container">
           {/* ── Policy Statement ── */}
           <div className="qp__statement">
             <FadeIn direction="up">
               <div className="qp__statement-header">
-                <div className="qp__statement-icon">
+                <div className="qp__statement-icon-wrap">
                   <FaAward />
                 </div>
-                <h2 className="qp__statement-title">
-                  Our Commitment to Quality
-                </h2>
+                <div>
+                  <h2 className="qp__statement-title">
+                    Our Commitment to Quality
+                  </h2>
+                  <p className="qp__statement-eyebrow">
+                    The foundation of everything we build
+                  </p>
+                </div>
               </div>
             </FadeIn>
 
             <div className="qp__statement-body">
               <FadeIn direction="left" delay={100}>
                 <div className="qp__statement-card">
-                  <div className="qp__statement-quote">&ldquo;</div>
+                  <div className="qp__statement-num">01</div>
+                  <div className="qp__statement-quote-mark">&ldquo;</div>
                   <p className="qp__statement-text">
                     <strong>Flexocon Engineers Pvt. Ltd.</strong> is committed
                     to provide the highest quality of product and service to its
@@ -207,7 +218,8 @@ const QualityPolicy = () => {
 
               <FadeIn direction="right" delay={200}>
                 <div className="qp__statement-card">
-                  <div className="qp__statement-quote">&ldquo;</div>
+                  <div className="qp__statement-num">02</div>
+                  <div className="qp__statement-quote-mark">&ldquo;</div>
                   <p className="qp__statement-text">
                     <strong>Flexocon Engineers Pvt. Ltd.</strong> is committed
                     to achieve{" "}
@@ -226,68 +238,76 @@ const QualityPolicy = () => {
             </div>
           </div>
 
-          {/* ── Commitment Cards ── */}
-          <FadeIn direction="up">
-            <h2 className="qp__section-title">Our Quality Commitments</h2>
-          </FadeIn>
+          {/* ── Commitments ── */}
+          <div className="qp__section-wrap">
+            <FadeIn direction="up">
+              <div className="qp__section-head">
+                <span className="qp__eyebrow">
+                  <FaShieldAlt /> What We Stand For
+                </span>
+                <h2 className="qp__section-title">Our Quality Commitments</h2>
+              </div>
+            </FadeIn>
 
-          <div className="qp__commitments">
             <div className="qp__commitments-grid">
-              {commitments.map((item, index) => (
-                <FadeIn key={index} direction="up" delay={index * 120}>
-                  <div className="qp__card">
-                    <div className="qp__card-icon">{item.icon}</div>
-                    <h3 className="qp__card-title">{item.title}</h3>
-                    <p className="qp__card-text">{item.description}</p>
-                    <div className="qp__card-number">
-                      {String(index + 1).padStart(2, "0")}
+              {commitments.map((item, i) => (
+                <FadeIn key={i} direction="up" delay={i * 120}>
+                  <div className="qp__commit-card">
+                    <div className="qp__commit-top">
+                      <div className="qp__commit-icon">{item.icon}</div>
+                      <span className="qp__commit-num">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                     </div>
+                    <h3 className="qp__commit-title">{item.title}</h3>
+                    <p className="qp__commit-text">{item.description}</p>
+                    <div className="qp__commit-bar" />
                   </div>
                 </FadeIn>
               ))}
             </div>
           </div>
 
-          {/* ── Certificate Section ── */}
-          <div className="qp__certificate">
+          {/* ── Certificate ── */}
+          <div className="qp__cert-section">
             <FadeIn direction="left" delay={100}>
-              <div className="qp__certificate-info">
-                <div className="qp__certificate-badge">
+              <div className="qp__cert-info">
+                <div className="qp__cert-badge">
                   <FaCertificate />
                 </div>
-                <h2 className="qp__certificate-title">Quality Certification</h2>
-                <p className="qp__certificate-text">
+                <h2 className="qp__cert-title">Quality Certification</h2>
+                <p className="qp__cert-text">
                   Our ISO 9001:2008 certification demonstrates our ongoing
                   commitment to quality management excellence and customer
                   satisfaction.
                 </p>
 
-                <ul className="qp__certificate-list">
+                <ul className="qp__cert-list">
                   {certChecklist.map((text, i) => (
                     <FadeIn key={i} direction="left" delay={i * 80 + 200}>
                       <li>
                         <FaCheckCircle className="qp__check" />
-                        {text}
+                        <span>{text}</span>
                       </li>
                     </FadeIn>
                   ))}
                 </ul>
 
                 <button
-                  className="qp__certificate-btn"
+                  className="qp__cert-btn"
                   onClick={() => setShowCertificate(true)}
                 >
                   <FaSearchPlus />
                   View Certificate
-                  <FaChevronRight className="qp__btn-arrow" />
+                  <FaChevronRight className="qp__cert-btn-arrow" />
                 </button>
               </div>
             </FadeIn>
 
             <FadeIn direction="right" delay={200}>
-              <div className="qp__certificate-preview">
+              <div className="qp__cert-preview">
                 <div
-                  className="qp__certificate-image"
+                  className="qp__cert-img-wrap"
                   onClick={() => setShowCertificate(true)}
                   role="button"
                   tabIndex={0}
@@ -300,29 +320,38 @@ const QualityPolicy = () => {
                     alt="ISO 9001:2008 Quality Certificate"
                     loading="lazy"
                   />
-                  <div className="qp__certificate-hover">
+                  <div className="qp__cert-overlay">
                     <FaSearchPlus />
                     <span>Click to View</span>
                   </div>
                 </div>
+                <div className="qp__cert-img-glow" />
               </div>
             </FadeIn>
           </div>
 
           {/* ── Principles ── */}
-          <FadeIn direction="up">
-            <h2 className="qp__section-title">Quality Principles We Follow</h2>
-          </FadeIn>
+          <div className="qp__section-wrap">
+            <FadeIn direction="up">
+              <div className="qp__section-head">
+                <span className="qp__eyebrow">
+                  <FaStar /> How We Operate
+                </span>
+                <h2 className="qp__section-title">
+                  Quality Principles We Follow
+                </h2>
+              </div>
+            </FadeIn>
 
-          <div className="qp__principles">
             <div className="qp__principles-grid">
-              {principles.map((principle, index) => (
-                <FadeIn key={index} direction="up" delay={index * 100}>
+              {principles.map((p, i) => (
+                <FadeIn key={i} direction="up" delay={i * 100}>
                   <div className="qp__principle">
                     <span className="qp__principle-num">
-                      {String(index + 1).padStart(2, "0")}
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="qp__principle-text">{principle}</span>
+                    <span className="qp__principle-text">{p}</span>
+                    <FaChevronRight className="qp__principle-arrow" />
                   </div>
                 </FadeIn>
               ))}
@@ -331,9 +360,7 @@ const QualityPolicy = () => {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          Certificate Modal — FIXED
-          ══════════════════════════════════════════════════════ */}
+      {/* ═══ MODAL ═══ */}
       {showCertificate && (
         <div
           className="qp__modal"
@@ -342,21 +369,18 @@ const QualityPolicy = () => {
           aria-modal="true"
           aria-label="Quality Certificate"
         >
-          <div
-            className="qp__modal-content"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="qp__modal-box" onClick={(e) => e.stopPropagation()}>
             <button
               className="qp__modal-close"
               onClick={() => setShowCertificate(false)}
-              aria-label="Close Certificate"
+              aria-label="Close"
             >
               <FaTimes />
             </button>
             <img
               src={CERTIFICATE_IMAGE}
               alt="ISO 9001:2008 Quality Certificate"
-              className="qp__modal-image"
+              className="qp__modal-img"
             />
           </div>
         </div>
