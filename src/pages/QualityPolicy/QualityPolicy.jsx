@@ -13,6 +13,7 @@ import {
   FaStar,
 } from "react-icons/fa";
 import "./QualityPolicy.css";
+import Navbar from "../../components/Navbar/Navbar.jsx";
 
 const BASE = import.meta.env.BASE_URL;
 const asset = (path) => {
@@ -132,6 +133,7 @@ const QualityPolicy = () => {
   return (
     <div className="qp">
       {/* ═══ HERO ═══ */}
+      <Navbar />
       <section className="qp__hero">
         <div className="qp__hero-grid" />
         <div className="qp__hero-radial qp__hero-radial--1" />
