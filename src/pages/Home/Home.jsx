@@ -529,13 +529,13 @@ const Home = () => {
               icon={<FaAward />}
             />
             <Counter
-              number={500}
+              number={20000}
               suffix="+"
               label="Installations"
               icon={<FaIndustry />}
             />
             <Counter
-              number={200}
+              number={10000}
               suffix="+"
               label="Happy Clients"
               icon={<FaUsers />}
