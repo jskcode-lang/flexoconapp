@@ -16,7 +16,6 @@ import {
   FaWrench,
   FaBoxOpen,
   FaCheckCircle,
-  FaPlay,
 } from "react-icons/fa";
 import "./Home.css";
 import PageHeader from "../../components/PageHeader/PageHeader";
@@ -263,7 +262,9 @@ const ScrollProgress = () => {
   );
 };
 
-/* ── Component ── */
+/* ══════════════════════════════════════════
+   MAIN COMPONENT
+══════════════════════════════════════════ */
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -288,7 +289,9 @@ const Home = () => {
     <div className="hm">
       <ScrollProgress />
 
-      {/* ═══ HERO ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          HERO
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
         <PageHeader />
 
@@ -311,7 +314,7 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Layered overlays */}
+        {/* Overlays */}
         <div className="hm__hero-overlay" />
         <div className="hm__hero-overlay-bottom" />
         <div className="hm__hero-grain" />
@@ -325,7 +328,7 @@ const Home = () => {
           <span className="hm__orb hm__orb--4" />
         </div>
 
-        {/* Floating particles */}
+        {/* Particles */}
         <div className="hm__particles" aria-hidden="true">
           {Array.from({ length: 18 }).map((_, i) => (
             <span
@@ -428,7 +431,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ PRODUCTS ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          PRODUCTS
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__products">
         <div className="hm__products-bg-dots" aria-hidden="true" />
         <div className="hm__wrap">
@@ -486,7 +491,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ ABOUT ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          ABOUT
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__about">
         <div className="hm__about-bg-blob" aria-hidden="true" />
         <div
@@ -571,7 +578,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ COUNTERS ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          COUNTERS
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__counters">
         <div className="hm__counters-overlay" aria-hidden="true" />
         <div className="hm__counters-shapes" aria-hidden="true">
@@ -609,8 +618,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ CLIENTS ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          CLIENTS  ← FIXED SECTION
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__clients">
+        <div className="hm__clients-bg" aria-hidden="true" />
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
@@ -620,13 +632,34 @@ const Home = () => {
               <h2 className="hm__h2">
                 Our Valued <span className="hm__h2-accent">Clients</span>
               </h2>
+              <p className="hm__sub">
+                Proudly serving 2000+ clients across diverse industries
+                nationwide
+              </p>
             </div>
           </Reveal>
         </div>
+
+        {/* Marquee Row 1 — left to right */}
         <div className="hm__marquee">
-          <div className="hm__marquee-track">
+          <div className="hm__marquee-track hm__marquee-track--ltr">
             {[...clientLogos, ...clientLogos].map((logo, i) => (
-              <div className="hm__marquee-item" key={i}>
+              <div className="hm__marquee-item" key={`ltr-${i}`}>
+                <img
+                  src={logo}
+                  alt={`Client ${(i % clientLogos.length) + 1}`}
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Marquee Row 2 — right to left (reversed) */}
+        <div className="hm__marquee hm__marquee--rtl">
+          <div className="hm__marquee-track hm__marquee-track--rtl">
+            {[...clientLogos, ...clientLogos].map((logo, i) => (
+              <div className="hm__marquee-item" key={`rtl-${i}`}>
                 <img
                   src={logo}
                   alt={`Client ${(i % clientLogos.length) + 1}`}
@@ -638,7 +671,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ WHY CHOOSE US ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          WHY CHOOSE US
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__why">
         <div className="hm__why-bg-shape" aria-hidden="true" />
         <div
@@ -707,7 +742,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ TESTIMONIALS ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          TESTIMONIALS
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__testi">
         <div className="hm__testi-bg-shape" aria-hidden="true" />
         <div className="hm__wrap">
@@ -735,7 +772,7 @@ const Home = () => {
               >
                 <div className="hm__testi-stars">
                   {Array.from({ length: t.rating }).map((_, s) => (
-                    <FaStar key={s} style={{ animationDelay: `${s * 0.1}s` }} />
+                    <FaStar key={s} />
                   ))}
                 </div>
                 <p className="hm__testi-text">{t.text}</p>
@@ -764,7 +801,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══ CTA ═══ */}
+      {/* ═══════════════════════════════════════════════════════
+          CTA
+      ═══════════════════════════════════════════════════════ */}
       <section className="hm__cta">
         <div className="hm__cta-canvas" aria-hidden="true">
           <span className="hm__cta-shape hm__cta-shape--1" />

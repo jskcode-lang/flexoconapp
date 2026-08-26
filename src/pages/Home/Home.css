@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
    Home Page — .hm scope — Dark Navy Premium Edition
-   ⚠ Every rule begins with .hm — zero bleed to other pages
+   ⚠ Every rule is prefixed .hm — zero bleed to other pages
 ═══════════════════════════════════════════════════════════════ */
 
-/* ── Reset inside .hm only ── */
+/* ── Scoped reset ── */
 .hm *,
 .hm *::before,
 .hm *::after {
@@ -14,7 +14,7 @@
    CSS VARIABLES
 ═══════════════════════════════════════════════════════════════ */
 .hm {
-    /* Navy palette */
+    /* Navy backgrounds */
     --hm-navy: #020b18;
     --hm-navy-2: #040f1e;
     --hm-navy-3: #071628;
@@ -29,18 +29,15 @@
     --hm-blue-glow: rgba(21, 101, 192, 0.4);
     --hm-blue-glow-sm: rgba(21, 101, 192, 0.2);
 
-    /* Gold accent */
+    /* Gold */
     --hm-gold: #f59e0b;
     --hm-gold-light: #fcd34d;
     --hm-gold-glow: rgba(245, 158, 11, 0.35);
 
-    /* Surfaces */
-    --hm-surface: #06111f;
-    --hm-surface-2: #091929;
-    --hm-surface-3: #0c2035;
+    /* Card surfaces */
     --hm-card: #081525;
     --hm-card-border: rgba(255, 255, 255, 0.06);
-    --hm-card-border-hover: rgba(66, 165, 245, 0.3);
+    --hm-card-border-h: rgba(66, 165, 245, 0.3);
 
     /* Text */
     --hm-text: #e2e8f0;
@@ -63,7 +60,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SCROLL PROGRESS BAR
+   SCROLL PROGRESS
 ═══════════════════════════════════════════════════════════════ */
 .hm__scroll-progress {
     position: fixed;
@@ -77,7 +74,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   REVEAL ANIMATIONS
+   REVEAL
 ═══════════════════════════════════════════════════════════════ */
 .hm__rv {
     opacity: 0;
@@ -131,7 +128,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TAG / PILL
+   TAG
 ═══════════════════════════════════════════════════════════════ */
 .hm__tag {
     display: inline-flex;
@@ -173,7 +170,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   HEADINGS
+   HEADINGS & TEXT
 ═══════════════════════════════════════════════════════════════ */
 .hm__h2 {
     font-size: 2.2rem;
@@ -185,10 +182,7 @@
 }
 
 .hm__h2-accent {
-    background: linear-gradient(135deg,
-            var(--hm-blue-light) 0%,
-            #90caf9 40%,
-            var(--hm-gold) 100%);
+    background: linear-gradient(135deg, var(--hm-blue-light) 0%, #90caf9 40%, var(--hm-gold) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -247,7 +241,6 @@
     transform: translateX(4px);
 }
 
-/* Fill */
 .hm__btn--fill {
     background: linear-gradient(135deg, var(--hm-blue-mid), var(--hm-blue));
     color: #fff;
@@ -273,7 +266,6 @@
     box-shadow: 0 16px 40px var(--hm-blue-glow);
 }
 
-/* Ghost (on dark bg) */
 .hm__btn--ghost {
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
@@ -287,7 +279,6 @@
     transform: translateY(-4px);
 }
 
-/* Outline (on light/dark bg) */
 .hm__btn--outline {
     background: transparent;
     color: var(--hm-blue-light);
@@ -302,7 +293,6 @@
     box-shadow: 0 12px 30px var(--hm-blue-glow);
 }
 
-/* White */
 .hm__btn--white {
     background: #fff;
     color: var(--hm-blue);
@@ -314,7 +304,6 @@
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Ghost white */
 .hm__btn--ghost-white {
     background: transparent;
     color: #fff;
@@ -404,7 +393,7 @@
     pointer-events: none;
 }
 
-/* Animated grid lines */
+/* Animated grid */
 .hm__hero-grid-lines {
     position: absolute;
     inset: 0;
@@ -474,7 +463,7 @@
 .hm__orb--4 {
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(245, 158, 11, 0.25), transparent 70%);
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.22), transparent 70%);
     top: 20%;
     left: 40%;
     animation-delay: -3s;
@@ -546,7 +535,7 @@
     top: 10px;
 }
 
-/* Hero animations */
+/* Hero enter animations */
 .hm__ha {
     opacity: 0;
     animation: hmHeroIn 1s var(--hm-ease) forwards;
@@ -628,10 +617,7 @@
 .hm__hero-accent {
     display: block;
     background: linear-gradient(90deg,
-            var(--hm-blue-light),
-            #e3f2fd,
-            var(--hm-gold-light),
-            var(--hm-blue-light));
+            var(--hm-blue-light), #e3f2fd, var(--hm-gold-light), var(--hm-blue-light));
     background-size: 250% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -652,16 +638,14 @@
     }
 }
 
-/* Subtitle */
+/* Subtext */
 .hm__hero-p {
     font-size: 1.05rem;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.82);
     line-height: 1.85;
-    margin-bottom: 2.5rem;
+    margin: 0 auto 2.5rem;
     max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .hm__hero-p strong {
@@ -669,7 +653,7 @@
     font-weight: 600;
 }
 
-/* Buttons row */
+/* Buttons */
 .hm__hero-btns {
     display: flex;
     gap: 1rem;
@@ -710,10 +694,7 @@
 .hm__hero-stat-divider {
     width: 1px;
     height: 44px;
-    background: linear-gradient(to bottom,
-            transparent,
-            rgba(66, 165, 245, 0.4),
-            transparent);
+    background: linear-gradient(to bottom, transparent, rgba(66, 165, 245, 0.4), transparent);
 }
 
 /* Indicators */
@@ -827,7 +808,7 @@
     }
 }
 
-/* Wave divider */
+/* Wave */
 .hm__wave-bottom {
     position: absolute;
     bottom: -1px;
@@ -853,13 +834,10 @@
     overflow: hidden;
 }
 
-/* Subtle dot-grid background */
 .hm__products-bg-dots {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle,
-            rgba(66, 165, 245, 0.06) 1px,
-            transparent 1px);
+    background-image: radial-gradient(circle, rgba(66, 165, 245, 0.06) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
@@ -872,7 +850,7 @@
     margin-bottom: 3rem;
 }
 
-/* Card */
+/* Product card */
 .hm__prod-card {
     position: relative;
     display: flex;
@@ -882,33 +860,22 @@
     overflow: hidden;
     border: 1px solid var(--hm-card-border);
     text-decoration: none;
-    transition: transform 0.5s var(--hm-ease), box-shadow 0.5s var(--hm-ease),
-        border-color 0.4s var(--hm-ease);
+    transition: transform 0.5s var(--hm-ease), box-shadow 0.5s var(--hm-ease), border-color 0.4s;
     isolation: isolate;
 }
 
-.hm__prod-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--hm-card-border-hover);
-    border-color: rgba(66, 165, 245, 0.25);
-}
-
-/* Gradient border on hover via pseudo */
 .hm__prod-card::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: var(--hm-radius);
     padding: 1px;
-    background: linear-gradient(135deg,
-            var(--hm-blue-mid),
-            var(--hm-gold));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
+    background: linear-gradient(135deg, var(--hm-blue-mid), var(--hm-gold));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     opacity: 0;
-    transition: opacity 0.5s var(--hm-ease);
+    transition: opacity 0.5s;
     pointer-events: none;
     z-index: 4;
 }
@@ -917,7 +884,12 @@
     opacity: 1;
 }
 
-/* Image container */
+.hm__prod-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(66, 165, 245, 0.25);
+    border-color: rgba(66, 165, 245, 0.2);
+}
+
 .hm__prod-img {
     position: relative;
     width: 100%;
@@ -939,20 +911,16 @@
     filter: brightness(1);
 }
 
-/* Image overlay on hover */
 .hm__prod-img-ov {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top,
-            rgba(2, 11, 24, 0.95) 0%,
-            rgba(21, 101, 192, 0.5) 50%,
-            transparent 100%);
+    background: linear-gradient(to top, rgba(2, 11, 24, 0.95), rgba(21, 101, 192, 0.5) 50%, transparent);
     display: flex;
     align-items: flex-end;
     justify-content: center;
     padding-bottom: 1.5rem;
     opacity: 0;
-    transition: opacity 0.45s var(--hm-ease);
+    transition: opacity 0.45s;
 }
 
 .hm__prod-img-ov span {
@@ -977,7 +945,6 @@
     transform: translateY(0);
 }
 
-/* Badge */
 .hm__prod-badge {
     position: absolute;
     top: 12px;
@@ -1005,7 +972,6 @@
     box-shadow: 0 6px 18px var(--hm-blue-glow);
 }
 
-/* Tag */
 .hm__prod-tag {
     position: absolute;
     top: 12px;
@@ -1021,7 +987,6 @@
     z-index: 2;
 }
 
-/* Body */
 .hm__prod-body {
     padding: 1.5rem 1.5rem 1.75rem;
     flex: 1;
@@ -1057,7 +1022,7 @@
     font-size: 0.74rem;
     font-weight: 700;
     color: var(--hm-blue-light);
-    transition: gap 0.35s var(--hm-ease);
+    transition: gap 0.35s;
     letter-spacing: 0.06em;
 }
 
@@ -1074,17 +1039,13 @@
     transform: translateX(4px);
 }
 
-/* Shine sweep */
 .hm__prod-shine {
     position: absolute;
     top: 0;
     left: -120%;
     width: 60%;
     height: 100%;
-    background: linear-gradient(120deg,
-            transparent 35%,
-            rgba(255, 255, 255, 0.06) 50%,
-            transparent 65%);
+    background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.06) 50%, transparent 65%);
     transition: left 0.9s var(--hm-ease-smooth);
     pointer-events: none;
     z-index: 3;
@@ -1094,7 +1055,6 @@
     left: 160%;
 }
 
-/* Glow */
 .hm__prod-glow {
     position: absolute;
     top: 50%;
@@ -1133,12 +1093,9 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.25;
+    opacity: 0.22;
     pointer-events: none;
     z-index: 0;
-}
-
-.hm__about-bg-blob {
     width: 500px;
     height: 500px;
     background: var(--hm-blue-mid);
@@ -1152,7 +1109,7 @@
     background: var(--hm-gold);
     bottom: -100px;
     left: -100px;
-    opacity: 0.1;
+    opacity: 0.08;
 }
 
 .hm__about-grid {
@@ -1162,7 +1119,6 @@
     align-items: center;
 }
 
-/* Image box */
 .hm__about-img-box {
     position: relative;
     padding: 30px 20px 20px 30px;
@@ -1172,9 +1128,7 @@
     position: relative;
     border-radius: var(--hm-radius-lg);
     overflow: hidden;
-    box-shadow:
-        0 30px 70px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(66, 165, 245, 0.12);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(66, 165, 245, 0.12);
     transform: perspective(1200px) rotateY(-4deg) rotateX(1deg);
     transition: transform 0.7s var(--hm-ease);
 }
@@ -1199,23 +1153,17 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg,
-            transparent 55%,
-            rgba(21, 101, 192, 0.25));
+    background: linear-gradient(135deg, transparent 55%, rgba(21, 101, 192, 0.25));
     pointer-events: none;
 }
 
-/* Shine */
 .hm__about-img-shine {
     position: absolute;
     top: -50%;
     left: -120%;
     width: 70%;
     height: 200%;
-    background: linear-gradient(120deg,
-            transparent 40%,
-            rgba(255, 255, 255, 0.1) 50%,
-            transparent 60%);
+    background: linear-gradient(120deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
     transform: rotate(20deg);
     pointer-events: none;
     animation: hmAboutShine 8s ease-in-out infinite;
@@ -1233,7 +1181,6 @@
     }
 }
 
-/* Experience badge */
 .hm__about-exp-badge {
     position: absolute;
     bottom: -8px;
@@ -1276,7 +1223,6 @@
     text-transform: uppercase;
 }
 
-/* Rings */
 .hm__about-img-ring {
     position: absolute;
     bottom: -30px;
@@ -1308,16 +1254,13 @@
     }
 }
 
-/* Dots */
 .hm__about-img-dots {
     position: absolute;
     top: -25px;
     left: -25px;
     width: 110px;
     height: 110px;
-    background-image: radial-gradient(circle,
-            rgba(66, 165, 245, 0.35) 1.5px,
-            transparent 1.5px);
+    background-image: radial-gradient(circle, rgba(66, 165, 245, 0.35) 1.5px, transparent 1.5px);
     background-size: 14px 14px;
     opacity: 0.5;
     z-index: 0;
@@ -1336,7 +1279,6 @@
     }
 }
 
-/* About text side */
 .hm__about-points {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1432,7 +1374,6 @@
     overflow: hidden;
 }
 
-/* Blueprint overlay */
 .hm__counters-overlay {
     position: absolute;
     inset: 0;
@@ -1492,7 +1433,6 @@
     z-index: 2;
 }
 
-/* Single counter */
 .hm__counter {
     text-align: center;
     padding: 2rem 1.5rem;
@@ -1576,22 +1516,42 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   CLIENTS — Marquee
+   CLIENTS — FIXED: Light frosted-glass cards, full-colour logos
 ═══════════════════════════════════════════════════════════════ */
 .hm__clients {
-    padding: 5rem 0;
-    background: var(--hm-surface-2);
+    padding: 5.5rem 0;
+    background: #0b1a2e;
+    /* ← slightly lighter navy for contrast */
     overflow: hidden;
+    position: relative;
 }
 
+/* Subtle radial glow behind the whole section */
+.hm__clients-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%,
+            rgba(21, 101, 192, 0.07) 0%,
+            transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Marquee container ── */
 .hm__marquee {
     width: 100%;
     overflow: hidden;
     position: relative;
-    padding: 1.5rem 0;
+    padding: 0.75rem 0;
+    margin-top: 0.5rem;
+}
+
+/* Second row spacing */
+.hm__marquee--rtl {
     margin-top: 1rem;
 }
 
+/* Fade edges */
 .hm__marquee::before,
 .hm__marquee::after {
     content: "";
@@ -1605,18 +1565,18 @@
 
 .hm__marquee::before {
     left: 0;
-    background: linear-gradient(to right, var(--hm-surface-2), transparent);
+    background: linear-gradient(to right, #0b1a2e, transparent);
 }
 
 .hm__marquee::after {
     right: 0;
-    background: linear-gradient(to left, var(--hm-surface-2), transparent);
+    background: linear-gradient(to left, #0b1a2e, transparent);
 }
 
+/* ── Track (shared) ── */
 .hm__marquee-track {
     display: flex;
-    gap: 4rem;
-    animation: hmMarquee 100s linear infinite;
+    gap: 1.25rem;
     width: max-content;
 }
 
@@ -1624,30 +1584,17 @@
     animation-play-state: paused;
 }
 
-.hm__marquee-item {
-    flex-shrink: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.45;
-    filter: grayscale(1) brightness(1.5);
-    transition: opacity 0.4s, filter 0.4s, transform 0.4s var(--hm-ease-smooth);
+/* LTR (left → right) */
+.hm__marquee-track--ltr {
+    animation: hmMarqueeLTR 90s linear infinite;
 }
 
-.hm__marquee-item:hover {
-    opacity: 1;
-    filter: grayscale(0) brightness(1);
-    transform: scale(1.12) translateY(-3px);
+/* RTL (right → left) */
+.hm__marquee-track--rtl {
+    animation: hmMarqueeRTL 90s linear infinite;
 }
 
-.hm__marquee-item img {
-    height: 100px;
-    width: 150px;
-    object-fit: contain;
-}
-
-@keyframes hmMarquee {
+@keyframes hmMarqueeLTR {
     0% {
         transform: translateX(0);
     }
@@ -1655,6 +1602,59 @@
     100% {
         transform: translateX(-50%);
     }
+}
+
+@keyframes hmMarqueeRTL {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* ── Individual logo card — WHITE FROSTED GLASS ── */
+.hm__marquee-item {
+    flex-shrink: 0;
+    /* White frosted card so logos always show clearly */
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 14px;
+    padding: 10px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(66, 165, 245, 0.0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 160px;
+    /* Full opacity + full colour by default */
+    opacity: 1;
+    filter: none;
+    transition:
+        transform 0.4s var(--hm-ease-smooth),
+        box-shadow 0.4s var(--hm-ease),
+        border-color 0.4s;
+}
+
+.hm__marquee-item:hover {
+    transform: translateY(-6px) scale(1.06);
+    box-shadow:
+        0 12px 32px rgba(21, 101, 192, 0.25),
+        0 0 0 2px rgba(66, 165, 245, 0.4);
+    border-color: rgba(66, 165, 245, 0.5);
+}
+
+.hm__marquee-item img {
+    height: 56px;
+    width: 130px;
+    object-fit: contain;
+    display: block;
+    /* Ensure images are always fully visible */
+    filter: none;
+    opacity: 1;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1676,9 +1676,6 @@
     opacity: 0.18;
     pointer-events: none;
     z-index: 0;
-}
-
-.hm__why-bg-shape {
     background: var(--hm-blue-mid);
     bottom: -150px;
     left: -100px;
@@ -1833,17 +1830,13 @@
     transform: scale(1.1) translate(-4px, -4px);
 }
 
-/* Shine */
 .hm__why-shine {
     position: absolute;
     top: 0;
     left: -120%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(120deg,
-            transparent 38%,
-            rgba(245, 158, 11, 0.05) 50%,
-            transparent 62%);
+    background: linear-gradient(120deg, transparent 38%, rgba(245, 158, 11, 0.05) 50%, transparent 62%);
     transition: left 0.9s var(--hm-ease-smooth);
     pointer-events: none;
 }
@@ -1904,7 +1897,6 @@
     z-index: 1;
 }
 
-/* Animated top line */
 .hm__testi-slider::before {
     content: "";
     position: absolute;
@@ -1912,11 +1904,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg,
-            transparent,
-            var(--hm-blue-mid),
-            var(--hm-gold),
-            transparent);
+    background: linear-gradient(90deg, transparent, var(--hm-blue-mid), var(--hm-gold), transparent);
     animation: hmSliderLine 4s ease-in-out infinite;
 }
 
@@ -2091,7 +2079,6 @@
     overflow: hidden;
 }
 
-/* Blueprint grid */
 .hm__cta::before {
     content: "";
     position: absolute;
@@ -2158,22 +2145,15 @@
     backdrop-filter: blur(8px);
 }
 
-/* Animated gradient border */
 .hm__cta-box::before {
     content: "";
     position: absolute;
     inset: -1px;
     border-radius: calc(var(--hm-radius-xl) + 1px);
     padding: 1px;
-    background: linear-gradient(135deg,
-            var(--hm-gold),
-            transparent 30%,
-            var(--hm-blue-mid) 60%,
-            transparent 80%,
-            var(--hm-gold));
+    background: linear-gradient(135deg, var(--hm-gold), transparent 30%, var(--hm-blue-mid) 60%, transparent 80%, var(--hm-gold));
     background-size: 300% 300%;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     animation: hmCtaBorder 6s linear infinite;
@@ -2226,10 +2206,8 @@
     font-weight: 300;
     color: rgba(255, 255, 255, 0.72);
     line-height: 1.85;
-    margin-bottom: 2.25rem;
+    margin: 0 auto 2.25rem;
     max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .hm__cta-btns {
@@ -2333,8 +2311,15 @@
         display: none;
     }
 
+    .hm__marquee-item {
+        width: 130px;
+        height: 68px;
+        padding: 8px 12px;
+    }
+
     .hm__marquee-item img {
-        height: 36px;
+        height: 46px;
+        width: 108px;
     }
 
     .hm__cta-h2 {
@@ -2356,6 +2341,14 @@
 
     .hm__about-img-ring {
         display: none;
+    }
+
+    .hm__marquee::before {
+        width: 80px;
+    }
+
+    .hm__marquee::after {
+        width: 80px;
     }
 }
 
@@ -2424,6 +2417,17 @@
     .hm__about-img-dots {
         display: none;
     }
+
+    .hm__marquee-item {
+        width: 110px;
+        height: 60px;
+        padding: 6px 10px;
+    }
+
+    .hm__marquee-item img {
+        height: 40px;
+        width: 90px;
+    }
 }
 
 @media (max-width: 399px) {
@@ -2460,12 +2464,8 @@
         font-size: 1.8rem;
     }
 
-    .hm__marquee-item img {
-        height: 30px;
-    }
-
     .hm__marquee-track {
-        gap: 2.5rem;
+        gap: 0.75rem;
     }
 }
 
@@ -2481,7 +2481,6 @@
     }
 }
 
-/* ── Smooth scroll (scoped to html, harmless global) ── */
 html {
     scroll-behavior: smooth;
 }
