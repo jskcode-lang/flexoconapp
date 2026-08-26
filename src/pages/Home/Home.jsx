@@ -16,20 +16,20 @@ import {
   FaWrench,
   FaBoxOpen,
   FaCheckCircle,
+  FaPlay,
 } from "react-icons/fa";
 import "./Home.css";
 import PageHeader from "../../components/PageHeader/PageHeader";
 
-// ── Safe URL helper ──────────────────────────────────────────
+/* ── Safe URL helper ── */
 const BASE = import.meta.env.BASE_URL;
-
 const asset = (path) => {
   const clean = path.startsWith("/") ? path.slice(1) : path;
   const base = BASE.endsWith("/") ? BASE : BASE + "/";
   return base + clean;
 };
 
-// ── Hero Carousel Images (6 images from public/assets/) ──────
+/* ── Hero Carousel Images ── */
 const heroImages = [
   asset("assets/hero-1.png"),
   asset("assets/hero-2.png"),
@@ -39,7 +39,7 @@ const heroImages = [
   asset("assets/hero- 6.png"),
 ];
 
-// ── InView Hook ───────────────────────────────────────────────
+/* ── InView Hook ── */
 const useInView = (opts = {}) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -53,7 +53,7 @@ const useInView = (opts = {}) => {
           obs.unobserve(el);
         }
       },
-      { threshold: 0.1, ...opts },
+      { threshold: 0.12, ...opts },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -61,7 +61,7 @@ const useInView = (opts = {}) => {
   return [ref, visible];
 };
 
-// ── Reveal ────────────────────────────────────────────────────
+/* ── Reveal ── */
 const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
   const [ref, vis] = useInView();
   const d = {
@@ -83,11 +83,10 @@ const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
   );
 };
 
-// ── Counter Hook ──────────────────────────────────────────────
-const useCounter = (target, duration = 2000) => {
+/* ── Counter Hook ── */
+const useCounter = (target, duration = 2200) => {
   const [count, setCount] = useState(0);
   const [ref, visible] = useInView();
-
   useEffect(() => {
     if (!visible) return;
     let start = 0;
@@ -103,16 +102,17 @@ const useCounter = (target, duration = 2000) => {
     }, 16);
     return () => clearInterval(timer);
   }, [visible, target, duration]);
-
   return [ref, count];
 };
 
-// ── Counter Component ─────────────────────────────────────────
+/* ── Counter Component ── */
 const Counter = ({ number, suffix = "", label, icon }) => {
   const [ref, count] = useCounter(number);
   return (
     <div className="hm__counter" ref={ref}>
-      {icon && <div className="hm__counter-icon">{icon}</div>}
+      <div className="hm__counter-icon-wrap">
+        {icon && <div className="hm__counter-icon">{icon}</div>}
+      </div>
       <span className="hm__counter-num">
         {count}
         {suffix}
@@ -122,7 +122,7 @@ const Counter = ({ number, suffix = "", label, icon }) => {
   );
 };
 
-// ── Data ──────────────────────────────────────────────────────
+/* ── Data ── */
 const products = [
   {
     title: "Non Metallic Expansion Joints",
@@ -241,36 +241,58 @@ const testimonials = [
   },
 ];
 
-// ── Component ─────────────────────────────────────────────────
+/* ── Scroll Progress Bar ── */
+const ScrollProgress = () => {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const scrolled = el.scrollTop;
+      const total = el.scrollHeight - el.clientHeight;
+      setProgress(total > 0 ? (scrolled / total) * 100 : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div
+      className="hm__scroll-progress"
+      style={{ width: `${progress}%` }}
+      aria-hidden="true"
+    />
+  );
+};
+
+/* ── Component ── */
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto-slide carousel every 5 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const iv = setInterval(
+      () => setCurrentSlide((p) => (p + 1) % heroImages.length),
+      5000,
+    );
+    return () => clearInterval(iv);
   }, []);
 
-  // Testimonial auto-rotate
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const iv = setInterval(
+      () => setCurrentTestimonial((p) => (p + 1) % testimonials.length),
+      5000,
+    );
+    return () => clearInterval(iv);
   }, []);
 
   return (
     <div className="hm">
-      {/* ═══════════════════════════════════════════════════════
-          HERO — Image Carousel Background
-          ═══════════════════════════════════════════════════════ */}
+      <ScrollProgress />
+
+      {/* ═══ HERO ═══ */}
       <section className="hm__hero">
         <PageHeader />
 
-        {/* ── Image Carousel ── */}
+        {/* Carousel */}
         <div className="hm__hero-carousel">
           {heroImages.map((img, i) => (
             <div
@@ -281,7 +303,7 @@ const Home = () => {
             >
               <img
                 src={img}
-                alt={`Hero slide ${i + 1}`}
+                alt={`Slide ${i + 1}`}
                 className="hm__hero-slide-img"
                 loading={i === 0 ? "eager" : "lazy"}
               />
@@ -289,20 +311,41 @@ const Home = () => {
           ))}
         </div>
 
-        {/* ── Overlays (kept exactly as before) ── */}
+        {/* Layered overlays */}
         <div className="hm__hero-overlay" />
+        <div className="hm__hero-overlay-bottom" />
         <div className="hm__hero-grain" />
+        <div className="hm__hero-grid-lines" />
 
-        {/* Floating orbs */}
-        <div className="hm__hero-orbs">
-          <span className="hm__orb hm__orb--1"></span>
-          <span className="hm__orb hm__orb--2"></span>
-          <span className="hm__orb hm__orb--3"></span>
+        {/* Orbs */}
+        <div className="hm__hero-orbs" aria-hidden="true">
+          <span className="hm__orb hm__orb--1" />
+          <span className="hm__orb hm__orb--2" />
+          <span className="hm__orb hm__orb--3" />
+          <span className="hm__orb hm__orb--4" />
         </div>
 
+        {/* Floating particles */}
+        <div className="hm__particles" aria-hidden="true">
+          {Array.from({ length: 18 }).map((_, i) => (
+            <span
+              key={i}
+              className="hm__particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animationDuration: `${6 + Math.random() * 10}s`,
+                animationDelay: `${Math.random() * 8}s`,
+                width: `${2 + Math.random() * 3}px`,
+                height: `${2 + Math.random() * 3}px`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Content */}
         <div className="hm__hero-content">
           <div className="hm__hero-badge hm__ha hm__ha--1">
-            <span className="hm__hero-badge-dot"></span>
+            <span className="hm__hero-badge-dot" />
             <FaIndustry />
             <span>Since 2001 — Engineering Excellence</span>
           </div>
@@ -320,10 +363,12 @@ const Home = () => {
 
           <div className="hm__hero-btns hm__ha hm__ha--4">
             <Link to="/products" className="hm__btn hm__btn--fill">
-              <span>Explore Products</span> <FaArrowRight />
+              <span>Explore Products</span>
+              <FaArrowRight />
             </Link>
             <Link to="/contact" className="hm__btn hm__btn--ghost">
-              <FaPhoneAlt /> <span>Contact Us</span>
+              <FaPhoneAlt />
+              <span>Contact Us</span>
             </Link>
           </div>
 
@@ -345,7 +390,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ── Carousel Indicators ── */}
+        {/* Indicators */}
         <div className="hm__hero-indicators">
           {heroImages.map((_, i) => (
             <button
@@ -361,34 +406,37 @@ const Home = () => {
           ))}
         </div>
 
-        <div className="hm__hero-scroll">
-          <div className="hm__hero-scroll-line" />
+        {/* Scroll cue */}
+        <div className="hm__hero-scroll" aria-hidden="true">
+          <div className="hm__hero-scroll-mouse">
+            <div className="hm__hero-scroll-wheel" />
+          </div>
         </div>
 
-        {/* Wavy bottom divider */}
+        {/* Wave divider */}
         <div className="hm__wave-bottom">
           <svg
-            viewBox="0 0 1440 120"
+            viewBox="0 0 1440 130"
             preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"
-              fill="#ffffff"
+              d="M0,65 C180,130 360,0 540,65 C720,130 900,0 1080,65 C1260,130 1350,30 1440,65 L1440,130 L0,130 Z"
+              fill="#05080f"
             />
           </svg>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          PRODUCTS
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ PRODUCTS ═══ */}
       <section className="hm__products">
+        <div className="hm__products-bg-dots" aria-hidden="true" />
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
               <span className="hm__tag">
-                <span className="hm__tag-dot"></span> What We Manufacture
+                <span className="hm__tag-dot" />
+                What We Manufacture
               </span>
               <h2 className="hm__h2">
                 Our <span className="hm__h2-accent">Products</span>
@@ -402,7 +450,7 @@ const Home = () => {
 
           <div className="hm__products-grid">
             {products.map((p, i) => (
-              <Reveal key={i} dir="up" delay={i * 100}>
+              <Reveal key={i} dir="up" delay={i * 90}>
                 <Link to={p.link} className="hm__prod-card">
                   <div className="hm__prod-img">
                     <img src={p.image} alt={p.title} loading="lazy" />
@@ -421,7 +469,8 @@ const Home = () => {
                       Learn More <FaChevronRight />
                     </span>
                   </div>
-                  <div className="hm__prod-glow"></div>
+                  <div className="hm__prod-shine" aria-hidden="true" />
+                  <div className="hm__prod-glow" aria-hidden="true" />
                 </Link>
               </Reveal>
             ))}
@@ -437,11 +486,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          ABOUT
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ ABOUT ═══ */}
       <section className="hm__about">
-        <div className="hm__about-bg-shape"></div>
+        <div className="hm__about-bg-blob" aria-hidden="true" />
+        <div
+          className="hm__about-bg-blob hm__about-bg-blob--2"
+          aria-hidden="true"
+        />
         <div className="hm__wrap">
           <div className="hm__about-grid">
             <Reveal dir="left" className="hm__about-left">
@@ -452,22 +503,29 @@ const Home = () => {
                     alt="Flexocon Factory"
                     loading="lazy"
                   />
+                  <div className="hm__about-img-shine" aria-hidden="true" />
                 </div>
                 <div className="hm__about-exp-badge">
-                  <span className="hm__about-exp-num">25+</span>
-                  <span className="hm__about-exp-label">
-                    Years of
-                    <br />
-                    Excellence
-                  </span>
+                  <FaAward className="hm__about-exp-icon" />
+                  <div>
+                    <span className="hm__about-exp-num">25+</span>
+                    <span className="hm__about-exp-label">
+                      Years of Excellence
+                    </span>
+                  </div>
                 </div>
-                <div className="hm__about-img-dots"></div>
+                <div className="hm__about-img-ring" aria-hidden="true" />
+                <div
+                  className="hm__about-img-ring hm__about-img-ring--2"
+                  aria-hidden="true"
+                />
+                <div className="hm__about-img-dots" aria-hidden="true" />
               </div>
             </Reveal>
 
             <Reveal dir="right" delay={150} className="hm__about-right">
               <span className="hm__tag">
-                <span className="hm__tag-dot"></span> About Us
+                <span className="hm__tag-dot" /> About Us
               </span>
               <h2 className="hm__h2">
                 Flexocon Engineers{" "}
@@ -477,14 +535,14 @@ const Home = () => {
                 Established in <strong>2001</strong>, Flexocon Engineers Pvt.
                 Ltd. is backed by qualified Mechanical Engineers having more
                 than <strong>25 years experience</strong> in Mechanical Power
-                Transmission Coupling &amp; Expansion Joints field at various
-                applications.
+                Transmission Coupling &amp; Expansion Joints at various
+                industrial applications.
               </p>
               <p className="hm__p">
-                The technical calculations of our designs are based on{" "}
-                <strong>recognized international standards</strong> and carried
-                out on our specially developed computer program and displayed on
-                our <strong>CAD system</strong>.
+                Technical calculations of our designs are based on{" "}
+                <strong>recognised international standards</strong> and carried
+                out on specially developed computer programs displayed on our{" "}
+                <strong>CAD system</strong>.
               </p>
 
               <div className="hm__about-points">
@@ -500,6 +558,7 @@ const Home = () => {
                   <div className="hm__about-point" key={i}>
                     <div className="hm__about-point-icon">{pt.icon}</div>
                     <span>{pt.text}</span>
+                    <FaCheckCircle className="hm__about-point-check" />
                   </div>
                 ))}
               </div>
@@ -512,13 +571,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          COUNTERS
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ COUNTERS ═══ */}
       <section className="hm__counters">
-        <div className="hm__counters-shapes">
-          <span className="hm__cshape hm__cshape--1"></span>
-          <span className="hm__cshape hm__cshape--2"></span>
+        <div className="hm__counters-overlay" aria-hidden="true" />
+        <div className="hm__counters-shapes" aria-hidden="true">
+          <span className="hm__cshape hm__cshape--1" />
+          <span className="hm__cshape hm__cshape--2" />
+          <span className="hm__cshape hm__cshape--3" />
         </div>
         <div className="hm__wrap">
           <div className="hm__counters-grid">
@@ -550,15 +609,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          CLIENT LOGOS — Infinite Scroll
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ CLIENTS ═══ */}
       <section className="hm__clients">
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
               <span className="hm__tag">
-                <span className="hm__tag-dot"></span> Trusted By
+                <span className="hm__tag-dot" /> Trusted By
               </span>
               <h2 className="hm__h2">
                 Our Valued <span className="hm__h2-accent">Clients</span>
@@ -566,7 +623,6 @@ const Home = () => {
             </div>
           </Reveal>
         </div>
-
         <div className="hm__marquee">
           <div className="hm__marquee-track">
             {[...clientLogos, ...clientLogos].map((logo, i) => (
@@ -582,16 +638,18 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          WHY CHOOSE US
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ WHY CHOOSE US ═══ */}
       <section className="hm__why">
-        <div className="hm__why-bg-shape"></div>
+        <div className="hm__why-bg-shape" aria-hidden="true" />
+        <div
+          className="hm__why-bg-shape hm__why-bg-shape--2"
+          aria-hidden="true"
+        />
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
               <span className="hm__tag">
-                <span className="hm__tag-dot"></span> Our Strengths
+                <span className="hm__tag-dot" /> Our Strengths
               </span>
               <h2 className="hm__h2">
                 Why Choose <span className="hm__h2-accent">Flexocon?</span>
@@ -636,10 +694,12 @@ const Home = () => {
                 <div className="hm__why-card">
                   <div className="hm__why-icon-wrap">
                     <div className="hm__why-icon">{w.icon}</div>
+                    <div className="hm__why-icon-ring" aria-hidden="true" />
                   </div>
                   <h3 className="hm__why-title">{w.title}</h3>
                   <p className="hm__why-text">{w.text}</p>
                   <div className="hm__why-num">0{i + 1}</div>
+                  <div className="hm__why-shine" aria-hidden="true" />
                 </div>
               </Reveal>
             ))}
@@ -647,15 +707,14 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          TESTIMONIALS
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ TESTIMONIALS ═══ */}
       <section className="hm__testi">
+        <div className="hm__testi-bg-shape" aria-hidden="true" />
         <div className="hm__wrap">
           <Reveal dir="up">
             <div className="hm__sec-head">
               <span className="hm__tag">
-                <span className="hm__tag-dot"></span> Testimonials
+                <span className="hm__tag-dot" /> Testimonials
               </span>
               <h2 className="hm__h2">
                 What Our <span className="hm__h2-accent">Clients Say</span>
@@ -676,13 +735,16 @@ const Home = () => {
               >
                 <div className="hm__testi-stars">
                   {Array.from({ length: t.rating }).map((_, s) => (
-                    <FaStar key={s} />
+                    <FaStar key={s} style={{ animationDelay: `${s * 0.1}s` }} />
                   ))}
                 </div>
                 <p className="hm__testi-text">{t.text}</p>
                 <div className="hm__testi-author">
-                  <strong>{t.author}</strong>
-                  <span>{t.company}</span>
+                  <div className="hm__testi-avatar">{t.author.charAt(0)}</div>
+                  <div>
+                    <strong>{t.author}</strong>
+                    <span>{t.company}</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -702,19 +764,18 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          CTA
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══ CTA ═══ */}
       <section className="hm__cta">
-        <div className="hm__cta-shapes">
-          <span className="hm__cta-shape hm__cta-shape--1"></span>
-          <span className="hm__cta-shape hm__cta-shape--2"></span>
+        <div className="hm__cta-canvas" aria-hidden="true">
+          <span className="hm__cta-shape hm__cta-shape--1" />
+          <span className="hm__cta-shape hm__cta-shape--2" />
+          <span className="hm__cta-shape hm__cta-shape--3" />
         </div>
         <div className="hm__wrap">
           <Reveal dir="zoom">
             <div className="hm__cta-box">
               <span className="hm__cta-tag">
-                <span className="hm__tag-dot"></span> Get In Touch
+                <span className="hm__tag-dot" /> Get In Touch
               </span>
               <h2 className="hm__cta-h2">
                 Ready to Discuss Your Requirements?
@@ -725,7 +786,8 @@ const Home = () => {
               </p>
               <div className="hm__cta-btns">
                 <Link to="/contact" className="hm__btn hm__btn--white">
-                  <FaPhoneAlt /> <span>Contact Us</span>
+                  <FaPhoneAlt />
+                  <span>Contact Us</span>
                   <FaArrowRight className="hm__btn-arr" />
                 </Link>
                 <Link to="/products" className="hm__btn hm__btn--ghost-white">
