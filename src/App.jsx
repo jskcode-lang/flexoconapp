@@ -13,6 +13,7 @@ const Clients = lazy(() => import("./pages/Clients/Clients"));
 const QualityPolicy = lazy(() => import("./pages/QualityPolicy/QualityPolicy"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
 const Products = lazy(() => import("./pages/Products/Products"));
+const Blog = lazy(() => import("./pages/Blog/Blog"));
 
 // ─── Expansion Joints ─────────────────────────────────────────
 const NonMetallicExpansionJoints = lazy(
@@ -69,6 +70,7 @@ const App = () => {
               <Route path="/clients" element={<Clients />} />
               <Route path="/quality-policy" element={<QualityPolicy />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
 
               {/* Expansion Joints */}
               <Route
