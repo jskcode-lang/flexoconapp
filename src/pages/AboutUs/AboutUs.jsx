@@ -24,11 +24,10 @@ import {
   FaTools,
 } from "react-icons/fa";
 import "./AboutUs.css";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar"; // Adjust path as needed
 
 // ── Safe URL helper ──────────────────────────────────────────
 const BASE = import.meta.env.BASE_URL;
-
 const asset = (path) => {
   const clean = path.startsWith("/") ? path.slice(1) : path;
   const base = BASE.endsWith("/") ? BASE : BASE + "/";
@@ -237,39 +236,33 @@ const AboutUs = () => {
   return (
     <div className="abu">
       <Navbar />
-      {/* ═══════════════════════════════════════════════════════
-          HERO
-          ═══════════════════════════════════════════════════════ */}
+
+      {/* Ambient Dark Theme Background Elements */}
+      <div className="abu__ambient-grid" />
+      <div className="abu__ambient-glow abu__glow-1" />
+      <div className="abu__ambient-glow abu__glow-2" />
+
+      {/* ═══════════════════════════════════════════════════════ HERO ═══════════════════════════════════════════════════════ */}
       <section className="abu__hero">
-        <div className="abu__hero-bg" />
-        <div className="abu__hero-shapes">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
         <div className="abu__hero-content">
           <div className="abu__hero-badge abu__ha abu__ha--1">
             <FaIndustry />
             <span>Established 2001</span>
           </div>
           <h1 className="abu__hero-h1 abu__ha abu__ha--2">
-            About
-            <span className="abu__hero-accent">Flexocon Engineers</span>
+            Engineering
+            <span className="abu__hero-accent"> Excellence.</span>
           </h1>
           <p className="abu__hero-p abu__ha abu__ha--3">
             Precision engineering backed by <strong>25+ years</strong> of
             expertise in Mechanical Power Transmission Couplings &amp; Expansion
-            Joints
+            Joints.
           </p>
           <div className="abu__hero-line abu__ha abu__ha--4" />
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          COUNTERS
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════════════════ COUNTERS ═══════════════════════════════════════════════════════ */}
       <section className="abu__counters">
         <div className="abu__wrap">
           <div className="abu__counters-grid">
@@ -286,7 +279,7 @@ const AboutUs = () => {
               icon={<FaIndustry />}
             />
             <Counter
-              number={5000}
+              number={500}
               suffix="+"
               label="Happy Clients"
               icon={<FaUsers />}
@@ -301,14 +294,13 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          STORY
-          ═══════════════════════════════════════════════════════ */}
-      <section className="abu__story">
+      {/* ═══════════════════════════════════════════════════════ STORY ═══════════════════════════════════════════════════════ */}
+      <section className="abu__story abu__section-alt">
         <div className="abu__wrap">
           <div className="abu__story-grid">
             <Reveal dir="left" className="abu__story-left">
               <div className="abu__story-img-box">
+                <div className="abu__story-img-overlay" />
                 <img
                   src={asset("assets/images/about-factory.jpg")}
                   alt="Flexocon Factory"
@@ -332,26 +324,24 @@ const AboutUs = () => {
 
             <Reveal dir="right" delay={150} className="abu__story-right">
               <span className="abu__tag">Our Story</span>
-              <h2 className="abu__h2">Engineering Excellence Since 2001</h2>
+              <h2 className="abu__h2">Forging the Future Since 2001</h2>
               <p className="abu__p">
                 <strong>Flexocon Engineers Pvt. Ltd.</strong> was established in{" "}
                 <strong>2001</strong>, backed by a team of qualified Mechanical
                 Engineers having more than <strong>25 years experience</strong>{" "}
-                in Mechanical Power Transmission Coupling &amp; Expansion Joints
-                field at various applications.
+                in Mechanical Power Transmission Coupling &amp; Expansion
+                Joints.
               </p>
               <p className="abu__p">
-                The technical calculations of Flexocon Engineers Pvt. Ltd.
-                designs are based on{" "}
-                <strong>recognized international standards</strong> and carried
-                out on our specially developed computer program and displayed on
-                our <strong>CAD system</strong>.
+                Our technical calculations are rooted in{" "}
+                <strong>recognized international standards</strong>, executed on
+                specially developed computer programs, and rendered with
+                precision on our <strong>CAD system</strong>.
               </p>
               <p className="abu__p">
-                From our state-of-the-art manufacturing facility in Kolkata, we
-                deliver precision-engineered products that meet the most
-                demanding industrial requirements — from power plants and steel
-                mills to cement industries and petrochemical facilities.
+                Operating from our state-of-the-art manufacturing facility in
+                Kolkata, we deliver precision-engineered products that power the
+                most demanding industrial requirements globally.
               </p>
 
               <div className="abu__story-highlights">
@@ -375,19 +365,17 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          QUOTE
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════════════════ QUOTE ═══════════════════════════════════════════════════════ */}
       <section className="abu__quote-sec">
         <div className="abu__wrap">
           <Reveal dir="up">
             <div className="abu__quote-box">
               <FaQuoteLeft className="abu__quote-icon" />
               <blockquote className="abu__quote-text">
-                Our designs are based on recognized international standards,
+                "Our designs are based on recognized international standards,
                 carried out on specially developed computer programs and
                 displayed on our CAD system — ensuring precision, reliability,
-                and excellence in every product we deliver.
+                and excellence in every product we deliver."
               </blockquote>
               <div className="abu__quote-author">
                 <strong>Flexocon Engineers Pvt. Ltd.</strong>
@@ -398,17 +386,15 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          VALUES
-          ═══════════════════════════════════════════════════════ */}
-      <section className="abu__values">
+      {/* ═══════════════════════════════════════════════════════ VALUES ═══════════════════════════════════════════════════════ */}
+      <section className="abu__values abu__section-alt">
         <div className="abu__wrap">
           <Reveal dir="up">
             <div className="abu__sec-head">
               <span className="abu__tag">What We Stand For</span>
               <h2 className="abu__h2">Our Core Values</h2>
               <p className="abu__sub">
-                The principles that drive everything we do
+                The unyielding principles that drive everything we engineer.
               </p>
             </div>
           </Reveal>
@@ -430,17 +416,15 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          TIMELINE
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════════════════ TIMELINE ═══════════════════════════════════════════════════════ */}
       <section className="abu__timeline-sec">
         <div className="abu__wrap">
           <Reveal dir="up">
             <div className="abu__sec-head">
-              <span className="abu__tag">Our Journey</span>
+              <span className="abu__tag">Our Legacy</span>
               <h2 className="abu__h2">Company Milestones</h2>
               <p className="abu__sub">
-                Key moments in our 25+ year journey of engineering excellence
+                Key moments in our 25+ year journey of engineering excellence.
               </p>
             </div>
           </Reveal>
@@ -453,9 +437,7 @@ const AboutUs = () => {
                 delay={i * 100}
               >
                 <div
-                  className={`abu__tl-item ${
-                    i % 2 === 0 ? "abu__tl-item--left" : "abu__tl-item--right"
-                  }`}
+                  className={`abu__tl-item ${i % 2 === 0 ? "abu__tl-item--left" : "abu__tl-item--right"}`}
                 >
                   <div className="abu__tl-dot">
                     <span>{m.year}</span>
@@ -471,17 +453,16 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          CAPABILITIES
-          ═══════════════════════════════════════════════════════ */}
-      <section className="abu__caps">
+      {/* ═══════════════════════════════════════════════════════ CAPABILITIES ═══════════════════════════════════════════════════════ */}
+      <section className="abu__caps abu__section-alt">
         <div className="abu__wrap">
           <Reveal dir="up">
             <div className="abu__sec-head">
               <span className="abu__tag">What We Offer</span>
               <h2 className="abu__h2">Our Capabilities</h2>
               <p className="abu__sub">
-                Advanced engineering and manufacturing capabilities
+                Advanced engineering and manufacturing capabilities built for
+                the future.
               </p>
             </div>
           </Reveal>
@@ -505,9 +486,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          TEAM
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════════════════ TEAM ═══════════════════════════════════════════════════════ */}
       <section className="abu__team">
         <div className="abu__wrap">
           <Reveal dir="up">
@@ -515,7 +494,8 @@ const AboutUs = () => {
               <span className="abu__tag">Our People</span>
               <h2 className="abu__h2">The Team Behind Flexocon</h2>
               <p className="abu__sub">
-                Qualified engineers and skilled professionals driving innovation
+                Qualified engineers and skilled professionals driving
+                innovation.
               </p>
             </div>
           </Reveal>
@@ -534,14 +514,12 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          OFFICES
-          ═══════════════════════════════════════════════════════ */}
-      <section className="abu__offices">
+      {/* ═══════════════════════════════════════════════════════ OFFICES ═══════════════════════════════════════════════════════ */}
+      <section className="abu__offices abu__section-alt">
         <div className="abu__wrap">
           <Reveal dir="up">
             <div className="abu__sec-head">
-              <span className="abu__tag">Find Us</span>
+              <span className="abu__tag">Global Reach</span>
               <h2 className="abu__h2">Our Offices</h2>
             </div>
           </Reveal>
@@ -586,7 +564,7 @@ const AboutUs = () => {
                       <br />
                       14, MIG Housing Estate, Sodepur,
                       <br />
-                      Kolkata - 700 110, West Bengal, India.
+                      Kolkata - 700 110, India.
                     </p>
                   </div>
                   <div className="abu__office-row">
@@ -606,26 +584,22 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          CTA
-          ═══════════════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════════════════ CTA ═══════════════════════════════════════════════════════ */}
       <section className="abu__cta">
         <div className="abu__wrap">
           <Reveal dir="up">
             <div className="abu__cta-box">
-              <h2 className="abu__cta-h2">
-                Let's Build Something Great Together
-              </h2>
+              <h2 className="abu__cta-h2">Ready to Build the Future?</h2>
               <p className="abu__cta-p">
                 Get in touch with our engineering team to discuss your
-                requirements — we're ready to deliver excellence.
+                requirements. Precision and excellence await.
               </p>
               <div className="abu__cta-btns">
-                <Link to="/contact" className="abu__btn abu__btn--white">
+                <Link to="/contact" className="abu__btn abu__btn--solid">
                   <FaPhoneAlt /> Contact Us
                   <FaArrowRight className="abu__btn-arr" />
                 </Link>
-                <Link to="/products" className="abu__btn abu__btn--ghost">
+                <Link to="/products" className="abu__btn abu__btn--outline">
                   View Products
                 </Link>
               </div>
