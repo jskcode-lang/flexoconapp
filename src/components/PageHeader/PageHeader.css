@@ -682,7 +682,8 @@
     }
 
     .ph__logo img {
-        height: 38px;
+        height: 90px;
+        width: 100px;
     }
 
     .ph__brochure {
