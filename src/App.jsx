@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Navbar from "./components/Navbar/Navbar"; // <-- Imported Navbar
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
@@ -13,7 +14,7 @@ const Clients = lazy(() => import("./pages/Clients/Clients"));
 const QualityPolicy = lazy(() => import("./pages/QualityPolicy/QualityPolicy"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
 const Products = lazy(() => import("./pages/Products/Products"));
-const Blog = lazy(() => import("./pages/Blog/Blog"));
+const Blog = lazy(() => import("./pages/Blog/Blog")); // <-- Imported Blog
 
 // ─── Expansion Joints ─────────────────────────────────────────
 const NonMetallicExpansionJoints = lazy(
@@ -59,6 +60,9 @@ const App = () => {
     <div className="app">
       <ScrollToTop />
 
+      {/* Navbar rendered here globally */}
+      <Navbar />
+
       <main className="app__main">
         <ErrorBoundary>
           <Suspense fallback={<Loader />}>
@@ -70,8 +74,7 @@ const App = () => {
               <Route path="/clients" element={<Clients />} />
               <Route path="/quality-policy" element={<QualityPolicy />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/blog" element={<Blog />} />
-
+              <Route path="/blog" element={<Blog />} /> {/* <-- Blog Route */}
               {/* Expansion Joints */}
               <Route
                 path="/products/expansion-joints/non-metallic"
@@ -85,7 +88,6 @@ const App = () => {
                 path="/products/expansion-joints/rubber"
                 element={<RubberExpansionJoints />}
               />
-
               {/* Mechanical Power Transmission */}
               <Route
                 path="/products/mechanical-power-transmission/resilient-coupling"
@@ -99,7 +101,6 @@ const App = () => {
                 path="/products/mechanical-power-transmission/pin-bush-tyre-coupling"
                 element={<PinBushTyreCoupling />}
               />
-
               {/* 404 Fallback */}
               <Route path="*" element={<NotFound />} />
             </Routes>

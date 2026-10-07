@@ -18,7 +18,6 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import "./Home.css";
-import PageHeader from "../../components/PageHeader/PageHeader";
 
 /* ── Safe URL helper ── */
 const BASE = import.meta.env.BASE_URL;
@@ -293,8 +292,6 @@ const Home = () => {
           HERO
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
-        <PageHeader />
-
         {/* Carousel */}
         <div className="hm__hero-carousel">
           {heroImages.map((img, i) => (

@@ -343,7 +343,20 @@ const Navbar = () => {
                 </NavLink>
               </li>
 
+              {/* Added Blog Link */}
               <li className="fullscreen-menu__item" style={{ "--i": 6 }}>
+                <NavLink
+                  to="/blog"
+                  className={({ isActive }) =>
+                    `fullscreen-menu__link ${isActive ? "fullscreen-menu__link--active" : ""}`
+                  }
+                  onClick={closeMenu}
+                >
+                  <span>Blog</span>
+                </NavLink>
+              </li>
+
+              <li className="fullscreen-menu__item" style={{ "--i": 7 }}>
                 <NavLink
                   to="/contact"
                   className={({ isActive }) =>
@@ -432,6 +445,9 @@ const Navbar = () => {
         <div className="fullscreen-menu__footer">
           <NavLink to="/about" onClick={closeMenu}>
             About
+          </NavLink>
+          <NavLink to="/blog" onClick={closeMenu}>
+            Blog
           </NavLink>
           <NavLink to="/contact" onClick={closeMenu}>
             Contact
