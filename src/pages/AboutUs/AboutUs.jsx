@@ -302,7 +302,7 @@ const AboutUs = () => {
               <div className="abu__story-img-box">
                 <div className="abu__story-img-overlay" />
                 <img
-                  src={asset("assets/images/about-factory.jpg")}
+                  src={asset("assets/flexocon_fac.jpeg")}
                   alt="Flexocon Factory"
                   loading="lazy"
                 />

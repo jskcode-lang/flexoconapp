@@ -1,23 +1,49 @@
 /* ═══════════════════════════════════════════════════════════════
-   About Us — .abu scope — Dark Premium Theme
-   ═══════════════════════════════════════════════════════════════ */
+   About Us — .abu Scope
+   Blue Section → White Section → Blue Section → White Section
+   All styles are safely scoped with .abu
+═══════════════════════════════════════════════════════════════ */
 
 .abu {
     position: relative;
-    background-color: #030712;
-    /* Deep dark slate */
+    background-color: #06172d;
     color: #f8fafc;
     font-family: "Inter", "Poppins", sans-serif;
     overflow: hidden;
+
+    --abu-navy: #06172d;
+    --abu-navy-dark: #030d1c;
+    --abu-navy-mid: #0a2342;
+    --abu-blue: #2563eb;
+    --abu-blue-light: #60a5fa;
+    --abu-blue-pale: #dbeafe;
+    --abu-text: #f8fafc;
+    --abu-muted: #94a3b8;
+    --abu-white-bg: #f8fafc;
+    --abu-white-card: #ffffff;
+    --abu-dark-text: #0f172a;
+    --abu-dark-muted: #475569;
+    --abu-border-dark: rgba(255, 255, 255, 0.08);
+    --abu-border-light: #e2e8f0;
 }
 
-/* Ambient Background Elements */
+/* ── Safe component reset ── */
+.abu *,
+.abu *::before,
+.abu *::after {
+    box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AMBIENT BACKGROUND ELEMENTS
+═══════════════════════════════════════════════════════════════ */
+
 .abu__ambient-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
     background-size: 40px 40px;
     z-index: 0;
     pointer-events: none;
@@ -35,7 +61,7 @@
 .abu__glow-1 {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.15), transparent 70%);
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.18), transparent 70%);
     top: -10%;
     left: -10%;
 }
@@ -43,15 +69,20 @@
 .abu__glow-2 {
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.1), transparent 70%);
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.12), transparent 70%);
     bottom: 20%;
     right: -20%;
 }
 
-/* Mature Reveal Animations */
+/* ═══════════════════════════════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════════════════════════════ */
+
 .abu__rv {
     opacity: 0;
-    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+    transition:
+        opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 1s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: opacity, transform;
 }
 
@@ -80,16 +111,56 @@
     transform: translate(0, 0);
 }
 
-/* Base Layout & Typography */
+/* ═══════════════════════════════════════════════════════════════
+   BASE LAYOUT
+═══════════════════════════════════════════════════════════════ */
+
 .abu section {
     position: relative;
     z-index: 1;
 }
 
+/*
+  BLUE SECTION:
+  Every normal About page section remains dark navy / blue.
+*/
+.abu__hero,
+.abu__counters,
+.abu__story,
+.abu__quote-sec,
+.abu__values,
+.abu__timeline-sec,
+.abu__caps,
+.abu__team,
+.abu__offices,
+.abu__cta {
+    background-color: var(--abu-navy);
+}
+
+/*
+  WHITE SECTION:
+  Add abu__section-alt to any section you want white.
+  Example:
+  <section className="abu__story abu__section-alt">
+*/
 .abu__section-alt {
-    background: rgba(255, 255, 255, 0.015);
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    background: var(--abu-white-bg) !important;
+    color: var(--abu-dark-text);
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* White section grid texture */
+.abu__section-alt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(37, 99, 235, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
 }
 
 .abu__wrap {
@@ -107,7 +178,7 @@
     display: inline-block;
     padding: 0.4rem 1.2rem;
     background: rgba(59, 130, 246, 0.1);
-    color: #60A5FA;
+    color: #60a5fa;
     border: 1px solid rgba(59, 130, 246, 0.2);
     font-size: 0.75rem;
     font-weight: 600;
@@ -129,27 +200,29 @@
 .abu__p {
     font-size: 0.95rem;
     font-weight: 300;
-    color: #94A3B8;
-    /* Muted slate */
+    color: #94a3b8;
     line-height: 1.8;
     margin-bottom: 1.2rem;
 }
 
 .abu__p strong {
     font-weight: 500;
-    color: #E2E8F0;
+    color: #e2e8f0;
 }
 
 .abu__sub {
     font-size: 0.95rem;
     font-weight: 300;
-    color: #94A3B8;
+    color: #94a3b8;
     line-height: 1.7;
     max-width: 600px;
     margin: 0 auto;
 }
 
-/* Buttons */
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════════════════ */
+
 .abu__btn {
     display: inline-flex;
     align-items: center;
@@ -165,12 +238,12 @@
 
 .abu__btn--solid {
     background: #ffffff;
-    color: #0F172A;
+    color: #0f172a;
     border: 1px solid #ffffff;
 }
 
 .abu__btn--solid:hover {
-    background: #E2E8F0;
+    background: #e2e8f0;
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
 }
@@ -196,7 +269,10 @@
     transform: translateX(4px);
 }
 
-/* ═══ HERO ════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════════════ */
+
 .abu__hero {
     min-height: 500px;
     display: flex;
@@ -220,7 +296,7 @@
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 30px;
-    color: #94A3B8;
+    color: #94a3b8;
     font-size: 0.75rem;
     margin-bottom: 2rem;
     backdrop-filter: blur(10px);
@@ -269,7 +345,7 @@
 
 .abu__hero-accent {
     display: inline-block;
-    background: linear-gradient(135deg, #60A5FA, #3B82F6);
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -277,7 +353,7 @@
 
 .abu__hero-p {
     font-size: 1.1rem;
-    color: #94A3B8;
+    color: #94a3b8;
     max-width: 600px;
     margin: 0 auto 2.5rem;
 }
@@ -289,11 +365,14 @@
 .abu__hero-line {
     width: 60px;
     height: 2px;
-    background: #3B82F6;
+    background: #3b82f6;
     margin: 0 auto;
 }
 
-/* ═══ COUNTERS ════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   COUNTERS
+═══════════════════════════════════════════════════════════════ */
+
 .abu__counters {
     padding: 3rem 0 5rem;
 }
@@ -326,7 +405,7 @@
     height: 50px;
     border-radius: 12px;
     background: rgba(59, 130, 246, 0.1);
-    color: #60A5FA;
+    color: #60a5fa;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,7 +416,7 @@
 }
 
 .abu__counter:hover .abu__counter-icon {
-    background: #3B82F6;
+    background: #3b82f6;
     color: #ffffff;
     transform: scale(1.05);
 }
@@ -353,12 +432,15 @@
 .abu__counter-label {
     font-size: 0.8rem;
     font-weight: 400;
-    color: #94A3B8;
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* ═══ STORY ═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   STORY
+═══════════════════════════════════════════════════════════════ */
+
 .abu__story {
     padding: 6rem 0;
 }
@@ -408,13 +490,13 @@
     display: block;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #60A5FA;
+    color: #60a5fa;
     line-height: 1;
 }
 
 .abu__story-badge-text {
     font-size: 0.65rem;
-    color: #94A3B8;
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -436,7 +518,7 @@
 
 .abu__story-float-icon {
     font-size: 1.5rem;
-    color: #60A5FA;
+    color: #60a5fa;
 }
 
 .abu__story-float-title {
@@ -448,7 +530,7 @@
 
 .abu__story-float-sub {
     font-size: 0.7rem;
-    color: #94A3B8;
+    color: #94a3b8;
 }
 
 .abu__story-highlights {
@@ -475,17 +557,20 @@
 }
 
 .abu__story-hl-icon {
-    color: #3B82F6;
+    color: #3b82f6;
     font-size: 1rem;
 }
 
 .abu__story-hl span {
     font-size: 0.85rem;
     font-weight: 400;
-    color: #E2E8F0;
+    color: #e2e8f0;
 }
 
-/* ═══ QUOTE ═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   QUOTE
+═══════════════════════════════════════════════════════════════ */
+
 .abu__quote-sec {
     padding: 6rem 0;
 }
@@ -495,7 +580,9 @@
     margin: 0 auto;
     text-align: center;
     padding: 3rem;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.03) 0%,
+            rgba(255, 255, 255, 0) 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 24px;
 }
@@ -509,7 +596,7 @@
 .abu__quote-text {
     font-size: 1.3rem;
     font-weight: 300;
-    color: #E2E8F0;
+    color: #e2e8f0;
     line-height: 1.8;
     font-style: italic;
     margin-bottom: 2rem;
@@ -523,10 +610,13 @@
 
 .abu__quote-author span {
     font-size: 0.8rem;
-    color: #94A3B8;
+    color: #94a3b8;
 }
 
-/* ═══ VALUES ══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   VALUES
+═══════════════════════════════════════════════════════════════ */
+
 .abu__values {
     padding: 6rem 0;
 }
@@ -559,7 +649,7 @@
     height: 48px;
     border-radius: 12px;
     background: rgba(59, 130, 246, 0.1);
-    color: #60A5FA;
+    color: #60a5fa;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -570,7 +660,7 @@
 }
 
 .abu__value-card:hover .abu__value-icon {
-    background: #3B82F6;
+    background: #3b82f6;
     color: #ffffff;
 }
 
@@ -583,7 +673,7 @@
 
 .abu__value-text {
     font-size: 0.9rem;
-    color: #94A3B8;
+    color: #94a3b8;
     line-height: 1.7;
 }
 
@@ -601,7 +691,10 @@
     color: rgba(59, 130, 246, 0.1);
 }
 
-/* ═══ TIMELINE ════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   TIMELINE
+═══════════════════════════════════════════════════════════════ */
+
 .abu__timeline-sec {
     padding: 6rem 0;
 }
@@ -619,7 +712,9 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: linear-gradient(to bottom, rgba(59, 130, 246, 0.5), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(to bottom,
+            rgba(59, 130, 246, 0.5),
+            rgba(255, 255, 255, 0.05));
     transform: translateX(-50%);
 }
 
@@ -648,9 +743,9 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: #030712;
-    border: 2px solid #3B82F6;
-    color: #60A5FA;
+    background: #06172d;
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -682,12 +777,15 @@
 
 .abu__tl-desc {
     font-size: 0.9rem;
-    color: #94A3B8;
+    color: #94a3b8;
     line-height: 1.7;
     margin: 0;
 }
 
-/* ═══ CAPABILITIES & TEAM ════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   CAPABILITIES & TEAM
+═══════════════════════════════════════════════════════════════ */
+
 .abu__caps,
 .abu__team {
     padding: 6rem 0;
@@ -730,7 +828,7 @@
     height: 44px;
     border-radius: 10px;
     background: rgba(59, 130, 246, 0.1);
-    color: #60A5FA;
+    color: #60a5fa;
     border: 1px solid rgba(59, 130, 246, 0.2);
     display: flex;
     align-items: center;
@@ -741,7 +839,7 @@
 
 .abu__cap-card:hover .abu__cap-icon,
 .abu__team-card:hover .abu__team-icon {
-    background: #3B82F6;
+    background: #3b82f6;
     color: #ffffff;
 }
 
@@ -770,11 +868,14 @@
 .abu__cap-text,
 .abu__team-text {
     font-size: 0.85rem;
-    color: #94A3B8;
+    color: #94a3b8;
     line-height: 1.7;
 }
 
-/* ═══ OFFICES ═════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   OFFICES
+═══════════════════════════════════════════════════════════════ */
+
 .abu__offices {
     padding: 6rem 0;
 }
@@ -802,7 +903,7 @@
     display: inline-block;
     padding: 0.3rem 1rem;
     background: rgba(59, 130, 246, 0.1);
-    color: #60A5FA;
+    color: #60a5fa;
     font-size: 0.7rem;
     font-weight: 600;
     border-radius: 20px;
@@ -829,7 +930,7 @@
     align-items: flex-start;
     gap: 12px;
     font-size: 0.9rem;
-    color: #94A3B8;
+    color: #94a3b8;
     line-height: 1.6;
 }
 
@@ -838,7 +939,7 @@
 }
 
 .abu__office-row a {
-    color: #60A5FA;
+    color: #60a5fa;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -848,16 +949,19 @@
 }
 
 .abu__office-icon {
-    color: #3B82F6;
+    color: #3b82f6;
     font-size: 1rem;
     margin-top: 4px;
     flex-shrink: 0;
 }
 
-/* ═══ CTA ═════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   CTA
+═══════════════════════════════════════════════════════════════ */
+
 .abu__cta {
     padding: 7rem 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.5) 100%);
+    background: linear-gradient(180deg, #06172d 0%, #030d1c 100%);
 }
 
 .abu__cta-box {
@@ -865,9 +969,8 @@
     max-width: 700px;
     margin: 0 auto;
     padding: 4rem 2rem;
-    background: rgba(30, 58, 138, 0.1);
-    /* Very subtle blue glow */
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: rgba(30, 58, 138, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.25);
     border-radius: 24px;
     backdrop-filter: blur(10px);
 }
@@ -882,7 +985,7 @@
 
 .abu__cta-p {
     font-size: 1.05rem;
-    color: #94A3B8;
+    color: #94a3b8;
     line-height: 1.7;
     margin-bottom: 2.5rem;
 }
@@ -894,8 +997,239 @@
     flex-wrap: wrap;
 }
 
-/* ═══ RESPONSIVE ══════════════════════════════════════════════ */
-@media(max-width: 1024px) {
+/* ═══════════════════════════════════════════════════════════════
+   WHITE SECTION OVERRIDES
+   Only affects elements inside .abu__section-alt
+═══════════════════════════════════════════════════════════════ */
+
+.abu .abu__section-alt .abu__tag {
+    background: rgba(37, 99, 235, 0.08);
+    color: #1d4ed8;
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+.abu .abu__section-alt .abu__h2 {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__p,
+.abu .abu__section-alt .abu__sub {
+    color: #475569;
+}
+
+.abu .abu__section-alt .abu__p strong {
+    color: #0f172a;
+}
+
+/* White section buttons */
+.abu .abu__section-alt .abu__btn--solid {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.abu .abu__section-alt .abu__btn--solid:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+}
+
+.abu .abu__section-alt .abu__btn--outline {
+    color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.35);
+}
+
+.abu .abu__section-alt .abu__btn--outline:hover {
+    color: #ffffff;
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+/* White counters */
+.abu .abu__section-alt .abu__counter {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+.abu .abu__section-alt .abu__counter:hover {
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 18px 35px rgba(37, 99, 235, 0.14);
+}
+
+.abu .abu__section-alt .abu__counter-icon {
+    background: rgba(37, 99, 235, 0.09);
+    color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+.abu .abu__section-alt .abu__counter-num {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__counter-label {
+    color: #64748b;
+}
+
+/* White Story */
+.abu .abu__section-alt .abu__story-img-box {
+    border-color: #e2e8f0;
+}
+
+.abu .abu__section-alt .abu__story-img-overlay {
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.08));
+}
+
+.abu .abu__section-alt .abu__story-hl {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.abu .abu__section-alt .abu__story-hl:hover {
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+.abu .abu__section-alt .abu__story-hl span {
+    color: #334155;
+}
+
+/* White quote */
+.abu .abu__section-alt .abu__quote-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.abu .abu__section-alt .abu__quote-text {
+    color: #334155;
+}
+
+.abu .abu__section-alt .abu__quote-author strong {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__quote-author span {
+    color: #64748b;
+}
+
+/* White value cards */
+.abu .abu__section-alt .abu__value-card {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+.abu .abu__section-alt .abu__value-card:hover {
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 18px 35px rgba(37, 99, 235, 0.14);
+}
+
+.abu .abu__section-alt .abu__value-title {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__value-text {
+    color: #64748b;
+}
+
+.abu .abu__section-alt .abu__value-num {
+    color: rgba(37, 99, 235, 0.08);
+}
+
+/* White timeline */
+.abu .abu__section-alt .abu__timeline::before {
+    background: linear-gradient(to bottom,
+            rgba(37, 99, 235, 0.55),
+            rgba(37, 99, 235, 0.08));
+}
+
+.abu .abu__section-alt .abu__tl-dot {
+    background: #ffffff;
+    color: #2563eb;
+}
+
+.abu .abu__section-alt .abu__tl-card {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+.abu .abu__section-alt .abu__tl-card:hover {
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.35);
+}
+
+.abu .abu__section-alt .abu__tl-title {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__tl-desc {
+    color: #64748b;
+}
+
+/* White capabilities and team cards */
+.abu .abu__section-alt .abu__cap-card,
+.abu .abu__section-alt .abu__team-card {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+.abu .abu__section-alt .abu__cap-card:hover,
+.abu .abu__section-alt .abu__team-card:hover {
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 18px 35px rgba(37, 99, 235, 0.14);
+}
+
+.abu .abu__section-alt .abu__cap-num {
+    color: rgba(37, 99, 235, 0.35);
+}
+
+.abu .abu__section-alt .abu__cap-title,
+.abu .abu__section-alt .abu__team-title {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__cap-text,
+.abu .abu__section-alt .abu__team-text {
+    color: #64748b;
+}
+
+/* White office cards */
+.abu .abu__section-alt .abu__office-card {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+.abu .abu__section-alt .abu__office-card:hover {
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 18px 35px rgba(37, 99, 235, 0.14);
+}
+
+.abu .abu__section-alt .abu__office-name {
+    color: #0f172a;
+}
+
+.abu .abu__section-alt .abu__office-row {
+    color: #475569;
+}
+
+.abu .abu__section-alt .abu__office-row a:hover {
+    color: #1d4ed8;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
 
     .abu__counters-grid,
     .abu__caps-grid,
@@ -933,7 +1267,7 @@
     }
 }
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
     .abu__hero {
         min-height: 400px;
         padding-top: 5rem;
@@ -983,7 +1317,7 @@
     }
 }
 
-@media(max-width: 480px) {
+@media (max-width: 480px) {
     .abu__hero-h1 {
         font-size: 2.2rem;
     }
@@ -1022,13 +1356,22 @@
         display: none;
     }
 
-    /* Hide float on tiny screens to avoid clutter */
-
     .abu__rv--left {
         transform: translateX(-20px);
     }
 
     .abu__rv--right {
         transform: translateX(20px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .abu *,
+    .abu *::before,
+    .abu *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
