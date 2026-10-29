@@ -31,6 +31,7 @@ import {
 } from "react-icons/fa";
 import "./MetallicExpansionJoints.css";
 
+const BASE = import.meta.env.BASE_URL || "/flexoconapp";
 // ── InView Hook ───────────────────────────────────────────────
 const useInView = (options = {}) => {
   const ref = useRef(null);
@@ -52,7 +53,7 @@ const useInView = (options = {}) => {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  });
 
   return [ref, isVisible];
 };
@@ -83,7 +84,7 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
 };
 
 // ── Image Constants ───────────────────────────────────────────
-const HERO_IMAGE = "/assets/img_2.png";
+const HERO_IMAGE = BASE + "/assets/img_2.png";
 
 // ── Data ──────────────────────────────────────────────────────
 const highlights = [
@@ -289,29 +290,20 @@ const whyChooseUs = [
 
 const galleryImages = [
   {
-    src: "/assets/images/mej-1.jpg",
+    src: BASE + "/assets/images/mej-1.jpg",
     title: "Single Bellows Expansion Joint",
   },
   {
-    src: "/assets/images/mej-2.jpg",
+    src: BASE + "/assets/images/mej-2.jpg",
     title: "Universal Expansion Joint",
   },
   {
-    src: "/assets/images/mej-3.jpg",
+    src: BASE + "/assets/images/mej-3.jpg",
     title: "Tied Expansion Joint Assembly",
   },
-  {
-    src: "/assets/images/mej-4.jpg",
-    title: "Hinged Expansion Joint",
-  },
-  {
-    src: "/assets/images/mej-5.jpg",
-    title: "Gimbal Expansion Joint",
-  },
-  {
-    src: "/assets/images/mej-6.jpg",
-    title: "Pressure Balanced Joint",
-  },
+  { src: BASE + "/assets/images/mej-4.jpg", title: "Hinged Expansion Joint" },
+  { src: BASE + "/assets/images/mej-5.jpg", title: "Gimbal Expansion Joint" },
+  { src: BASE + "/assets/images/mej-6.jpg", title: "Pressure Balanced Joint" },
 ];
 
 // ── Component ─────────────────────────────────────────────────
@@ -869,10 +861,9 @@ const MetallicExpansionJoints = () => {
               </span>
             </div>
           </div>
+          <Footer />
         </div>
       )}
-
-      <Footer />
     </div>
   );
 };
