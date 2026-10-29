@@ -290,20 +290,20 @@ const whyChooseUs = [
 
 const galleryImages = [
   {
-    src: BASE + "/assets/images/mej-1.jpg",
+    src: BASE + "/assets/img_1.png",
     title: "Single Bellows Expansion Joint",
   },
   {
-    src: BASE + "/assets/images/mej-2.jpg",
+    src: BASE + "/assets/img_2.png",
     title: "Universal Expansion Joint",
   },
   {
-    src: BASE + "/assets/images/mej-3.jpg",
+    src: BASE + "/assets/img_3.png",
     title: "Tied Expansion Joint Assembly",
   },
-  { src: BASE + "/assets/images/mej-4.jpg", title: "Hinged Expansion Joint" },
-  { src: BASE + "/assets/images/mej-5.jpg", title: "Gimbal Expansion Joint" },
-  { src: BASE + "/assets/images/mej-6.jpg", title: "Pressure Balanced Joint" },
+  { src: BASE + "/assets/img_4.png", title: "Hinged Expansion Joint" },
+  { src: BASE + "/assets/img_5.png", title: "Gimbal Expansion Joint" },
+  { src: BASE + "/assets/img_7.png", title: "Pressure Balanced Joint" },
 ];
 
 // ── Component ─────────────────────────────────────────────────
