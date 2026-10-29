@@ -84,7 +84,7 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "" }) => {
 };
 
 // ── Image Constants ───────────────────────────────────────────
-const HERO_IMAGE = BASE + "/assets/img_2.png";
+const HERO_IMAGE = BASE + "assets/img_2.png";
 
 // ── Data ──────────────────────────────────────────────────────
 const highlights = [
@@ -290,20 +290,20 @@ const whyChooseUs = [
 
 const galleryImages = [
   {
-    src: BASE + "/assets/img_1.png",
+    src: BASE + "assets/img_1.png",
     title: "Single Bellows Expansion Joint",
   },
   {
-    src: BASE + "/assets/img_2.png",
+    src: BASE + "assets/img_2.png",
     title: "Universal Expansion Joint",
   },
   {
-    src: BASE + "/assets/img_3.png",
+    src: BASE + "assets/img_3.png",
     title: "Tied Expansion Joint Assembly",
   },
-  { src: BASE + "/assets/img_4.png", title: "Hinged Expansion Joint" },
-  { src: BASE + "/assets/img_5.png", title: "Gimbal Expansion Joint" },
-  { src: BASE + "/assets/img_7.png", title: "Pressure Balanced Joint" },
+  { src: BASE + "assets/img_4.png", title: "Hinged Expansion Joint" },
+  { src: BASE + "assets/img_5.png", title: "Gimbal Expansion Joint" },
+  { src: BASE + "assets/img_7.png", title: "Pressure Balanced Joint" },
 ];
 
 // ── Component ─────────────────────────────────────────────────
