@@ -292,7 +292,7 @@ const Clients = () => {
               },
               {
                 icon: <FaGlobeAmericas />,
-                num: "10000+",
+                num: "20000+",
                 label: "Installations",
               },
             ].map((s, i) => (
