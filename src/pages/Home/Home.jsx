@@ -16,6 +16,7 @@ import {
   FaWrench,
   FaBoxOpen,
   FaCheckCircle,
+  FaFilePdf,
 } from "react-icons/fa";
 import "./Home.css";
 
@@ -27,14 +28,48 @@ const asset = (path) => {
   return base + clean;
 };
 
-/* ── Hero Carousel Images ── */
+/* ── Hero Carousel Images (Original) ── */
 const heroImages = [
   asset("assets/hero-1.png"),
   asset("assets/hero-2.png"),
   asset("assets/hero-3.png"),
   asset("assets/hero-4.png"),
   asset("assets/hero-5.png"),
-  asset("assets/hero- 6.png"),
+  asset("assets/hero-6.png"),
+];
+
+/* ── Nuteck Replica Slides Data ── */
+const NUTECK_SLIDES = [
+  {
+    id: 1,
+    title: "Roller Chain Flexible Couplings",
+    description:
+      "Roller Chain Flexible Couplings are compact, long lasting flexible couplings, capable of transmitting relatively high torques with minimum of space consumption.",
+    bgImage: asset("assets/hero-1.png"),
+    productImage: asset("assets/3d_1.png"),
+    link: "/products/roller-chain",
+    pdfLink: "#",
+  },
+  {
+    id: 2,
+    title: "Pin & Bushing Flexible Couplings",
+    description:
+      "Designed to absorb severe shock loads, damp torsional vibrations, and accommodate shaft misalignment in critical industrial drives.",
+    bgImage: asset("assets/hero-2.png"),
+    productImage: asset("assets/3d_2.png"),
+    link: "/products/pin-bushing",
+    pdfLink: "#",
+  },
+  {
+    id: 3,
+    title: "Curved Jaw & Star Couplings",
+    description:
+      "Fail-safe elastomeric couplings offering vibration damping, electric insulation, and easy visual element inspection.",
+    bgImage: asset("assets/hero-3.png"),
+    productImage: asset("assets/3d_3.png"),
+    link: "/products/jaw-coupling",
+    pdfLink: "#",
+  },
 ];
 
 /* ── InView Hook ── */
@@ -125,7 +160,7 @@ const products = [
   {
     title: "Non Metallic Expansion Joints",
     desc: "Fabric joints for high temp ducts, ESP, and industrial fans — up to 1400°C.",
-    image: asset("assets/img_1.png"),
+    image: asset("assets/3d_1.png"),
     link: "/products/expansion-joints/non-metallic",
     icon: <FaShieldAlt />,
     tag: "High Temp",
@@ -133,7 +168,7 @@ const products = [
   {
     title: "Metallic Expansion Joints",
     desc: "EJMA standard SS 304/316/321 bellows for high pressure piping systems.",
-    image: asset("assets/img_2.png"),
+    image: asset("assets/3d_2.png"),
     link: "/products/expansion-joints/metallic",
     icon: <FaBolt />,
     tag: "High Pressure",
@@ -141,7 +176,7 @@ const products = [
   {
     title: "Rubber Expansion Joints",
     desc: "FSA standard flexible joints from 25mm to 2200mm NB — up to 30 kg/cm².",
-    image: asset("assets/img_3.png"),
+    image: asset("assets/3d_3.png"),
     link: "/products/expansion-joints/rubber",
     icon: <FaBoxOpen />,
     tag: "Flexible",
@@ -149,7 +184,7 @@ const products = [
   {
     title: "Resilient Coupling",
     desc: "Grid spring coupling with 80% shock damping — all metal construction.",
-    image: asset("assets/img_4.png"),
+    image: asset("assets/3d_4.png"),
     link: "/products/mechanical-power-transmission/resilient-coupling",
     icon: <FaCog />,
     tag: "Shock Absorb",
@@ -157,7 +192,7 @@ const products = [
   {
     title: "Geared Coupling",
     desc: "Crown gear teeth coupling with ±1.5° angular misalignment capacity.",
-    image: asset("assets/img_5.png"),
+    image: asset("assets/3d_5.png"),
     link: "/products/mechanical-power-transmission/geared-coupling",
     icon: <FaWrench />,
     tag: "Precision",
@@ -165,7 +200,7 @@ const products = [
   {
     title: "Pin Bush & Tyre Coupling",
     desc: "Robust coupling for reliable power transmission in industrial setups.",
-    image: asset("assets/img_7.png"),
+    image: asset("assets/3d_7.png"),
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
     icon: <FaIndustry />,
     tag: "Heavy Duty",
@@ -268,6 +303,10 @@ const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const [ntSlide, setNtSlide] = useState(0);
+  const [isAutoPlayingNt, setIsAutoPlayingNt] = useState(true);
+
+  // Original Hero AutoPlay
   useEffect(() => {
     const iv = setInterval(
       () => setCurrentSlide((p) => (p + 1) % heroImages.length),
@@ -276,6 +315,7 @@ const Home = () => {
     return () => clearInterval(iv);
   }, []);
 
+  // Testimonial AutoPlay
   useEffect(() => {
     const iv = setInterval(
       () => setCurrentTestimonial((p) => (p + 1) % testimonials.length),
@@ -284,15 +324,107 @@ const Home = () => {
     return () => clearInterval(iv);
   }, []);
 
+  // Nuteck Hero AutoPlay
+  useEffect(() => {
+    if (!isAutoPlayingNt) return;
+    const iv = setInterval(() => {
+      setNtSlide((prev) => (prev + 1) % NUTECK_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(iv);
+  }, [isAutoPlayingNt, ntSlide]);
+
+  const nextNtSlide = () => {
+    setNtSlide((prev) => (prev + 1) % NUTECK_SLIDES.length);
+  };
+
+  const prevNtSlide = () => {
+    setNtSlide((prev) => (prev === 0 ? NUTECK_SLIDES.length - 1 : prev - 1));
+  };
+
   return (
     <div className="hm">
       <ScrollProgress />
 
       {/* ═══════════════════════════════════════════════════════
-          HERO
+          NUTECK REPLICA HERO SECTION
+      ═══════════════════════════════════════════════════════ */}
+      <section
+        className="hm__nt-hero"
+        onMouseEnter={() => setIsAutoPlayingNt(false)}
+        onMouseLeave={() => setIsAutoPlayingNt(true)}
+      >
+        {NUTECK_SLIDES.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`hm__nt-slide ${index === ntSlide ? "active" : ""}`}
+          >
+            {/* Background Image */}
+            <div
+              className="hm__nt-bg-img"
+              style={{ backgroundImage: `url(${slide.bgImage})` }}
+            ></div>
+            <div className="hm__nt-bg-overlay"></div>
+
+            <div className="hm__nt-content hm__wrap">
+              {/* Text Left */}
+              <div className="hm__nt-text">
+                <h2>{slide.title}</h2>
+                <p>{slide.description}</p>
+                <Link to={slide.link} className="hm__nt-btn">
+                  More Details
+                </Link>
+              </div>
+
+              {/* 3D Image Right/Center */}
+              <div className="hm__nt-image">
+                <img src={slide.productImage} alt={slide.title} />
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Navigation Arrows */}
+        <button
+          className="hm__nt-nav hm__nt-nav--prev"
+          onClick={prevNtSlide}
+          aria-label="Previous Slide"
+        >
+          <svg viewBox="0 0 24 48">
+            <path d="M 22 2 L 2 24 L 22 46" />
+          </svg>
+        </button>
+        <button
+          className="hm__nt-nav hm__nt-nav--next"
+          onClick={nextNtSlide}
+          aria-label="Next Slide"
+        >
+          <svg viewBox="0 0 24 48">
+            <path d="M 2 2 L 22 24 L 2 46" />
+          </svg>
+        </button>
+
+        {/* Loading Progress Circle */}
+        <div className="hm__nt-progress">
+          <svg key={ntSlide} viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" className="hm__nt-progress-bg" />
+            <circle cx="20" cy="20" r="18" className="hm__nt-progress-bar" />
+          </svg>
+        </div>
+
+        {/* PDF Button */}
+        <a
+          href={NUTECK_SLIDES[ntSlide].pdfLink}
+          className="hm__nt-pdf"
+          aria-label="Download PDF"
+        >
+          <FaFilePdf />
+        </a>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          ORIGINAL HERO
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
-        {/* Carousel */}
         <div className="hm__hero-carousel">
           {heroImages.map((img, i) => (
             <div
@@ -311,13 +443,11 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Overlays */}
         <div className="hm__hero-overlay" />
         <div className="hm__hero-overlay-bottom" />
         <div className="hm__hero-grain" />
         <div className="hm__hero-grid-lines" />
 
-        {/* Orbs */}
         <div className="hm__hero-orbs" aria-hidden="true">
           <span className="hm__orb hm__orb--1" />
           <span className="hm__orb hm__orb--2" />
@@ -325,7 +455,6 @@ const Home = () => {
           <span className="hm__orb hm__orb--4" />
         </div>
 
-        {/* Particles */}
         <div className="hm__particles" aria-hidden="true">
           {Array.from({ length: 18 }).map((_, i) => (
             <span
@@ -342,7 +471,6 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Content */}
         <div className="hm__hero-content">
           <div className="hm__hero-badge hm__ha hm__ha--1">
             <span className="hm__hero-badge-dot" />
@@ -379,18 +507,17 @@ const Home = () => {
             </div>
             <div className="hm__hero-stat-divider" />
             <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">10000+</span>
+              <span className="hm__hero-stat-num">20000+</span>
               <span className="hm__hero-stat-label">Installations</span>
             </div>
             <div className="hm__hero-stat-divider" />
             <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">2000+</span>
+              <span className="hm__hero-stat-num">5000+</span>
               <span className="hm__hero-stat-label">Clients</span>
             </div>
           </div>
         </div>
 
-        {/* Indicators */}
         <div className="hm__hero-indicators">
           {heroImages.map((_, i) => (
             <button
@@ -406,14 +533,12 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Scroll cue */}
         <div className="hm__hero-scroll" aria-hidden="true">
           <div className="hm__hero-scroll-mouse">
             <div className="hm__hero-scroll-wheel" />
           </div>
         </div>
 
-        {/* Wave divider */}
         <div className="hm__wave-bottom">
           <svg
             viewBox="0 0 1440 130"
@@ -616,7 +741,7 @@ const Home = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          CLIENTS  ← FIXED SECTION
+          CLIENTS
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__clients">
         <div className="hm__clients-bg" aria-hidden="true" />
@@ -637,7 +762,6 @@ const Home = () => {
           </Reveal>
         </div>
 
-        {/* Marquee Row 1 — left to right */}
         <div className="hm__marquee">
           <div className="hm__marquee-track hm__marquee-track--ltr">
             {[...clientLogos, ...clientLogos].map((logo, i) => (
@@ -652,7 +776,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Marquee Row 2 — right to left (reversed) */}
         <div className="hm__marquee hm__marquee--rtl">
           <div className="hm__marquee-track hm__marquee-track--rtl">
             {[...clientLogos, ...clientLogos].map((logo, i) => (
