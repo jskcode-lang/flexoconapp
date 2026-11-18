@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
 .hm {
     --hm-navy: #020b18;
     --hm-navy-2: #040f1e;
@@ -50,6 +52,7 @@
     overflow: hidden;
     display: flex;
     align-items: center;
+    font-family: "Poppins", sans-serif;
 }
 
 .hm__nt-slide {
@@ -113,7 +116,7 @@
 }
 
 .hm__nt-text h2 {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: "Poppins", sans-serif;
     font-size: 3.4rem;
     font-weight: 700;
     color: #ffffff;
@@ -123,7 +126,7 @@
 }
 
 .hm__nt-text p {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     color: #f1f5f9;
     margin-bottom: 2rem;
@@ -137,7 +140,7 @@
     background-color: #ffffff;
     color: var(--hm-blue-mid);
     padding: 12px 28px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;

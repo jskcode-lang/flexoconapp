@@ -47,7 +47,7 @@ const NUTECK_SLIDES = [
       "Roller Chain Flexible Couplings are compact, long lasting flexible couplings, capable of transmitting relatively high torques with minimum of space consumption.",
     bgImage: asset("assets/hero-1.png"),
     productImage: asset("assets/3d_1.png"),
-    link: "/products/roller-chain",
+    link: "/products",
     pdfLink: "#",
   },
   {
@@ -57,7 +57,7 @@ const NUTECK_SLIDES = [
       "Designed to absorb severe shock loads, damp torsional vibrations, and accommodate shaft misalignment in critical industrial drives.",
     bgImage: asset("assets/hero-2.png"),
     productImage: asset("assets/3d_2.png"),
-    link: "/products/pin-bushing",
+    link: "/products",
     pdfLink: "#",
   },
   {
@@ -67,7 +67,7 @@ const NUTECK_SLIDES = [
       "Fail-safe elastomeric couplings offering vibration damping, electric insulation, and easy visual element inspection.",
     bgImage: asset("assets/hero-3.png"),
     productImage: asset("assets/3d_3.png"),
-    link: "/products/jaw-coupling",
+    link: "/products",
     pdfLink: "#",
   },
 ];
@@ -346,7 +346,7 @@ const Home = () => {
       <ScrollProgress />
 
       {/* ═══════════════════════════════════════════════════════
-          NUTECK REPLICA HERO SECTION
+          NUTECK REPLICA HERO SECTION  (Poppins Font)
       ═══════════════════════════════════════════════════════ */}
       <section
         className="hm__nt-hero"
@@ -370,7 +370,7 @@ const Home = () => {
               <div className="hm__nt-text">
                 <h2>{slide.title}</h2>
                 <p>{slide.description}</p>
-                <Link to={slide.link} className="hm__nt-btn">
+                <Link to="/products" className="hm__nt-btn">
                   More Details
                 </Link>
               </div>
