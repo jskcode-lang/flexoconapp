@@ -32,11 +32,10 @@ const Footer = () => {
         <FaArrowUp />
       </button>
 
-      {/* ═══════════════    ═══════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════
           Upper Footer
           ══════════════════════════════════════════════════════ */}
       <div className="ft__upper">
-        fOOTER
         <div className="ft__wrap">
           <div className="ft__grid">
             {/* ── Col 1: Company ── */}
@@ -125,7 +124,7 @@ const Footer = () => {
               <ul className="ft__links">
                 <li className="ft__links-head">
                   <FaShieldAlt className="ft__links-head-icon" />
-                  Expansion Joints
+                  Couplings
                 </li>
                 <li>
                   <Link to="/products/expansion-joints/non-metallic">
@@ -239,22 +238,18 @@ const Footer = () => {
         <div className="ft__wrap">
           <div className="ft__mid-inner">
             <div className="ft__mid-item">
-              <FaIndustry />
               <span>25+ Years Experience</span>
             </div>
             <div className="ft__mid-divider" />
             <div className="ft__mid-item">
-              <FaShieldAlt />
               <span>ISO 9001:2008 Certified</span>
             </div>
             <div className="ft__mid-divider" />
             <div className="ft__mid-item">
-              <FaCog />
               <span>10000+ Installations</span>
             </div>
             <div className="ft__mid-divider" />
             <div className="ft__mid-item">
-              <FaShieldAlt />
               <span>FSA USA &amp; EJMA Standards</span>
             </div>
           </div>

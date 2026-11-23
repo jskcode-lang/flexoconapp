@@ -1,6 +1,11 @@
 /* ═══════════════════════════════════════════════════════════════
-   Footer — .ft scope — Fully Isolated
+   Footer — .ft scope — Fully Isolated & Left Aligned
    ═══════════════════════════════════════════════════════════════ */
+
+.ft {
+    text-align: left;
+    font-family: "Poppins", sans-serif;
+}
 
 /* ─── Back to Top ───────────────────────────────────────────── */
 .ft__top-btn {
@@ -35,21 +40,35 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    text-align: left;
 }
 
 /* ═══ UPPER FOOTER ════════════════════════════════════════════ */
 .ft__upper {
     background: #0a1628;
     padding: 4rem 0 3rem;
+    text-align: left;
 }
 
 .ft__grid {
     display: grid;
     grid-template-columns: 1.2fr 0.7fr 0.9fr 1.2fr;
     gap: 2.5rem;
+    text-align: left;
 }
 
 /* ─── Column Base ───────────────────────────────────────────── */
+.ft__col {
+    text-align: left;
+}
+
+.ft__col--brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
 .ft__col-title {
     font-size: 0.88rem;
     font-weight: 600;
@@ -58,6 +77,7 @@
     margin-bottom: 1.2rem;
     position: relative;
     padding-bottom: 0.7rem;
+    text-align: left;
 }
 
 .ft__col-title::after {
@@ -65,7 +85,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 30px;
+    width: 50%;
     height: 2px;
     background: #1a73e8;
     border-radius: 10px;
@@ -78,12 +98,12 @@
 /* ─── Brand Column ──────────────────────────────────────────── */
 .ft__logo {
     display: inline-block;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0;
 }
 
 .ft__logo img {
-    height: 44px;
-    width: auto;
+    height: 100px;
+    width: 100px;
     object-fit: contain;
     display: block;
     filter: brightness(0) invert(1);
@@ -95,12 +115,14 @@
     font-family: "Poppins", sans-serif;
     color: rgba(200, 214, 229, 0.7);
     line-height: 1.75;
-    margin-bottom: 1.5rem;
+    margin: 0 0 1.5rem 0;
+    text-align: left;
 }
 
 /* ─── Social ────────────────────────────────────────────────── */
 .ft__social {
     display: flex;
+    justify-content: flex-start;
     gap: 0.6rem;
     margin-bottom: 1.5rem;
 }
@@ -143,6 +165,7 @@
 .ft__brochure-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 6px;
     padding: 0.45rem 1rem;
     background: transparent;
@@ -171,14 +194,24 @@
 /* ─── Links Column ──────────────────────────────────────────── */
 .ft__links {
     list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0;
+    text-align: left;
+}
+
+.ft__links li {
+    width: 100%;
+    text-align: left;
 }
 
 .ft__links li a {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 6px;
     padding: 0.38rem 0;
     font-family: "Poppins", sans-serif;
@@ -186,6 +219,7 @@
     font-weight: 300;
     color: rgba(200, 214, 229, 0.65);
     text-decoration: none;
+    text-align: left;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -197,6 +231,7 @@
 .ft__links li a svg {
     font-size: 0.5rem;
     color: rgba(26, 115, 232, 0.4);
+    flex-shrink: 0;
     transition: color 0.3s ease;
 }
 
@@ -208,6 +243,7 @@
 .ft__links-head {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 6px;
     font-family: "Poppins", sans-serif;
     font-size: 0.72rem;
@@ -215,6 +251,7 @@
     color: rgba(200, 214, 229, 0.85);
     padding: 0.35rem 0 0.15rem;
     margin-top: 0.3rem;
+    text-align: left;
 }
 
 .ft__links-head--mt {
@@ -224,24 +261,33 @@
 .ft__links-head-icon {
     font-size: 0.6rem;
     color: #1a73e8;
+    flex-shrink: 0;
 }
 
 /* ─── Contact Column ────────────────────────────────────────── */
 .ft__contact-block {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0.7rem;
+    text-align: left;
 }
 
 .ft__contact-item {
     display: flex;
     align-items: flex-start;
+    justify-content: flex-start;
     gap: 10px;
     font-family: "Poppins", sans-serif;
     font-size: 0.74rem;
     font-weight: 300;
     color: rgba(200, 214, 229, 0.65);
     line-height: 1.65;
+    text-align: left;
+}
+
+.ft__contact-item div {
+    text-align: left;
 }
 
 .ft__contact-item strong {
@@ -249,12 +295,14 @@
     color: rgba(200, 214, 229, 0.9);
     display: block;
     margin-bottom: 2px;
+    text-align: left;
 }
 
 .ft__contact-item p {
     margin: 0;
     color: rgba(200, 214, 229, 0.65);
     line-height: 1.65;
+    text-align: left;
 }
 
 .ft__contact-icon {
@@ -285,29 +333,34 @@
     padding: 1.2rem 0;
     border-top: 1px solid rgba(26, 115, 232, 0.08);
     border-bottom: 1px solid rgba(26, 115, 232, 0.08);
+    text-align: left;
 }
 
 .ft__mid-inner {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1.5rem;
     flex-wrap: wrap;
+    text-align: left;
 }
 
 .ft__mid-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 6px;
     font-family: "Poppins", sans-serif;
     font-size: 0.72rem;
     font-weight: 400;
     color: rgba(200, 214, 229, 0.65);
+    text-align: left;
 }
 
 .ft__mid-item svg {
     font-size: 0.72rem;
     color: #1a73e8;
+    flex-shrink: 0;
 }
 
 .ft__mid-divider {
@@ -320,6 +373,7 @@
 .ft__bottom {
     background: #081422;
     padding: 1.2rem 0;
+    text-align: left;
 }
 
 .ft__bottom-inner {
@@ -328,6 +382,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.8rem;
+    text-align: left;
 }
 
 .ft__copy {
@@ -336,11 +391,13 @@
     font-weight: 300;
     color: rgba(200, 214, 229, 0.45);
     margin: 0;
+    text-align: left;
 }
 
 .ft__bottom-links {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 0.5rem;
 }
 
@@ -362,7 +419,7 @@
     font-size: 0.6rem;
 }
 
-/* ═══ RESPONSIVE ══════════════════════════════════════════════ */
+/* ═══ RESPONSIVE (Left Alignment Preserved Everywhere) ════════ */
 @media (max-width: 1024px) {
     .ft__grid {
         grid-template-columns: 1fr 1fr;
@@ -371,24 +428,12 @@
 
     .ft__col--brand {
         grid-column: span 2;
-        text-align: center;
-    }
-
-    .ft__logo {
-        margin: 0 auto 1rem;
-    }
-
-    .ft__social {
-        justify-content: center;
-    }
-
-    .ft__brochure-btn {
-        margin: 0 auto;
+        align-items: flex-start;
+        text-align: left;
     }
 
     .ft__brand-text {
-        max-width: 500px;
-        margin: 0 auto 1.5rem;
+        max-width: 560px;
     }
 }
 
@@ -412,6 +457,7 @@
 
     .ft__mid-inner {
         gap: 1rem;
+        justify-content: flex-start;
     }
 
     .ft__mid-divider {
@@ -420,34 +466,31 @@
 
     .ft__bottom-inner {
         flex-direction: column;
-        text-align: center;
+        align-items: flex-start;
+        text-align: left;
         gap: 0.5rem;
     }
 
     .ft__col-title::after {
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        transform: none;
     }
 
     .ft__col {
-        text-align: center;
+        text-align: left;
     }
 
     .ft__links li a {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .ft__links-head {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .ft__contact-item {
-        justify-content: center;
-        text-align: center;
-    }
-
-    .ft__contact-icon {
-        display: none;
+        justify-content: flex-start;
+        text-align: left;
     }
 }
 
@@ -492,6 +535,7 @@
 
     .ft__mid-inner {
         flex-direction: column;
+        align-items: flex-start;
         gap: 0.5rem;
     }
 }
