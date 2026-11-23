@@ -122,9 +122,9 @@ const Footer = () => {
             <div className="ft__col">
               <h3 className="ft__col-title">Our Products</h3>
               <ul className="ft__links">
-                <li className="ft__links-head">
+                <li className="ft__links-head" style={{ fontSize: "0.9rem" }}>
                   <FaShieldAlt className="ft__links-head-icon" />
-                  Couplings
+                  Expansion Joints
                 </li>
                 <li>
                   <Link to="/products/expansion-joints/non-metallic">
@@ -142,9 +142,12 @@ const Footer = () => {
                   </Link>
                 </li>
 
-                <li className="ft__links-head ft__links-head--mt">
+                <li
+                  className="ft__links-head ft__links-head--mt"
+                  style={{ fontSize: "0.9rem" }}
+                >
                   <FaCog className="ft__links-head-icon" />
-                  Power Transmission
+                  Couplings
                 </li>
                 <li>
                   <Link to="/products/mechanical-power-transmission/resilient-coupling">
