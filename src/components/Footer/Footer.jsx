@@ -171,7 +171,7 @@ const Footer = () => {
                 <div className="ft__contact-item">
                   <FaMapMarkerAlt className="ft__contact-icon" />
                   <div>
-                    <strong>Flexocon Engineers Pvt. Ltd.</strong>
+                    <strong>Flexocon Engineers</strong>
                     <p>
                       29 Dr. Gopal Chatterjee Road, Sukchar,
                       <br />
