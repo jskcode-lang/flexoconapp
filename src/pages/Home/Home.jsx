@@ -656,14 +656,11 @@ const Home = () => {
               <span className="hm__tag">
                 <span className="hm__tag-dot" /> About Us
               </span>
-              <h2 className="hm__h2">
-                Flexocon Engineers{" "}
-                <span className="hm__h2-accent">Pvt. Ltd.</span>
-              </h2>
+              <h2 className="hm__h2">Flexocon Engineers</h2>
               <p className="hm__p">
-                Established in <strong>2001</strong>, Flexocon Engineers Pvt.
-                Ltd. is backed by qualified Mechanical Engineers having more
-                than <strong>25 years experience</strong> in Mechanical Power
+                Established in <strong>2001</strong>, Flexocon Engineers is
+                backed by qualified Mechanical Engineers having more than{" "}
+                <strong>25 years experience</strong> in Mechanical Power
                 Transmission Coupling &amp; Expansion Joints at various
                 industrial applications.
               </p>
