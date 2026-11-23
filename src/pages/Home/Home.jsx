@@ -656,7 +656,9 @@ const Home = () => {
               <span className="hm__tag">
                 <span className="hm__tag-dot" /> About Us
               </span>
-              <h2 className="hm__h2">Flexocon Engineers</h2>
+              <h2 className="hm__h2">
+                Flexocon <span className="hm__h2-accent">Engineers</span>
+              </h2>
               <p className="hm__p">
                 Established in <strong>2001</strong>, Flexocon Engineers is
                 backed by qualified Mechanical Engineers having more than{" "}
