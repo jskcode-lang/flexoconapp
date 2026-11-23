@@ -863,65 +863,6 @@ const Home = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          TESTIMONIALS
-      ═══════════════════════════════════════════════════════ */}
-      <section className="hm__testi">
-        <div className="hm__testi-bg-shape" aria-hidden="true" />
-        <div className="hm__wrap">
-          <Reveal dir="up">
-            <div className="hm__sec-head">
-              <span className="hm__tag">
-                <span className="hm__tag-dot" /> Testimonials
-              </span>
-              <h2 className="hm__h2">
-                What Our <span className="hm__h2-accent">Clients Say</span>
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="hm__testi-slider">
-            <div className="hm__testi-bg-quote">
-              <FaQuoteLeft />
-            </div>
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className={`hm__testi-card ${
-                  currentTestimonial === i ? "hm__testi-card--active" : ""
-                }`}
-              >
-                <div className="hm__testi-stars">
-                  {Array.from({ length: t.rating }).map((_, s) => (
-                    <FaStar key={s} />
-                  ))}
-                </div>
-                <p className="hm__testi-text">{t.text}</p>
-                <div className="hm__testi-author">
-                  <div className="hm__testi-avatar">{t.author.charAt(0)}</div>
-                  <div>
-                    <strong>{t.author}</strong>
-                    <span>{t.company}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="hm__testi-dots">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  className={`hm__testi-dot ${
-                    currentTestimonial === i ? "hm__testi-dot--active" : ""
-                  }`}
-                  onClick={() => setCurrentTestimonial(i)}
-                  aria-label={`Testimonial ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
           CTA
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__cta">
