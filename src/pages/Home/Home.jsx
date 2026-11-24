@@ -10,13 +10,11 @@ import {
   FaUsers,
   FaGlobeAmericas,
   FaPhoneAlt,
-  FaQuoteLeft,
   FaStar,
   FaBolt,
   FaWrench,
   FaBoxOpen,
   FaCheckCircle,
-  FaFilePdf,
 } from "react-icons/fa";
 import "./Home.css";
 
@@ -28,47 +26,28 @@ const asset = (path) => {
   return base + clean;
 };
 
-/* ── Hero Carousel Images (Original) ── */
-const heroImages = [
-  asset("assets/hero-1.png"),
-  asset("assets/hero-2.png"),
-  asset("assets/hero-3.png"),
-  asset("assets/hero-4.png"),
-  asset("assets/hero-5.png"),
-  asset("assets/hero-6.png"),
-];
+/* ── Single Hero Background Image ── */
+const HERO_BG_IMAGE = asset("assets/home_page_background.png");
 
-/* ── Nuteck Replica Slides Data ── */
-const NUTECK_SLIDES = [
+/* ── Floating Product Images (Changes every 6.5 seconds) ── */
+const HERO_PRODUCT_IMAGES = [
   {
-    id: 1,
-    title: "Roller Chain Flexible Couplings",
-    description:
-      "Roller Chain Flexible Couplings are compact, long lasting flexible couplings, capable of transmitting relatively high torques with minimum of space consumption.",
-    bgImage: asset("assets/hero-1.png"),
-    productImage: asset("assets/3d_1.png"),
-    link: "/products",
-    pdfLink: "#",
+    src: asset("assets/geared_coupling.png"),
+    alt: "Non Metallic Expansion Joints",
   },
   {
-    id: 2,
-    title: "Pin & Bushing Flexible Couplings",
-    description:
-      "Designed to absorb severe shock loads, damp torsional vibrations, and accommodate shaft misalignment in critical industrial drives.",
-    bgImage: asset("assets/hero-2.png"),
-    productImage: asset("assets/3d_2.png"),
-    link: "/products",
-    pdfLink: "#",
+    src: asset("assets/grid-spring_resilient_coupling.png"),
+    alt: "Metallic Expansion Joints",
   },
   {
-    id: 3,
-    title: "Curved Jaw & Star Couplings",
-    description:
-      "Fail-safe elastomeric couplings offering vibration damping, electric insulation, and easy visual element inspection.",
-    bgImage: asset("assets/hero-3.png"),
-    productImage: asset("assets/3d_3.png"),
-    link: "/products",
-    pdfLink: "#",
+    src: asset("assets/metallic_expansion_joints_bellows.png"),
+    alt: "Rubber Expansion Joints",
+  },
+  { src: asset("assets/pinbush_coupling.png"), alt: "Resilient Coupling" },
+  { src: asset("assets/rubber_expansion.png"), alt: "Geared Coupling" },
+  {
+    src: asset("assets/tyre_flexible_coupling.png"),
+    alt: "Pin Bush & Tyre Coupling",
   },
 ];
 
@@ -253,27 +232,6 @@ const clientLogos = [
   asset("assets/part_42.png"),
 ];
 
-const testimonials = [
-  {
-    text: "Flexocon's expansion joints have consistently delivered exceptional quality. Their engineering team understood our exact requirements and delivered on time.",
-    author: "Senior Engineer",
-    company: "Leading Steel Plant",
-    rating: 5,
-  },
-  {
-    text: "We've been using Flexocon couplings for over 10 years. The build quality and after-sales support are outstanding.",
-    author: "Maintenance Head",
-    company: "Cement Manufacturing Unit",
-    rating: 5,
-  },
-  {
-    text: "Their fabric expansion joints withstand extreme temperatures in our kilns without any issues. Truly reliable products.",
-    author: "Plant Manager",
-    company: "Power Generation Company",
-    rating: 5,
-  },
-];
-
 /* ── Scroll Progress Bar ── */
 const ScrollProgress = () => {
   const [progress, setProgress] = useState(0);
@@ -300,149 +258,35 @@ const ScrollProgress = () => {
    MAIN COMPONENT
 ══════════════════════════════════════════ */
 const Home = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [heroProductIndex, setHeroProductIndex] = useState(0);
 
-  const [ntSlide, setNtSlide] = useState(0);
-  const [isAutoPlayingNt, setIsAutoPlayingNt] = useState(true);
-
-  // Original Hero AutoPlay
+  // Cycle floating product image every 6.5 seconds
   useEffect(() => {
-    const iv = setInterval(
-      () => setCurrentSlide((p) => (p + 1) % heroImages.length),
-      5000,
-    );
-    return () => clearInterval(iv);
-  }, []);
-
-  // Testimonial AutoPlay
-  useEffect(() => {
-    const iv = setInterval(
-      () => setCurrentTestimonial((p) => (p + 1) % testimonials.length),
-      5000,
-    );
-    return () => clearInterval(iv);
-  }, []);
-
-  // Nuteck Hero AutoPlay
-  useEffect(() => {
-    if (!isAutoPlayingNt) return;
     const iv = setInterval(() => {
-      setNtSlide((prev) => (prev + 1) % NUTECK_SLIDES.length);
-    }, 6000);
+      setHeroProductIndex((prev) => (prev + 1) % HERO_PRODUCT_IMAGES.length);
+    }, 6500);
     return () => clearInterval(iv);
-  }, [isAutoPlayingNt, ntSlide]);
-
-  const nextNtSlide = () => {
-    setNtSlide((prev) => (prev + 1) % NUTECK_SLIDES.length);
-  };
-
-  const prevNtSlide = () => {
-    setNtSlide((prev) => (prev === 0 ? NUTECK_SLIDES.length - 1 : prev - 1));
-  };
+  }, []);
 
   return (
     <div className="hm">
       <ScrollProgress />
 
       {/* ═══════════════════════════════════════════════════════
-          NUTECK REPLICA HERO SECTION  (Poppins Font)
-      ═══════════════════════════════════════════════════════ */}
-      <section
-        className="hm__nt-hero"
-        onMouseEnter={() => setIsAutoPlayingNt(false)}
-        onMouseLeave={() => setIsAutoPlayingNt(true)}
-      >
-        {NUTECK_SLIDES.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`hm__nt-slide ${index === ntSlide ? "active" : ""}`}
-          >
-            {/* Background Image */}
-            <div
-              className="hm__nt-bg-img"
-              style={{ backgroundImage: `url(${slide.bgImage})` }}
-            ></div>
-            <div className="hm__nt-bg-overlay"></div>
-
-            <div className="hm__nt-content hm__wrap">
-              {/* Text Left */}
-              <div className="hm__nt-text">
-                <h2>{slide.title}</h2>
-                <p>{slide.description}</p>
-                <Link to="/products" className="hm__nt-btn">
-                  More Details
-                </Link>
-              </div>
-
-              {/* 3D Image Right/Center */}
-              <div className="hm__nt-image">
-                <img src={slide.productImage} alt={slide.title} />
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Navigation Arrows */}
-        <button
-          className="hm__nt-nav hm__nt-nav--prev"
-          onClick={prevNtSlide}
-          aria-label="Previous Slide"
-        >
-          <svg viewBox="0 0 24 48">
-            <path d="M 22 2 L 2 24 L 22 46" />
-          </svg>
-        </button>
-        <button
-          className="hm__nt-nav hm__nt-nav--next"
-          onClick={nextNtSlide}
-          aria-label="Next Slide"
-        >
-          <svg viewBox="0 0 24 48">
-            <path d="M 2 2 L 22 24 L 2 46" />
-          </svg>
-        </button>
-
-        {/* Loading Progress Circle */}
-        <div className="hm__nt-progress">
-          <svg key={ntSlide} viewBox="0 0 40 40">
-            <circle cx="20" cy="20" r="18" className="hm__nt-progress-bg" />
-            <circle cx="20" cy="20" r="18" className="hm__nt-progress-bar" />
-          </svg>
-        </div>
-
-        {/* PDF Button */}
-        <a
-          href={NUTECK_SLIDES[ntSlide].pdfLink}
-          className="hm__nt-pdf"
-          aria-label="Download PDF"
-        >
-          <FaFilePdf />
-        </a>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          ORIGINAL HERO
+          HERO SECTION (Single Zooming BG + Flexbox + Auto-Changing Floating Product)
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
-        <div className="hm__hero-carousel">
-          {heroImages.map((img, i) => (
-            <div
-              key={i}
-              className={`hm__hero-slide ${
-                i === currentSlide ? "hm__hero-slide--active" : ""
-              }`}
-            >
-              <img
-                src={img}
-                alt={`Slide ${i + 1}`}
-                className="hm__hero-slide-img"
-                loading={i === 0 ? "eager" : "lazy"}
-              />
-            </div>
-          ))}
+        {/* Single Background Image with Zoom Animation */}
+        <div className="hm__hero-bg">
+          <img
+            src={HERO_BG_IMAGE}
+            alt="Flexocon Industrial Background"
+            className="hm__hero-bg-img"
+            loading="eager"
+          />
         </div>
 
+        {/* Overlays & Ambient Effects */}
         <div className="hm__hero-overlay" />
         <div className="hm__hero-overlay-bottom" />
         <div className="hm__hero-grain" />
@@ -455,40 +299,55 @@ const Home = () => {
           <span className="hm__orb hm__orb--4" />
         </div>
 
-        <div className="hm__particles" aria-hidden="true">
-          {Array.from({ length: 18 }).map((_, i) => (
-            <span
-              key={i}
-              className="hm__particle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                animationDuration: `${6 + Math.random() * 10}s`,
-                animationDelay: `${Math.random() * 8}s`,
-                width: `${2 + Math.random() * 3}px`,
-                height: `${2 + Math.random() * 3}px`,
-              }}
-            />
-          ))}
-        </div>
+        {/* Main Hero Container */}
+        <div className="hm__wrap hm__hero-container">
+          {/* Flexbox Row: Left Info + Right Floating Product */}
+          <div className="hm__hero-row">
+            {/* Left Flexbox: Badge, Heading, Description */}
+            <div className="hm__hero-left">
+              <div className="hm__hero-badge hm__ha hm__ha--1">
+                <span className="hm__hero-badge-dot" />
+                <FaIndustry />
+                <span>Since 2001 — Engineering Excellence</span>
+              </div>
 
-        <div className="hm__hero-content">
-          <div className="hm__hero-badge hm__ha hm__ha--1">
-            <span className="hm__hero-badge-dot" />
-            <FaIndustry />
-            <span>Since 2001 — Engineering Excellence</span>
+              <h1 className="hm__hero-h1 hm__ha hm__ha--2">
+                Precision Engineered
+                <span className="hm__hero-accent">Industrial Solutions</span>
+              </h1>
+
+              <p className="hm__hero-p hm__ha hm__ha--3">
+                Leading manufacturers of <strong>Expansion Joints</strong> &amp;{" "}
+                <strong>Mechanical Power Transmission Couplings</strong> —
+                backed by 25+ years of engineering expertise.
+              </p>
+            </div>
+
+            {/* Right Flexbox: Auto-Changing Floating 3D Product Image */}
+            <div className="hm__hero-right hm__ha hm__ha--3">
+              <div className="hm__hero-float-stage">
+                {HERO_PRODUCT_IMAGES.map((prod, idx) => (
+                  <div
+                    key={idx}
+                    className={`hm__hero-prod-slide ${
+                      idx === heroProductIndex
+                        ? "hm__hero-prod-slide--active"
+                        : ""
+                    }`}
+                  >
+                    <img
+                      src={prod.src}
+                      alt={prod.alt}
+                      className="hm__hero-float-img"
+                      loading={idx === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <h1 className="hm__hero-h1 hm__ha hm__ha--2">
-            Precision Engineered
-            <span className="hm__hero-accent">Industrial Solutions</span>
-          </h1>
-
-          <p className="hm__hero-p hm__ha hm__ha--3">
-            Leading manufacturers of <strong>Expansion Joints</strong> &amp;{" "}
-            <strong>Mechanical Power Transmission Couplings</strong> — backed by
-            25+ years of engineering expertise.
-          </p>
-
+          {/* Just Below the Middle: Centered Action Buttons */}
           <div className="hm__hero-btns hm__ha hm__ha--4">
             <Link to="/products" className="hm__btn hm__btn--fill">
               <span>Explore Products</span>
@@ -499,57 +358,6 @@ const Home = () => {
               <span>Contact Us</span>
             </Link>
           </div>
-
-          <div className="hm__hero-stats hm__ha hm__ha--5">
-            <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">25+</span>
-              <span className="hm__hero-stat-label">Years</span>
-            </div>
-            <div className="hm__hero-stat-divider" />
-            <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">20000+</span>
-              <span className="hm__hero-stat-label">Installations</span>
-            </div>
-            <div className="hm__hero-stat-divider" />
-            <div className="hm__hero-stat">
-              <span className="hm__hero-stat-num">5000+</span>
-              <span className="hm__hero-stat-label">Clients</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="hm__hero-indicators">
-          {heroImages.map((_, i) => (
-            <button
-              key={i}
-              className={`hm__hero-indicator ${
-                i === currentSlide ? "hm__hero-indicator--active" : ""
-              }`}
-              onClick={() => setCurrentSlide(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            >
-              <span className="hm__hero-indicator-fill" />
-            </button>
-          ))}
-        </div>
-
-        <div className="hm__hero-scroll" aria-hidden="true">
-          <div className="hm__hero-scroll-mouse">
-            <div className="hm__hero-scroll-wheel" />
-          </div>
-        </div>
-
-        <div className="hm__wave-bottom">
-          <svg
-            viewBox="0 0 1440 130"
-            preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0,65 C180,130 360,0 540,65 C720,130 900,0 1080,65 C1260,130 1350,30 1440,65 L1440,130 L0,130 Z"
-              fill="#05080f"
-            />
-          </svg>
         </div>
       </section>
 
