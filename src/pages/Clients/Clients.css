@@ -1,5 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
-   CLIENTS PAGE — .cli scoped — Complete Rewrite
+   CLIENTS PAGE — .cli scoped
+   Section order: Hero → Trusted Across Industries → Browse by Industry
+                  → Stats → CTA
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── Reset & Base ── */
@@ -13,6 +15,10 @@
 .cli *::before,
 .cli *::after {
     box-sizing: border-box;
+}
+
+.cli section[id] {
+    scroll-margin-top: 80px;
 }
 
 .cli__wrap {
@@ -85,6 +91,15 @@
     color: #1a1a2e;
     margin: 0 0 0.4rem;
     line-height: 1.3;
+}
+
+.cli__sec-sub {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: #5a6b8a;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0.5rem auto 0;
 }
 
 /* ═══════════════════════════════════
@@ -298,7 +313,7 @@
     position: relative;
     z-index: 5;
     text-align: center;
-    padding: 5rem 2rem 6rem;
+    padding: 6rem 2rem 6rem;
     max-width: 720px;
 }
 
@@ -451,7 +466,7 @@
     letter-spacing: 0.6px;
 }
 
-/* wave */
+/* wave — fill matches the white "Trusted Across Industries" section below */
 .cli__hero-bottom {
     position: absolute;
     bottom: -1px;
@@ -503,10 +518,108 @@
 }
 
 /* ═══════════════════════════════════
-   FILTER
+   TRUSTED ACROSS INDUSTRIES (2nd section)
+   ═══════════════════════════════════ */
+.cli__marquee-sec {
+    padding: 5rem 0 4.5rem;
+    background: #fff;
+    overflow: hidden;
+}
+
+.cli__marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 0.8rem 0;
+}
+
+.cli__marquee::before,
+.cli__marquee::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.cli__marquee::before {
+    left: 0;
+    background: linear-gradient(to right, #fff, transparent);
+}
+
+.cli__marquee::after {
+    right: 0;
+    background: linear-gradient(to left, #fff, transparent);
+}
+
+.cli__marquee-track {
+    display: flex;
+    gap: 2.5rem;
+    animation: cliMarquee 50s linear infinite;
+    width: max-content;
+}
+
+.cli__marquee-track:hover {
+    animation-play-state: paused;
+}
+
+.cli__marquee-track--rev {
+    animation-direction: reverse;
+    animation-duration: 55s;
+}
+
+.cli__marquee-item {
+    flex-shrink: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.35;
+    filter: grayscale(100%);
+    transition: opacity 0.3s, filter 0.3s, transform 0.3s;
+}
+
+.cli__marquee-item:hover {
+    opacity: 1;
+    filter: grayscale(0);
+    transform: scale(1.12);
+}
+
+.cli__marquee-item img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+.cli__marquee-fallback {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #8a96b0;
+    white-space: nowrap;
+    padding: 0 0.6rem;
+}
+
+.cli__marquee--rev {
+    margin-top: 0.6rem;
+}
+
+@keyframes cliMarquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ═══════════════════════════════════
+   BROWSE BY INDUSTRY (3rd section)
    ═══════════════════════════════════ */
 .cli__filter {
-    padding: 3rem 0 1.5rem;
+    padding: 4.5rem 0 1.5rem;
     background: #f3f6ff;
 }
 
@@ -536,7 +649,7 @@
     gap: 0.45rem;
 }
 
-/* ── Filter Button — no icon, name only ── */
+/* ── Filter Button — name only ── */
 .cli__fbtn {
     display: inline-flex;
     align-items: center;
@@ -595,7 +708,7 @@
     margin-bottom: 0;
 }
 
-/* ── Sector Header — name only, no icon, no count ── */
+/* ── Sector Header — name only ── */
 .cli__sector-head {
     display: flex;
     align-items: center;
@@ -673,6 +786,13 @@
     transform: scale(1.1);
 }
 
+.cli__logo-fallback {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #8a96b0;
+    text-align: center;
+}
+
 .cli__logo-accent {
     height: 3px;
     width: 100%;
@@ -682,96 +802,6 @@
 
 .cli__logo-card:hover .cli__logo-accent {
     opacity: 1;
-}
-
-/* ═══════════════════════════════════
-   MARQUEE
-   ═══════════════════════════════════ */
-.cli__marquee-sec {
-    padding: 4.5rem 0;
-    background: #fff;
-    overflow: hidden;
-}
-
-.cli__marquee {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 0.8rem 0;
-}
-
-.cli__marquee::before,
-.cli__marquee::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 140px;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.cli__marquee::before {
-    left: 0;
-    background: linear-gradient(to right, #fff, transparent);
-}
-
-.cli__marquee::after {
-    right: 0;
-    background: linear-gradient(to left, #fff, transparent);
-}
-
-.cli__marquee-track {
-    display: flex;
-    gap: 2.5rem;
-    animation: cliMarquee 50s linear infinite;
-    width: max-content;
-}
-
-.cli__marquee-track:hover {
-    animation-play-state: paused;
-}
-
-.cli__marquee-track--rev {
-    animation-direction: reverse;
-    animation-duration: 55s;
-}
-
-.cli__marquee-item {
-    flex-shrink: 0;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.35;
-    filter: grayscale(100%);
-    transition: opacity 0.3s, filter 0.3s, transform 0.3s;
-}
-
-.cli__marquee-item:hover {
-    opacity: 1;
-    filter: grayscale(0);
-    transform: scale(1.12);
-}
-
-.cli__marquee-item img {
-    height: 36px;
-    width: auto;
-    object-fit: contain;
-}
-
-.cli__marquee--rev {
-    margin-top: 0.6rem;
-}
-
-@keyframes cliMarquee {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
 }
 
 /* ═══════════════════════════════════
@@ -976,7 +1006,7 @@
     }
 
     .cli__hero-content {
-        padding: 3.5rem 1.5rem 5rem;
+        padding: 5rem 1.5rem 5rem;
     }
 
     .cli__wrap {
@@ -1021,12 +1051,16 @@
         height: 28px;
     }
 
-    .cli__sectors {
-        padding: 1.5rem 0 3.5rem;
+    .cli__marquee-sec {
+        padding: 3.5rem 0 3rem;
     }
 
-    .cli__marquee-sec {
-        padding: 3rem 0;
+    .cli__filter {
+        padding: 3.5rem 0 1rem;
+    }
+
+    .cli__sectors {
+        padding: 1.5rem 0 3.5rem;
     }
 
     .cli__sector-name {
@@ -1056,7 +1090,7 @@
     }
 
     .cli__hero-content {
-        padding: 3rem 1rem 4.5rem;
+        padding: 4rem 1rem 4.5rem;
     }
 
     .cli__logo-grid {
@@ -1139,7 +1173,7 @@
     }
 
     .cli__hero-content {
-        padding: 2.5rem 0.9rem 4rem;
+        padding: 3.5rem 0.9rem 4rem;
     }
 
     .cli__logo-grid {

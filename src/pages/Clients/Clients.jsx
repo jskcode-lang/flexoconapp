@@ -5,12 +5,10 @@ import {
   FaBolt,
   FaCubes,
   FaLeaf,
-  FaShip,
   FaScroll,
   FaCog,
   FaAward,
   FaUsers,
-  FaStar,
   FaGlobeAmericas,
   FaHandshake,
   FaChevronRight,
@@ -24,6 +22,7 @@ const BASE = import.meta.env.BASE_URL;
 const useInView = (threshold = 0.08) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -39,6 +38,7 @@ const useInView = (threshold = 0.08) => {
     obs.observe(el);
     return () => obs.disconnect();
   }, [threshold]);
+
   return [ref, visible];
 };
 
@@ -53,6 +53,7 @@ const Reveal = ({ children, dir = "up", delay = 0, className = "" }) => {
     scale: "cli__rv--scale",
     none: "cli__rv--none",
   };
+
   return (
     <div
       ref={ref}
@@ -92,6 +93,24 @@ const AnimatedCounter = ({ target, suffix = "" }) => {
       {count.toLocaleString()}
       {suffix}
     </span>
+  );
+};
+
+/* ── Logo with graceful fallback (shows client name if image is missing) ── */
+const LogoImage = ({ logo, fallbackClass }) => {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return <span className={fallbackClass}>{logo.name}</span>;
+  }
+
+  return (
+    <img
+      src={logo.src}
+      alt={logo.name}
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
   );
 };
 
@@ -235,22 +254,31 @@ const industries = [
   },
 ];
 
+/* ── Derived data ── */
+const allLogos = industries.flatMap((i) => i.logos);
+const sectorsWithLogos = industries.filter((i) => i.logos.length > 0);
+
 /* ── Main Component ── */
 const Clients = () => {
   const [activeIndustry, setActiveIndustry] = useState("all");
-  const [heroRef, heroVis] = useInView(0.05);
 
   const filteredIndustries =
     activeIndustry === "all"
-      ? industries.filter((i) => i.logos.length > 0)
-      : industries.filter((i) => i.id === activeIndustry && i.logos.length > 0);
+      ? sectorsWithLogos
+      : sectorsWithLogos.filter((i) => i.id === activeIndustry);
+
+  // Two marquee rows: first row forward, second row reversed.
+  // Each track is duplicated so the -50% translate loops seamlessly.
+  const marqueeRowA = [...allLogos, ...allLogos];
+  const reversedLogos = [...allLogos].reverse();
+  const marqueeRowB = [...reversedLogos, ...reversedLogos];
 
   return (
     <div className="cli">
       <Navbar />
 
       {/* ═══ HERO ═══ */}
-      <section className="cli__hero" ref={heroRef}>
+      <section className="cli__hero">
         <div className="cli__hero-bg">
           <div className="cli__hero-grid-pattern" />
           <div className="cli__hero-radial cli__hero-radial--1" />
@@ -312,7 +340,7 @@ const Clients = () => {
           <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
             <path
               d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120Z"
-              fill="#f3f6ff"
+              fill="#ffffff"
             />
           </svg>
         </div>
@@ -322,8 +350,46 @@ const Clients = () => {
         </div>
       </section>
 
-      {/* ═══ FILTER ═══ */}
-      <section className="cli__filter">
+      {/* ═══ TRUSTED ACROSS INDUSTRIES (2nd section) ═══ */}
+      <section className="cli__marquee-sec" id="network">
+        <div className="cli__wrap">
+          <Reveal dir="up">
+            <div className="cli__sec-head">
+              <span className="cli__tag">
+                <FaGlobeAmericas /> Our Network
+              </span>
+              <h2 className="cli__h2">Trusted Across Industries</h2>
+              <p className="cli__sec-sub">
+                Organisations across heavy industry rely on our
+                precision-engineered solutions every day
+              </p>
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="cli__marquee">
+          <div className="cli__marquee-track">
+            {marqueeRowA.map((logo, i) => (
+              <div className="cli__marquee-item" key={`a-${i}`}>
+                <LogoImage logo={logo} fallbackClass="cli__marquee-fallback" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="cli__marquee cli__marquee--rev">
+          <div className="cli__marquee-track cli__marquee-track--rev">
+            {marqueeRowB.map((logo, i) => (
+              <div className="cli__marquee-item" key={`b-${i}`}>
+                <LogoImage logo={logo} fallbackClass="cli__marquee-fallback" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ BROWSE BY INDUSTRY (3rd section) ═══ */}
+      <section className="cli__filter" id="industries">
         <div className="cli__wrap">
           <Reveal dir="up">
             <div className="cli__filter-head">
@@ -333,6 +399,7 @@ const Clients = () => {
               </p>
             </div>
           </Reveal>
+
           <Reveal dir="up" delay={100}>
             <div className="cli__filter-bar">
               <button
@@ -341,71 +408,30 @@ const Clients = () => {
               >
                 All Industries
               </button>
-              {industries
-                .filter((i) => i.logos.length > 0)
-                .map((ind) => (
-                  <button
-                    key={ind.id}
-                    className={`cli__fbtn ${activeIndustry === ind.id ? "cli__fbtn--on" : ""}`}
-                    onClick={() =>
-                      setActiveIndustry(
-                        activeIndustry === ind.id ? "all" : ind.id,
-                      )
-                    }
-                    style={{ "--cli-c": ind.color }}
-                  >
-                    {ind.name}
-                  </button>
-                ))}
+              {sectorsWithLogos.map((ind) => (
+                <button
+                  key={ind.id}
+                  className={`cli__fbtn ${activeIndustry === ind.id ? "cli__fbtn--on" : ""}`}
+                  onClick={() =>
+                    setActiveIndustry(
+                      activeIndustry === ind.id ? "all" : ind.id,
+                    )
+                  }
+                  style={{ "--cli-c": ind.color }}
+                >
+                  {ind.name}
+                </button>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ═══ INDUSTRY SECTIONS ═══ */}
       <section className="cli__sectors">
         <div className="cli__wrap">
           {filteredIndustries.map((industry, idx) => (
             <IndustryBlock key={industry.id} industry={industry} index={idx} />
           ))}
-        </div>
-      </section>
-
-      {/* ═══ MARQUEE ═══ */}
-      <section className="cli__marquee-sec">
-        <div className="cli__wrap">
-          <Reveal dir="up">
-            <div className="cli__sec-head">
-              <span className="cli__tag">
-                <FaGlobeAmericas /> Our Network
-              </span>
-              <h2 className="cli__h2">Trusted Across Industries</h2>
-            </div>
-          </Reveal>
-        </div>
-        <div className="cli__marquee">
-          <div className="cli__marquee-track">
-            {[
-              ...industries.flatMap((i) => i.logos),
-              ...industries.flatMap((i) => i.logos),
-            ].map((logo, i) => (
-              <div className="cli__marquee-item" key={`a-${i}`}>
-                <img src={logo.src} alt={logo.name} loading="lazy" />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="cli__marquee cli__marquee--rev">
-          <div className="cli__marquee-track cli__marquee-track--rev">
-            {[
-              ...industries.flatMap((i) => i.logos).reverse(),
-              ...industries.flatMap((i) => i.logos).reverse(),
-            ].map((logo, i) => (
-              <div className="cli__marquee-item" key={`b-${i}`}>
-                <img src={logo.src} alt={logo.name} loading="lazy" />
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -502,10 +528,10 @@ const IndustryBlock = ({ industry, index }) => {
           <div
             className={`cli__logo-card ${vis ? "cli__logo-card--vis" : ""}`}
             style={{ transitionDelay: `${200 + i * 50}ms` }}
-            key={i}
+            key={`${industry.id}-${i}`}
           >
             <div className="cli__logo-inner">
-              <img src={logo.src} alt={logo.name} loading="lazy" />
+              <LogoImage logo={logo} fallbackClass="cli__logo-fallback" />
             </div>
             <div
               className="cli__logo-accent"
