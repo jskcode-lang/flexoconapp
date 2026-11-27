@@ -1471,35 +1471,57 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   CLIENTS
+   CLIENTS — FLOATING LOGO MARQUEE
+   (copied 1:1 from the Clients page "Trusted Across Industries")
 ═══════════════════════════════════════════════════════════════ */
 .hm__clients {
-    padding: 5.5rem 0;
-    background: #0b1a2e;
+    padding: 5rem 0 4.5rem;
+    background: #fff;
     overflow: hidden;
     position: relative;
+    border-top: 1px solid #e8edf5;
 }
 
-.hm__clients-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 50%,
-            rgba(21, 101, 192, 0.07) 0%,
-            transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+/* Section header — Clients page look */
+.hm__clients .hm__sec-head {
+    margin-bottom: 2.8rem;
 }
 
+.hm__clients .hm__tag {
+    gap: 6px;
+    padding: 0.3rem 1rem;
+    background: rgba(26, 115, 232, 0.08);
+    color: #1a73e8;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    margin-bottom: 0.9rem;
+}
+
+.hm__clients .hm__tag svg {
+    font-size: 0.75rem;
+}
+
+.hm__clients .hm__h2 {
+    color: #1a1a2e;
+}
+
+.hm__clients .hm__sub {
+    font-size: 0.82rem;
+    color: #5a6b8a;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0.5rem auto 0;
+}
+
+/* Marquee rows */
 .hm__marquee {
     width: 100%;
     overflow: hidden;
     position: relative;
-    padding: 0.75rem 0;
-    margin-top: 0.5rem;
-}
-
-.hm__marquee--rtl {
-    margin-top: 1rem;
+    padding: 0.8rem 0;
 }
 
 .hm__marquee::before,
@@ -1508,24 +1530,25 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 180px;
+    width: 140px;
     z-index: 2;
     pointer-events: none;
 }
 
 .hm__marquee::before {
     left: 0;
-    background: linear-gradient(to right, #0b1a2e, transparent);
+    background: linear-gradient(to left, #fff, transparent);
 }
 
 .hm__marquee::after {
     right: 0;
-    background: linear-gradient(to left, #0b1a2e, transparent);
+    background: linear-gradient(to right, #fff, transparent);
 }
 
 .hm__marquee-track {
     display: flex;
-    gap: 1.25rem;
+    gap: 2.5rem;
+    animation: hmMarquee 130s linear infinite;
     width: max-content;
 }
 
@@ -1533,67 +1556,54 @@
     animation-play-state: paused;
 }
 
-.hm__marquee-track--ltr {
-    animation: hmMarqueeLTR 90s linear infinite;
-}
-
-.hm__marquee-track--rtl {
-    animation: hmMarqueeRTL 90s linear infinite;
-}
-
-@keyframes hmMarqueeLTR {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-@keyframes hmMarqueeRTL {
-    0% {
-        transform: translateX(-50%);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
+.hm__marquee-track--rev {
+    animation-direction: reverse;
+    animation-duration: 130s;
 }
 
 .hm__marquee-item {
     flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.92);
-    border-radius: 14px;
-    padding: 10px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18),
-        0 0 0 1px rgba(66, 165, 245, 0);
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px;
-    width: 160px;
-    opacity: 1;
-    filter: none;
-    transition: transform 0.4s var(--hm-ease-smooth),
-        box-shadow 0.4s var(--hm-ease), border-color 0.4s;
+    opacity: 0.57;
+    filter: grayscale(100%);
+    transition: opacity 0.3s, filter 0.3s, transform 0.3s;
 }
 
 .hm__marquee-item:hover {
-    transform: translateY(-6px) scale(1.06);
-    box-shadow: 0 12px 32px rgba(21, 101, 192, 0.25),
-        0 0 0 2px rgba(66, 165, 245, 0.4);
-    border-color: rgba(66, 165, 245, 0.5);
+    opacity: 1;
+    filter: grayscale(0);
+    transform: scale(1.12);
 }
 
 .hm__marquee-item img {
-    height: 56px;
-    width: 130px;
+    height: 65px;
+    width: auto;
     object-fit: contain;
-    display: block;
-    filter: none;
-    opacity: 1;
+}
+
+.hm__marquee-fallback {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #8a96b0;
+    white-space: nowrap;
+    padding: 0 0.6rem;
+}
+
+.hm__marquee--rev {
+    margin-top: 0.6rem;
+}
+
+@keyframes hmMarquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2275,9 +2285,12 @@
     .hm__products,
     .hm__about,
     .hm__why,
-    .hm__clients,
     .hm__cta {
         padding: 4.5rem 0;
+    }
+
+    .hm__clients {
+        padding: 3.5rem 0 3rem;
     }
 
     .hm__products-grid--4,
@@ -2310,15 +2323,13 @@
         grid-template-columns: 1fr;
     }
 
-    .hm__marquee-item {
-        width: 130px;
-        height: 68px;
-        padding: 8px 12px;
+    .hm__marquee-item img {
+        height: 28px;
     }
 
-    .hm__marquee-item img {
-        height: 46px;
-        width: 108px;
+    .hm__marquee::before,
+    .hm__marquee::after {
+        width: 70px;
     }
 
     .hm__cta-h2 {
@@ -2327,14 +2338,6 @@
 
     .hm__about-img-ring {
         display: none;
-    }
-
-    .hm__marquee::before {
-        width: 80px;
-    }
-
-    .hm__marquee::after {
-        width: 80px;
     }
 }
 
@@ -2389,15 +2392,8 @@
         display: none;
     }
 
-    .hm__marquee-item {
-        width: 110px;
-        height: 60px;
-        padding: 6px 10px;
-    }
-
     .hm__marquee-item img {
-        height: 40px;
-        width: 90px;
+        height: 24px;
     }
 }
 
@@ -2429,10 +2425,6 @@
 
     .hm__about-exp-num {
         font-size: 1.8rem;
-    }
-
-    .hm__marquee-track {
-        gap: 0.75rem;
     }
 }
 

@@ -633,25 +633,11 @@ const Home = () => {
                 Our Valued <span className="hm__h2-accent">Clients</span>
               </h2>
               <p className="hm__sub">
-                Proudly serving 2000+ clients across diverse industries
+                Proudly serving 5000+ clients across diverse industries
                 nationwide
               </p>
             </div>
           </Reveal>
-        </div>
-
-        <div className="hm__marquee">
-          <div className="hm__marquee-track hm__marquee-track--ltr">
-            {[...clientLogos, ...clientLogos].map((logo, i) => (
-              <div className="hm__marquee-item" key={`ltr-${i}`}>
-                <img
-                  src={logo}
-                  alt={`Client ${(i % clientLogos.length) + 1}`}
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="hm__marquee hm__marquee--rtl">
