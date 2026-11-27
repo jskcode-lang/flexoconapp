@@ -31,19 +31,19 @@ const HERO_BG_IMAGE = asset("assets/home_page_background.png");
 /* ── Floating Product Images (Changes every 6.5 seconds) ── */
 const HERO_PRODUCT_IMAGES = [
   {
-    src: asset("assets/geared_coupling.png"),
+    src: asset("assets/non_metallic_expansion.png"),
     alt: "Non Metallic Expansion Joints",
   },
   {
-    src: asset("assets/grid-spring_resilient_coupling.png"),
+    src: asset("assets/metallic_expansion_joints_bellows.png"),
     alt: "Metallic Expansion Joints",
   },
   {
-    src: asset("assets/metallic_expansion_joints_bellows.png"),
+    src: asset("assets/rubber_expansion.png"),
     alt: "Rubber Expansion Joints",
   },
-  { src: asset("assets/pinbush_coupling.png"), alt: "Resilient Coupling" },
-  { src: asset("assets/rubber_expansion.png"), alt: "Geared Coupling" },
+  { src: asset("assets/resilient_coupling.png"), alt: "Resilient Coupling" },
+  { src: asset("assets/geared_coupling.png"), alt: "Geared Coupling" },
   {
     src: asset("assets/tyre_flexible_coupling.png"),
     alt: "Pin Bush & Tyre Coupling",
