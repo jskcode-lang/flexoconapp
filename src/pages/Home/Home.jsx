@@ -11,7 +11,6 @@ import {
   FaGlobeAmericas,
   FaPhoneAlt,
   FaStar,
-  FaBolt,
   FaWrench,
   FaBoxOpen,
   FaCheckCircle,
@@ -134,55 +133,66 @@ const Counter = ({ number, suffix = "", label, icon }) => {
   );
 };
 
-/* ── Data ── */
-const products = [
+/* ── Categorized Products Data ── */
+const couplingProducts = [
   {
-    title: "Non Metallic Expansion Joints",
-    desc: "Fabric joints for high temp ducts, ESP, and industrial fans — up to 1400°C.",
-    image: asset("assets/3d_1.png"),
-    link: "/products/expansion-joints/non-metallic",
-    icon: <FaShieldAlt />,
-    tag: "High Temp",
-  },
-  {
-    title: "Metallic Expansion Joints",
-    desc: "EJMA standard SS 304/316/321 bellows for high pressure piping systems.",
-    image: asset("assets/3d_2.png"),
-    link: "/products/expansion-joints/metallic",
-    icon: <FaBolt />,
-    tag: "High Pressure",
-  },
-  {
-    title: "Rubber Expansion Joints",
-    desc: "FSA standard flexible joints from 25mm to 2200mm NB — up to 30 kg/cm².",
-    image: asset("assets/3d_3.png"),
-    link: "/products/expansion-joints/rubber",
-    icon: <FaBoxOpen />,
-    tag: "Flexible",
-  },
-  {
-    title: "Resilient Coupling",
-    desc: "Grid spring coupling with 80% shock damping — all metal construction.",
-    image: asset("assets/3d_4.png"),
-    link: "/products/mechanical-power-transmission/resilient-coupling",
-    icon: <FaCog />,
-    tag: "Shock Absorb",
+    title: "Pinbush Coupling",
+    desc: "Robust coupling for reliable power transmission and heavy-duty industrial setups.",
+    image: asset("assets/pinbush_coupling.png"),
+    link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
+    icon: <FaIndustry />,
+    tag: "Heavy Duty",
   },
   {
     title: "Geared Coupling",
     desc: "Crown gear teeth coupling with ±1.5° angular misalignment capacity.",
-    image: asset("assets/3d_5.png"),
+    image: asset("assets/geared_coupling.png"),
     link: "/products/mechanical-power-transmission/geared-coupling",
     icon: <FaWrench />,
     tag: "Precision",
   },
   {
-    title: "Pin Bush & Tyre Coupling",
-    desc: "Robust coupling for reliable power transmission in industrial setups.",
-    image: asset("assets/3d_7.png"),
+    title: "Grid Spring Resilient Coupling",
+    desc: "Grid spring coupling with 80% shock damping — all-metal durable construction.",
+    image: asset("assets/resilient_coupling.png"),
+    link: "/products/mechanical-power-transmission/resilient-coupling",
+    icon: <FaCog />,
+    tag: "Shock Absorb",
+  },
+  {
+    title: "Tyre Coupling",
+    desc: "Highly flexible rubber tyre coupling for superior shock absorption and shaft misalignment compensation.",
+    image: asset("assets/tyre_flexible_coupling.png"),
     link: "/products/mechanical-power-transmission/pin-bush-tyre-coupling",
-    icon: <FaIndustry />,
-    tag: "Heavy Duty",
+    icon: <FaCog />,
+    tag: "Vibration Damping",
+  },
+];
+
+const expansionJointProducts = [
+  {
+    title: "Metallic Expansion Joints & Bellows",
+    desc: "EJMA standard SS 304/316/321 bellows engineered for high pressure piping systems.",
+    image: asset("assets/metallic_expansion_joints_bellows.png"),
+    link: "/products/expansion-joints/metallic",
+    icon: <FaBoxOpen />,
+    tag: "High Pressure",
+  },
+  {
+    title: "Non Metallic Expansion Joints",
+    desc: "Fabric joints for high temp ducts, ESP, and industrial fans — temperature resistant up to 1400°C.",
+    image: asset("assets/non_metallic_expansion.png"),
+    link: "/products/expansion-joints/non-metallic",
+    icon: <FaShieldAlt />,
+    tag: "High Temperature",
+  },
+  {
+    title: "Rubber Expansion Joints",
+    desc: "Flexible elastomer joints that absorb pipe movement, thermal vibration, and acoustic noise.",
+    image: asset("assets/rubber_expansion.png"),
+    link: "/products/expansion-joints/rubber",
+    icon: <FaShieldAlt />,
+    tag: "Vibration Absorption",
   },
 ];
 
@@ -276,7 +286,6 @@ const Home = () => {
           HERO SECTION (Single Zooming BG + Flexbox + Auto-Changing Floating Product)
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__hero">
-        {/* Single Background Image with Zoom Animation */}
         <div className="hm__hero-bg">
           <img
             src={HERO_BG_IMAGE}
@@ -286,7 +295,6 @@ const Home = () => {
           />
         </div>
 
-        {/* Overlays & Ambient Effects */}
         <div className="hm__hero-overlay" />
         <div className="hm__hero-overlay-bottom" />
         <div className="hm__hero-grain" />
@@ -299,11 +307,8 @@ const Home = () => {
           <span className="hm__orb hm__orb--4" />
         </div>
 
-        {/* Main Hero Container */}
         <div className="hm__wrap hm__hero-container">
-          {/* Flexbox Row: Left Info + Right Floating Product */}
           <div className="hm__hero-row">
-            {/* Left Flexbox: Badge, Heading, Description */}
             <div className="hm__hero-left">
               <div className="hm__hero-badge hm__ha hm__ha--1">
                 <span className="hm__hero-badge-dot" />
@@ -323,7 +328,6 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Right Flexbox: Auto-Changing Floating 3D Product Image */}
             <div className="hm__hero-right hm__ha hm__ha--3">
               <div className="hm__hero-float-stage">
                 {HERO_PRODUCT_IMAGES.map((prod, idx) => (
@@ -347,7 +351,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Just Below the Middle: Centered Action Buttons */}
           <div className="hm__hero-btns hm__ha hm__ha--4">
             <Link to="/products" className="hm__btn hm__btn--fill">
               <span>Explore Products</span>
@@ -362,7 +365,7 @@ const Home = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          PRODUCTS
+          PRODUCTS (Categorized: Couplings & Expansion Joints)
       ═══════════════════════════════════════════════════════ */}
       <section className="hm__products">
         <div className="hm__products-bg-dots" aria-hidden="true" />
@@ -377,44 +380,112 @@ const Home = () => {
                 Our <span className="hm__h2-accent">Products</span>
               </h2>
               <p className="hm__sub">
-                Precision-engineered expansion joints and couplings for
-                demanding industrial applications
+                Engineered for maximum reliability, high load capacities, and
+                severe industrial working environments.
               </p>
             </div>
           </Reveal>
 
-          <div className="hm__products-grid">
-            {products.map((p, i) => (
-              <Reveal key={i} dir="up" delay={i * 90}>
-                <Link to={p.link} className="hm__prod-card">
-                  <div className="hm__prod-img">
-                    <img src={p.image} alt={p.title} loading="lazy" />
-                    <div className="hm__prod-img-ov">
-                      <span>
-                        View Details <FaArrowRight />
+          {/* ── Category 1: Couplings ── */}
+          <div className="hm__prod-category-block">
+            <Reveal dir="up">
+              <div className="hm__prod-cat-head">
+                <div className="hm__prod-cat-badge">
+                  <FaCog />
+                  <span>Category 01</span>
+                </div>
+                <h3 className="hm__prod-cat-title">Couplings </h3>
+                <p className="hm__prod-cat-sub">
+                  Mechanical power transmission couplings engineered for smooth
+                  torque transfer, shock dampening, and shaft alignment.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="hm__products-grid hm__products-grid--4">
+              {couplingProducts.map((p, i) => (
+                <Reveal key={i} dir="up" delay={i * 80}>
+                  <Link to={p.link} className="hm__prod-card">
+                    <div className="hm__prod-img">
+                      <img src={p.image} alt={p.title} loading="lazy" />
+                      <div className="hm__prod-img-ov">
+                        <span>
+                          View Details <FaArrowRight />
+                        </span>
+                      </div>
+                      <div className="hm__prod-badge">{p.icon}</div>
+                      <div className="hm__prod-tag">{p.tag}</div>
+                    </div>
+                    <div className="hm__prod-body">
+                      <h4 className="hm__prod-title">{p.title}</h4>
+                      <p className="hm__prod-desc">{p.desc}</p>
+                      <span className="hm__prod-link">
+                        Learn More <FaChevronRight />
                       </span>
                     </div>
-                    <div className="hm__prod-badge">{p.icon}</div>
-                    <div className="hm__prod-tag">{p.tag}</div>
-                  </div>
-                  <div className="hm__prod-body">
-                    <h3 className="hm__prod-title">{p.title}</h3>
-                    <p className="hm__prod-desc">{p.desc}</p>
-                    <span className="hm__prod-link">
-                      Learn More <FaChevronRight />
-                    </span>
-                  </div>
-                  <div className="hm__prod-shine" aria-hidden="true" />
-                  <div className="hm__prod-glow" aria-hidden="true" />
-                </Link>
-              </Reveal>
-            ))}
+                    <div className="hm__prod-shine" aria-hidden="true" />
+                    <div className="hm__prod-glow" aria-hidden="true" />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
           </div>
 
-          <Reveal dir="up" delay={200}>
+          {/* ── Subtle Divider Between Product Categories ── */}
+          <div className="hm__prod-divider" aria-hidden="true" />
+
+          {/* ── Category 2: Expansion Joints ── */}
+          <div className="hm__prod-category-block">
+            <Reveal dir="up">
+              <div className="hm__prod-cat-head">
+                <div className="hm__prod-cat-badge">
+                  <FaShieldAlt />
+                  <span>Category 02</span>
+                </div>
+                <h3 className="hm__prod-cat-title">
+                  Expansion{" "}
+                  <span className="hm__prod-cat-title-accent">Joints</span>
+                </h3>
+                <p className="hm__prod-cat-sub">
+                  Flexible piping joints designed to absorb thermal growth,
+                  structural vibrations, and pressure stresses.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="hm__products-grid hm__products-grid--3">
+              {expansionJointProducts.map((p, i) => (
+                <Reveal key={i} dir="up" delay={i * 80}>
+                  <Link to={p.link} className="hm__prod-card">
+                    <div className="hm__prod-img">
+                      <img src={p.image} alt={p.title} loading="lazy" />
+                      <div className="hm__prod-img-ov">
+                        <span>
+                          View Details <FaArrowRight />
+                        </span>
+                      </div>
+                      <div className="hm__prod-badge">{p.icon}</div>
+                      <div className="hm__prod-tag">{p.tag}</div>
+                    </div>
+                    <div className="hm__prod-body">
+                      <h4 className="hm__prod-title">{p.title}</h4>
+                      <p className="hm__prod-desc">{p.desc}</p>
+                      <span className="hm__prod-link">
+                        Learn More <FaChevronRight />
+                      </span>
+                    </div>
+                    <div className="hm__prod-shine" aria-hidden="true" />
+                    <div className="hm__prod-glow" aria-hidden="true" />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          <Reveal dir="up" delay={150}>
             <div className="hm__products-cta">
               <Link to="/products" className="hm__btn hm__btn--outline">
-                <span>View All Products</span> <FaArrowRight />
+                <span>View Full Product Catalog</span> <FaArrowRight />
               </Link>
             </div>
           </Reveal>
